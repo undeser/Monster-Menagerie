@@ -17,11 +17,12 @@ In-game currency used to mint and purchase card packs. Can be purchased using ET
 
 ### Card
 
-### Deck
 
 ### Battle
+Take in an input of an array of `Card`s.
 
 ### Auction House
+To buy, sell and trade the `Card`s with other players.
 
 ### Staking
 
