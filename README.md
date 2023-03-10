@@ -16,15 +16,21 @@ A project for a module, IS4302 - Blockchain and Distributed Ledeger Technologies
 In-game currency used to mint and purchase card packs. Can be purchased using ETH.
 
 ### Card
+Properties of `Card`:
+- Health Points (HP)
+- Attack Stat (AP)
+- Rarity (Common, Rare, Legendary)
+- Broken Status
+- Repair Cost
+  - based on Rarity status
 
-
-### Battle
-Take in an input of an array of `Card`s.
+### Challenge
+Take in an input of an array of `Card`.
 
 ### Auction House
-To buy, sell and trade the `Card`s with other players.
+To buy, sell and trade `Card` with other players.
 
 ### Staking
 
-## Battle Mechanics
+## Challenge Mechanics
 
