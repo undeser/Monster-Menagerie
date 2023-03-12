@@ -12,7 +12,7 @@ A project for a module, IS4302 - Blockchain and Distributed Ledeger Technologies
 
 ## Contracts
 
-### Token
+### Gems
 In-game currency used to mint and purchase card packs. Can be purchased using ETH.
 
 ### Card
