@@ -27,7 +27,7 @@ Properties of `Card`:
 ### Challenge
 Take in an input of an array of `Card`.
 
-### Auction House
+### Marketplace
 To buy, sell and trade `Card` with other players.
 
 ### Staking
