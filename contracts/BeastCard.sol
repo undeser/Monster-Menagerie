@@ -3,25 +3,29 @@ pragma solidity ^0.8.19;
 
 import './IERC721Receiver.sol';
 
-contract ERC721 {
+contract BeastCard {
     string public name;
     string public symbol;
     string public baseURI;
+
+    enum cardState { broken, functional }
 
     uint256 public nextTokenIdToMint;
     uint256 public maxTokens;
     address public contractOwner;
 
-    // token id => owner
+    // card id => owner
     mapping(uint256 => address) internal _owners;
-    // owner => token count
+    // owner => card count
     mapping(address => uint256) internal _balances;
-    // token id => approved address
+    // card id => approved address
     mapping(uint256 => address) internal _tokenApprovals;
     // owner => (operator => yes/no)
     mapping(address => mapping(address => bool)) internal _operatorApprovals;
-    // token id => token uri
+    // card id => token uri
     mapping(uint256 => string) _tokenUris;
+    // card id => card state
+    mapping(uint256 => cardState) _cardStates;
 
     event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
     event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
@@ -86,6 +90,7 @@ contract ERC721 {
         _owners[nextTokenIdToMint] = tx.origin;
         _balances[tx.origin] += 1;
         _tokenUris[nextTokenIdToMint] = string.concat(baseURI, "Beast_", uint2str(nextTokenIdToMint), ".json");
+        _cardStates[nextTokenIdToMint] = cardState.functional;
         emit Transfer(address(0), tx.origin, nextTokenIdToMint);
         nextTokenIdToMint += 1;
     }
