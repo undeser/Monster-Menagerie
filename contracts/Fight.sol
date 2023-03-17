@@ -3,7 +3,7 @@ pragma solidity ^0.8.2;
 
 import "./BeastCard.sol";
 
-contract CardBattle {
+contract Fight {
     BeastCard cardContract;
     address[] matchmakingQueue; 
 
