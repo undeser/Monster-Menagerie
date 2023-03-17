@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.18;
 
 import './IERC721Receiver.sol';
 
 contract BeastCard {
-    string public name;
+    string public collectionName;
     string public symbol;
     string public baseURI;
 
@@ -41,7 +41,7 @@ contract BeastCard {
     event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
 
     constructor(string memory _name, string memory _symbol) {
-        name = _name;
+        collectionName = _name;
         symbol = _symbol;
         //baseURI = "https://ipfs.io/ipfs/bafybeiel4uozzktij5vgegsmtnh6j46wtj3azuiih5ufwnl5uuh6jwhcia/";
         nextTokenIdToMint = 0;
@@ -94,19 +94,15 @@ contract BeastCard {
         return _operatorApprovals[_owner][_operator];
     }
 
-    function mint(address _to, string name, string rarity, uint256 attack, uint256 health) public payable{
+    function mint(address _to, string memory name, string memory rarity, uint256 attack, uint256 health) public payable{
         require(msg.value > 100000000000000000, "Not enough Eth supplied");
         _owners[nextTokenIdToMint] = _to;
         _balances[_to] += 1;
         //_tokenUris[nextTokenIdToMint] = string.concat(baseURI, "Beast_", uint2str(nextTokenIdToMint), ".json");
-        _beasts[nextTokenIdToMint] = new Beast(nextTokenIdToMint, name, rarity, attack, health);
+        _beasts[nextTokenIdToMint] = Beast(nextTokenIdToMint, name, rarity, attack, health);
         _cardStates[nextTokenIdToMint] = cardState.functional;
         emit Transfer(address(0), _to, nextTokenIdToMint);
         nextTokenIdToMint += 1;
-    }
-
-    function tokenURI(uint256 _tokenId) public view returns(string memory) {
-        return _tokenUris[_tokenId];
     }
 
     function totalSupply() public view returns(uint256) {
