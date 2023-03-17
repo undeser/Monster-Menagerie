@@ -36,4 +36,15 @@ contract Gem {
         return erc20Contract.transfer(recipient, value);
     }
 
+    function transferFrom(address from, address to, uint256 amt) public {
+        // function transferFrom(address from, address to, uint256 amount)
+        erc20Contract.transferFrom(from, to, amt);
+    }
+
+    function giveApproval(address receipt, uint256 amt) public {
+        // function approve(address spender, uint256 amount)
+        erc20Contract.approve(receipt, amt);
+    }
+
+
 }
