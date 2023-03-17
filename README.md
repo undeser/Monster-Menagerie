@@ -35,7 +35,7 @@ Functions of `Gem`:
 Properties of `BeastCard`:
 - Health Points (HP)
 - Attack Stat (AP)
-- Rarity (Common, Rare, Legendary)
+- Rarity (Rare, Epic, Unique, Legendary)
 - Broken Status
 - Repair Cost
   - based on Rarity status

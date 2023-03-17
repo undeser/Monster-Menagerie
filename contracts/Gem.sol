@@ -46,5 +46,9 @@ contract Gem {
         erc20Contract.approve(receipt, amt);
     }
 
+    function checkAllowance(addres owner) public returns (uint256) {
+        // function allowance(address owner, address spender) external view returns (uint256);
+        erc20Contract.allowance(owner, msg.sender);
+    }
 
 }
