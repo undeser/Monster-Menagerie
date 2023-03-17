@@ -20,17 +20,18 @@ A project for a module, IS4302 - Blockchain and Distributed Ledeger Technologies
 ## Architecture & Design
 
 ### Gem
-[]`ERC20`]
+[`ERC20`]
 In-game currency used to mint and purchase card packs. Can be purchased using ETH.
 Functions of `Gem`:
 - `getCredit()`: allows caller to check own credits
 - `checkCredit()`: 
 - `checkBal()`:
 - `transfer()`: 
+- `transferFrom()`: 
 - `giveApproval()`: 
 
 ### BeastCard
-[]`ERC721`]
+[`ERC721`]
 Properties of `BeastCard`:
 - Health Points (HP)
 - Attack Stat (AP)
