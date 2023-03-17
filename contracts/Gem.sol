@@ -38,6 +38,7 @@ contract Gem {
 
     function transferFrom(address from, address to, uint256 amt) public {
         // function transferFrom(address from, address to, uint256 amount)
+        require(erc20Contract.checkAllowance(from) > amt, "Warning: You are not allowed to transfer!");
         erc20Contract.transferFrom(from, to, amt);
     }
 
