@@ -1,26 +1,26 @@
 pragma solidity ^0.5.0;
 
 import "./Gem.sol";
-import "./Card.sol";
+import "./BeastCard.sol";
 
 contract Marketplace {
-    Card CardContract;
+    BeastCard CardContract;
     Gem GemContract;
     //uint256 public comissionFee;
     address _owner = msg.sender;
     mapping(uint256 => uint256) listPrice;
-        constructor(Card CardContract, Gem GemContract) public {
+        constructor(BeastCard CardContract, Gem GemContract) public {
             CardContract = CardContract;
             GemContract = GemContract;
         }
 
     function list(uint256 cardID, uint256 price) public {
-        require(msg.sender == CardContract.getPrevOwner(cardID), "Sorry you cannot list this card as you are not the owner");
+        require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot list this card as you are not the owner");
         listPrice[cardID] = price;
     }
 
     function unlist(uint256 cardID) public {
-        require(msg.sender == CardContract.getPrevOwner(cardID), "Sorry you cannot list this card as you are not the owner");
+        require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot list this card as you are not the owner");
         listPrice[cardID] = 0;
     }
 
