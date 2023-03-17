@@ -49,6 +49,26 @@ contract BeastCard {
         contractOwner = msg.sender;
     }
 
+    function cardDestroyed(uint256 _cardId) public {
+        _cardStates[_cardId] = cardState.broken;
+    }
+
+    function cardRevived(uint256 _cardId) public {
+        _cardStates[_cardId] = cardState.functional;
+    }
+
+    function attackOf(uint256 _cardId) public view returns(uint256) {
+        return _beasts[_cardId].attack;
+    }
+
+    function healthOf(uint256 _cardId) public view returns(uint256) {
+        return _beasts[_cardId].health;
+    }
+
+    function stateOf(uint256 _cardId) public view returns(cardState) {
+        return _cardStates[_cardId];
+    }
+
     function balanceOf(address _owner) public view returns(uint256) {
         require(_owner != address(0), "Null address specified");
         return _balances[_owner];
