@@ -8,7 +8,17 @@ contract Marketplace {
     Gem GemContract;
     //uint256 public comissionFee;
     address _owner = msg.sender;
+
+    struct offer {
+        address owner;
+        uint256 offerValue;
+        uint256 offerCardId;
+        uint256 offerID;
+    }
+
     mapping(uint256 => uint256) listPrice;
+    mapping(uint256 => offer[]) offers;
+
         constructor(BeastCard CardContract, Gem GemContract) public {
             CardContract = CardContract;
             GemContract = GemContract;
@@ -17,6 +27,7 @@ contract Marketplace {
     function list(uint256 cardID, uint256 price) public {
         require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot list this card as you are not the owner");
         listPrice[cardID] = price;
+        offers[cardID] = new offer[];
     }
 
     function unlist(uint256 cardID) public {
@@ -28,14 +39,25 @@ contract Marketplace {
         return listPrice[cardID]*1.05; // Charge 5% commission
     }
 
+    function offer(uint256 cardID, uint256 offerPrice) public {
+        require(listPrice[cardID] != 0, "Card is not listed for sale");
+        offers[cardID].push(new offer({
+            owner: address(msg.sender),
+            offerValue: offerPrice,
+            offerCardId: cardID,
+            offerID:len(offers[cardID])
+        }));
+    }
+
     function buy(uint256 cardID) public {
         require(listPrice[cardID] != 0, "Card is not listed for sale");
         require(GemContract.checkCredit(msg.sender) >= this.checkPrice(cardID), "Insufficient Gems");
 
-        address recipent = address(uint160(CardContract.getPrevOwner(cardID)));
+        address recipent = address(uint160(CardContract.ownerOf(cardID)));
+        address seller = recipent;
         GemContract.transfer(recipent, listPrice[cardID]); // transfer price to seller
         GemContract.transfer(address(this), listPrice[cardID]*0.05); // transfer commission to this contract
-        CardContract.transfer(cardID, msg.sender);
+        CardContract.safeTransferFrom(seller, address(msg.sender), cardID);
     }
 
     function getContractOwner() public view returns(address) {
