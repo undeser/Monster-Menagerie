@@ -49,6 +49,18 @@ contract Marketplace {
         }));
     }
 
+    function checkOffers() public view returns() {
+
+    }
+
+    function acceptOffer() public {
+
+    }
+
+    function retractOffer() public {
+
+    }
+
     function buy(uint256 cardID) public {
         require(listPrice[cardID] != 0, "Card is not listed for sale");
         require(GemContract.checkCredit(msg.sender) >= this.checkPrice(cardID), "Insufficient Gems");
