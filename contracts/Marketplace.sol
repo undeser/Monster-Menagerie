@@ -51,22 +51,35 @@ contract Marketplace {
 
     function checkOffers(cardID) public view returns(offer[] memory) {
         require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot view the offers for this card as you are not the owner");
-        numOffers = len(offers[cardID]);
+        uint256 numOffers = len(offers[cardID]);
         Offer[] memory id = new Offer[](numOffers);
         for (uint i = 0; i < numOffers; i++) {
             Offer storage offer = offers[cardID][i];
             id[i] = offer;
         }
-        
+
         return id;
     }
 
     function acceptOffer() public {
 
     }
+    
+    function remove(uint index, Offer[] offers) public {
+        offers[index] = offers[offers.length - 1];
+        offers.pop();
+    }
 
-    function retractOffer() public {
-
+    function retractOffer(cardID) public {
+        Offer[] offerArray = offers[cardID];
+        address Offerer = address(msg.sender);
+        uint256 numOffers = len(offers[cardID]);
+        for (uint i = 0; i < numOffers; i++) {
+            Offer storage offer = offerArray[i];
+            if(offer.owner == Offerer) {
+                offers[cardID].remove(i, offerArray);
+            }
+        }
     }
 
     function buy(uint256 cardID) public {
