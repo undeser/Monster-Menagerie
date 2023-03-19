@@ -9,7 +9,7 @@ contract Marketplace {
     //uint256 public comissionFee;
     address _owner = msg.sender;
 
-    struct offer {
+    struct Offer {
         address owner;
         uint256 offerValue;
         uint256 offerCardId;
@@ -17,7 +17,7 @@ contract Marketplace {
     }
 
     mapping(uint256 => uint256) listPrice;
-    mapping(uint256 => offer[]) offers;
+    mapping(uint256 => Offer[]) offers;
 
         constructor(BeastCard CardContract, Gem GemContract) public {
             CardContract = CardContract;
@@ -27,7 +27,7 @@ contract Marketplace {
     function list(uint256 cardID, uint256 price) public {
         require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot list this card as you are not the owner");
         listPrice[cardID] = price;
-        offers[cardID] = new offer[];
+        offers[cardID] = new Offer[];
     }
 
     function unlist(uint256 cardID) public {
@@ -49,8 +49,16 @@ contract Marketplace {
         }));
     }
 
-    function checkOffers() public view returns() {
-
+    function checkOffers(cardID) public view returns(offer[] memory) {
+        require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot view the offers for this card as you are not the owner");
+        numOffers = len(offers[cardID]);
+        Offer[] memory id = new Offer[](numOffers);
+        for (uint i = 0; i < numOffers; i++) {
+            Offer storage offer = offers[cardID][i];
+            id[i] = offer;
+        }
+        
+        return id;
     }
 
     function acceptOffer() public {
