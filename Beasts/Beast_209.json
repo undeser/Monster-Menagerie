@@ -1,9 +1,28 @@
 {
-    "id": 210,
-    "name": "Hyena, brown",
-    "rarityNum": 80,
-    "rarity": "epic",
-    "power": 16,
-    "attack": 12,
-    "health": 4
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 209,
+    "name": "Aquatic Butterfly, canadian tiger swallowtail",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Epic"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Aquatic"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 15
+        },
+        {
+            "trait_type": "Attack",
+            "value": 8
+        },
+        {
+            "trait_type": "Health",
+            "value": 8
+        }
+    ]
 }

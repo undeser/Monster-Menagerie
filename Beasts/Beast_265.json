@@ -1,9 +1,28 @@
 {
-    "id": 266,
-    "name": "Levaillant's barbet",
-    "rarityNum": 99,
-    "rarity": "legendary",
-    "power": 19,
-    "attack": 8,
-    "health": 11
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 265,
+    "name": "Aquatic Small Indian mongoose",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Common"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Aquatic"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 1
+        },
+        {
+            "trait_type": "Attack",
+            "value": 4
+        },
+        {
+            "trait_type": "Health",
+            "value": 6
+        }
+    ]
 }

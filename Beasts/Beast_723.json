@@ -1,9 +1,28 @@
 {
-    "id": 724,
-    "name": "Woodrat (unidentified)",
-    "rarityNum": 91,
-    "rarity": "legendary",
-    "power": 20,
-    "attack": 12,
-    "health": 8
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 723,
+    "name": "Aquatic Lizard, blue-tongued",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Rare"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Aquatic"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 10
+        },
+        {
+            "trait_type": "Attack",
+            "value": 6
+        },
+        {
+            "trait_type": "Health",
+            "value": 9
+        }
+    ]
 }

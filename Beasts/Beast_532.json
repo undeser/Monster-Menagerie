@@ -1,9 +1,28 @@
 {
-    "id": 533,
-    "name": "Galapagos penguin",
-    "rarityNum": 38,
-    "rarity": "common",
-    "power": 7,
-    "attack": 5,
-    "health": 2
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 532,
+    "name": "Verdant Common goldeneye",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Common"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Verdant"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 1
+        },
+        {
+            "trait_type": "Attack",
+            "value": 9
+        },
+        {
+            "trait_type": "Health",
+            "value": 1
+        }
+    ]
 }

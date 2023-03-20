@@ -1,9 +1,28 @@
 {
-    "id": 241,
-    "name": "Common seal",
-    "rarityNum": 86,
-    "rarity": "epic",
-    "power": 16,
-    "attack": 8,
-    "health": 8
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 240,
+    "name": "Aquatic Turtle, long-necked",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Common"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Aquatic"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 1
+        },
+        {
+            "trait_type": "Attack",
+            "value": 8
+        },
+        {
+            "trait_type": "Health",
+            "value": 2
+        }
+    ]
 }

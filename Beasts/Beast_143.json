@@ -1,9 +1,28 @@
 {
-    "id": 144,
-    "name": "Snake, carpet",
-    "rarityNum": 4,
-    "rarity": "common",
-    "power": 8,
-    "attack": 3,
-    "health": 5
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 143,
+    "name": "Infernal Common wallaroo",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Rare"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Infernal"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 10
+        },
+        {
+            "trait_type": "Attack",
+            "value": 2
+        },
+        {
+            "trait_type": "Health",
+            "value": 10
+        }
+    ]
 }

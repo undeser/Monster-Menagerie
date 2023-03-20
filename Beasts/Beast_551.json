@@ -1,9 +1,28 @@
 {
-    "id": 552,
-    "name": "Rhinoceros, black",
-    "rarityNum": 65,
-    "rarity": "rare",
-    "power": 15,
-    "attack": 2,
-    "health": 13
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 551,
+    "name": "Infernal Lesser double-collared sunbird",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Rare"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Infernal"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 10
+        },
+        {
+            "trait_type": "Attack",
+            "value": 5
+        },
+        {
+            "trait_type": "Health",
+            "value": 9
+        }
+    ]
 }

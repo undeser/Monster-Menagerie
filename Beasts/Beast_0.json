@@ -1,9 +1,28 @@
 {
-    "id": 1,
-    "name": "Little blue penguin",
-    "rarityNum": 33,
-    "rarity": "common",
-    "power": 8,
-    "attack": 4,
-    "health": 4
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 0,
+    "name": "Aquatic Sable antelope",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Common"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Aquatic"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 1
+        },
+        {
+            "trait_type": "Attack",
+            "value": 2
+        },
+        {
+            "trait_type": "Health",
+            "value": 5
+        }
+    ]
 }

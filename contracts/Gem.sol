@@ -15,7 +15,7 @@ contract Gem {
     }
 
     function getCredit() public payable {
-        uint256 amt = msg.value / 10000000000000000; //???
+        uint256 amt = msg.value / 1000000000000000; //???
         require(erc20Contract.totalSupply() + amt < supplyLimit, "Warning: Insufficient Gems!");
         // erc.mint(address account, uint256 amount);
         erc20Contract.mint(msg.sender, amt);
