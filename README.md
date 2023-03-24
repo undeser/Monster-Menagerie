@@ -1,6 +1,6 @@
 # is4302placeholdername
 
-## About
+## Introduction
 A project for a module, IS4302 - Blockchain and Distributed Ledeger Technologies, taken in National University of Singapore (NUS) in 2023. The project is a GameFi Dapp.
 
 ### Contributors
@@ -10,27 +10,45 @@ A project for a module, IS4302 - Blockchain and Distributed Ledeger Technologies
 - Luther Tan Xin Kang
 - Seah Zhi Han Mervyn
 
-## Contracts
+### Problem Definition
 
-### Gems
+### Proposed Solution
+
+### Targeted Users
+
+
+## Architecture & Design
+
+### Gem
+[`ERC20`]
 In-game currency used to mint and purchase card packs. Can be purchased using ETH.
+Functions of `Gem`:
+- `getCredit()`: allows caller to check own credits
+- `checkCredit()`: 
+- `checkBal()`:
+- `transfer()`: 
+- `transferFrom()`: 
+- `giveApproval()`: 
 
-### Card
-Properties of `Card`:
+### BeastCard
+[`ERC721`]
+Properties of `BeastCard`:
 - Health Points (HP)
 - Attack Stat (AP)
-- Rarity (Common, Rare, Legendary)
+- Rarity (Rare, Epic, Unique, Legendary)
 - Broken Status
 - Repair Cost
   - based on Rarity status
 
-### Challenge
+### Fight
 Take in an input of an array of `Card`.
 
 ### Marketplace
 To buy, sell and trade `Card` with other players.
+To make the game more gasless and make the game seamless... 
 
 ### Staking
 
 ## Challenge Mechanics
 
+#

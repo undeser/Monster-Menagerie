@@ -1,9 +1,28 @@
 {
-    "id": 943,
-    "name": "European red squirrel",
-    "rarityNum": 93,
-    "rarity": "legendary",
-    "power": 19,
-    "attack": 2,
-    "health": 17
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 942,
+    "name": "Infernal Black-backed magpie",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Common"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Infernal"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 1
+        },
+        {
+            "trait_type": "Attack",
+            "value": 4
+        },
+        {
+            "trait_type": "Health",
+            "value": 4
+        }
+    ]
 }

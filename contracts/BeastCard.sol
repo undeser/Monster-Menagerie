@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.18;
 
 import './IERC721Receiver.sol';
+import './Gem.sol';
 
 contract BeastCard {
-    string public name;
+
+    Gem gemContract;
+    string public collectionName;
     string public symbol;
     string public baseURI;
 
@@ -22,22 +25,72 @@ contract BeastCard {
     mapping(uint256 => address) internal _tokenApprovals;
     // owner => (operator => yes/no)
     mapping(address => mapping(address => bool)) internal _operatorApprovals;
-    // card id => token uri
-    mapping(uint256 => string) _tokenUris;
+    // card id => beast struct
+    mapping(uint256 => Beast) _beasts;
     // card id => card state
     mapping(uint256 => cardState) _cardStates;
+
+
+    struct Beast {
+        uint256 id;
+        string name;
+        string rarity;
+        string nature;
+        uint256 cost;
+        uint256 attack;
+        uint256 health;
+    }
 
     event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
     event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
     event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
 
-    constructor(string memory _name, string memory _symbol) {
-        name = _name;
+    constructor(address gemAddress, string memory _name, string memory _symbol) {
+        gemContract = gemAddress;
+        collectionName = _name;
         symbol = _symbol;
-        baseURI = "https://ipfs.io/ipfs/bafybeiel4uozzktij5vgegsmtnh6j46wtj3azuiih5ufwnl5uuh6jwhcia/";
+        //baseURI = "https://ipfs.io/ipfs/bafybeihxrnzopq3srhjms4rmg2nulen7aiet2cid7rbyczuj2vtnkrpumy/";
         nextTokenIdToMint = 0;
         maxTokens = 1000;
         contractOwner = msg.sender;
+    }
+
+    function cardDestroyed(uint256 _cardId) public {
+        _cardStates[_cardId] = cardState.broken;
+    }
+
+    function cardRevived(uint256 _cardId) public {
+        _cardStates[_cardId] = cardState.functional;
+    }
+
+    function restoreCard(uint256 _cardId) public {
+        require(_cardStates[_cardId] == cardState.broken, "Card is not broken");
+        string rarity = _beasts[cardId].rarity;
+        if (rarity == "Legendary") {
+            gemContract.transferFrom(msg.sender, address(this), 2);
+            cardRevived(_cardId);
+        } else if (rarity == "Epic") {
+            gemContract.transferFrom(msg.sender, address(this), 1);
+            cardRevived(_cardId);
+        } else if (rarity == "Rare") {
+            gemContract.transferFrom(msg.sender, address(this), 0.5);
+            cardRevived(_cardId);
+        } else if (rarity == "Common") {
+            gemContract.transferFrom(msg.sender, address(this), 0.25);
+            cardRevived(_cardId);
+        }
+    }
+
+    function attackOf(uint256 _cardId) public view returns(uint256) {
+        return _beasts[_cardId].attack;
+    }
+
+    function healthOf(uint256 _cardId) public view returns(uint256) {
+        return _beasts[_cardId].health;
+    }
+
+    function stateOf(uint256 _cardId) public view returns(cardState) {
+        return _cardStates[_cardId];
     }
 
     function balanceOf(address _owner) public view returns(uint256) {
@@ -85,22 +138,26 @@ contract BeastCard {
         return _operatorApprovals[_owner][_operator];
     }
 
-    function mint() public payable{
-        require(msg.value > 100000000000000000, "Not enough Eth supplied");
-        _owners[nextTokenIdToMint] = tx.origin;
-        _balances[tx.origin] += 1;
-        _tokenUris[nextTokenIdToMint] = string.concat(baseURI, "Beast_", uint2str(nextTokenIdToMint), ".json");
+    function mint(address _to, string memory name, string memory rarity, string nature, uint256 cost, uint256 attack, uint256 health) public {
+        require(gemContract.checkBal(_to) > 1, "Not enough Gem in wallet");
+        gemContract.transferFrom(_to, address(this), 1);
+        _owners[nextTokenIdToMint] = _to;
+        _balances[_to] += 1;
+        //_tokenUris[nextTokenIdToMint] = string.concat(baseURI, "Beast_", uint2str(nextTokenIdToMint), ".json");
+        _beasts[nextTokenIdToMint] = Beast(nextTokenIdToMint, name, rarity, nature, cost, attack, health);
         _cardStates[nextTokenIdToMint] = cardState.functional;
-        emit Transfer(address(0), tx.origin, nextTokenIdToMint);
+        emit Transfer(address(0), _to, nextTokenIdToMint);
         nextTokenIdToMint += 1;
-    }
-
-    function tokenURI(uint256 _tokenId) public view returns(string memory) {
-        return _tokenUris[_tokenId];
     }
 
     function totalSupply() public view returns(uint256) {
         return nextTokenIdToMint;
+    }
+
+    function withdraw() public {
+        uint256 amt = gemContract.checkBal(address(this));
+        gemContract.giveApproval(contractOwner, amt);
+        gemContract.transferFrom(address(this), contractOwner, amt);
     }
 
     // INTERNAL FUNCTIONS

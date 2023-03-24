@@ -1,9 +1,28 @@
 {
-    "id": 294,
-    "name": "Sparrow, rufous-collared",
-    "rarityNum": 55,
-    "rarity": "rare",
-    "power": 12,
-    "attack": 11,
-    "health": 1
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 293,
+    "name": "Aquatic Monkey, rhesus",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Common"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Aquatic"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 1
+        },
+        {
+            "trait_type": "Attack",
+            "value": 2
+        },
+        {
+            "trait_type": "Health",
+            "value": 9
+        }
+    ]
 }

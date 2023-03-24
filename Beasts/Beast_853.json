@@ -1,9 +1,28 @@
 {
-    "id": 854,
-    "name": "House sparrow",
-    "rarityNum": 40,
-    "rarity": "rare",
-    "power": 12,
-    "attack": 5,
-    "health": 7
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 853,
+    "name": "Verdant Oryx, fringe-eared",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Common"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Verdant"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 1
+        },
+        {
+            "trait_type": "Attack",
+            "value": 4
+        },
+        {
+            "trait_type": "Health",
+            "value": 5
+        }
+    ]
 }

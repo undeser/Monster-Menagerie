@@ -1,9 +1,28 @@
 {
-    "id": 840,
-    "name": "Crab, red lava",
-    "rarityNum": 46,
-    "rarity": "rare",
-    "power": 13,
-    "attack": 9,
-    "health": 4
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 839,
+    "name": "Verdant Snake, eastern indigo",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Epic"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Verdant"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 15
+        },
+        {
+            "trait_type": "Attack",
+            "value": 1
+        },
+        {
+            "trait_type": "Health",
+            "value": 17
+        }
+    ]
 }

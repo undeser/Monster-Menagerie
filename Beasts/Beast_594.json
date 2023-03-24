@@ -1,9 +1,28 @@
 {
-    "id": 595,
-    "name": "Hawk-eagle, crowned",
-    "rarityNum": 14,
-    "rarity": "common",
-    "power": 9,
-    "attack": 3,
-    "health": 6
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 594,
+    "name": "Aquatic Blue peacock",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Common"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Aquatic"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 1
+        },
+        {
+            "trait_type": "Attack",
+            "value": 2
+        },
+        {
+            "trait_type": "Health",
+            "value": 9
+        }
+    ]
 }

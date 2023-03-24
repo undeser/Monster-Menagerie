@@ -1,9 +1,28 @@
 {
-    "id": 726,
-    "name": "Civet, small-toothed palm",
-    "rarityNum": 53,
-    "rarity": "rare",
-    "power": 14,
-    "attack": 3,
-    "health": 11
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 725,
+    "name": "Verdant Ibis, glossy",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Epic"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Verdant"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 15
+        },
+        {
+            "trait_type": "Attack",
+            "value": 10
+        },
+        {
+            "trait_type": "Health",
+            "value": 7
+        }
+    ]
 }

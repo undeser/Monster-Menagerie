@@ -1,9 +1,28 @@
 {
-    "id": 91,
-    "name": "Savannah deer (unidentified)",
-    "rarityNum": 0,
-    "rarity": "common",
-    "power": 11,
-    "attack": 5,
-    "health": 6
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 90,
+    "name": "Verdant Red-headed woodpecker",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Rare"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Verdant"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 10
+        },
+        {
+            "trait_type": "Attack",
+            "value": 5
+        },
+        {
+            "trait_type": "Health",
+            "value": 9
+        }
+    ]
 }

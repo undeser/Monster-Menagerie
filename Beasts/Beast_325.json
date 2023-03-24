@@ -1,9 +1,28 @@
 {
-    "id": 326,
-    "name": "Long-nosed bandicoot",
-    "rarityNum": 91,
-    "rarity": "legendary",
-    "power": 19,
-    "attack": 13,
-    "health": 6
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 325,
+    "name": "Infernal Grey heron",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Common"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Infernal"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 1
+        },
+        {
+            "trait_type": "Attack",
+            "value": 5
+        },
+        {
+            "trait_type": "Health",
+            "value": 5
+        }
+    ]
 }

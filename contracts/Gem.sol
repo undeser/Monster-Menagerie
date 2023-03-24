@@ -15,7 +15,7 @@ contract Gem {
     }
 
     function getCredit() public payable {
-        uint256 amt = msg.value / 10000000000000000; //???
+        uint256 amt = msg.value / 1000000000000000; //???
         require(erc20Contract.totalSupply() + amt < supplyLimit, "Warning: Insufficient Gems!");
         // erc.mint(address account, uint256 amount);
         erc20Contract.mint(msg.sender, amt);
@@ -34,6 +34,22 @@ contract Gem {
     function transfer(address recipient, uint256 value) public returns (bool) {
         // erc.transfer(address to, uint256 amount);
         return erc20Contract.transfer(recipient, value);
+    }
+
+    function transferFrom(address from, address to, uint256 amt) public {
+        // function transferFrom(address from, address to, uint256 amount)
+        require(erc20Contract.checkAllowance(from) > amt, "Warning: You are not allowed to transfer!");
+        erc20Contract.transferFrom(from, to, amt);
+    }
+
+    function giveApproval(address receipt, uint256 amt) public {
+        // function approve(address spender, uint256 amount)
+        erc20Contract.approve(receipt, amt);
+    }
+
+    function checkAllowance(addres owner) public returns (uint256) {
+        // function allowance(address owner, address spender) external view returns (uint256);
+        erc20Contract.allowance(owner, msg.sender);
     }
 
 }

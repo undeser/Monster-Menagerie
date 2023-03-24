@@ -1,9 +1,28 @@
 {
-    "id": 367,
-    "name": "Cape starling",
-    "rarityNum": 61,
-    "rarity": "rare",
-    "power": 14,
-    "attack": 11,
-    "health": 3
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 366,
+    "name": "Verdant Long-tailed skua",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Common"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Verdant"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 1
+        },
+        {
+            "trait_type": "Attack",
+            "value": 7
+        },
+        {
+            "trait_type": "Health",
+            "value": 1
+        }
+    ]
 }

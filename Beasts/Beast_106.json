@@ -1,9 +1,28 @@
 {
-    "id": 107,
-    "name": "Flamingo, roseat",
-    "rarityNum": 84,
-    "rarity": "epic",
-    "power": 18,
-    "attack": 1,
-    "health": 17
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 106,
+    "name": "Aquatic Shrike, common boubou",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Epic"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Aquatic"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 15
+        },
+        {
+            "trait_type": "Attack",
+            "value": 9
+        },
+        {
+            "trait_type": "Health",
+            "value": 9
+        }
+    ]
 }

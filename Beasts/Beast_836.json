@@ -1,9 +1,28 @@
 {
-    "id": 837,
-    "name": "Coqui francolin",
-    "rarityNum": 40,
-    "rarity": "rare",
-    "power": 13,
-    "attack": 3,
-    "health": 10
+    "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
+    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "tokenId": 836,
+    "name": "Verdant Striped hyena",
+    "attributes": [
+        {
+            "trait_type": "Rarity",
+            "value": "Epic"
+        },
+        {
+            "trait_type": "Nature",
+            "value": "Verdant"
+        },
+        {
+            "trait_type": "Cost",
+            "value": 15
+        },
+        {
+            "trait_type": "Attack",
+            "value": 8
+        },
+        {
+            "trait_type": "Health",
+            "value": 9
+        }
+    ]
 }
