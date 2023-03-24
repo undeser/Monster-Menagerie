@@ -1,4 +1,5 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
 
 import "./ERC20.sol"; 
 
@@ -8,8 +9,8 @@ contract Gem {
     uint256 currentSupply;
     address owner;
     
-    constructor() public {
-        ERC20 e = new ERC20();
+    constructor() {
+        ERC20 e = new ERC20("Beast Gem", "BGM");
         erc20Contract = e;
         owner = msg.sender;
     }
@@ -38,7 +39,7 @@ contract Gem {
 
     function transferFrom(address from, address to, uint256 amt) public {
         // function transferFrom(address from, address to, uint256 amount)
-        require(erc20Contract.checkAllowance(from) > amt, "Warning: You are not allowed to transfer!");
+        require(erc20Contract.allowance(from, msg.sender) > amt, "Warning: You are not allowed to transfer!");
         erc20Contract.transferFrom(from, to, amt);
     }
 
@@ -47,9 +48,9 @@ contract Gem {
         erc20Contract.approve(receipt, amt);
     }
 
-    function checkAllowance(addres owner) public returns (uint256) {
+    function checkAllowance(address user, address spender) public view returns (uint256) {
         // function allowance(address owner, address spender) external view returns (uint256);
-        erc20Contract.allowance(owner, msg.sender);
+        return erc20Contract.allowance(user, spender);
     }
 
 }
