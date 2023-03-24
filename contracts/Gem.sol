@@ -1,4 +1,7 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts (last updated v4.6.0) (token/ERC20/IERC20.sol)
+
+pragma solidity ^0.8.0;
 
 import "./ERC20.sol"; 
 
@@ -9,7 +12,7 @@ contract Gem {
     address owner;
     
     constructor() public {
-        ERC20 e = new ERC20();
+        ERC20 e = new ERC20("Beast Gem", "BGM");
         erc20Contract = e;
         owner = msg.sender;
     }
@@ -18,7 +21,7 @@ contract Gem {
         uint256 amt = msg.value / 1000000000000000; //???
         require(erc20Contract.totalSupply() + amt < supplyLimit, "Warning: Insufficient Gems!");
         // erc.mint(address account, uint256 amount);
-        erc20Contract.mint(msg.sender, amt);
+        erc20Contract._mint(msg.sender, amt);
     }
 
     function checkCredit() public view returns(uint256) {
@@ -47,7 +50,7 @@ contract Gem {
         erc20Contract.approve(receipt, amt);
     }
 
-    function checkAllowance(addres owner) public returns (uint256) {
+    function checkAllowance(address owner) public returns (uint256) {
         // function allowance(address owner, address spender) external view returns (uint256);
         erc20Contract.allowance(owner, msg.sender);
     }
