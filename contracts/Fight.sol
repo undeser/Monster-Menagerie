@@ -5,11 +5,13 @@ import "./BeastCard.sol";
 
 contract Fight {
     BeastCard cardContract;
+    Gem gemContract;
     // MMR mmrContract;
     address[] matchmakingQueue; 
 
-    constructor(BeastCard cardAddress, MMR mmrAddress) {
+    constructor(Gem gemAddress, BeastCard cardAddress) {
         cardContract = cardAddress;
+        gemContract = gemAddress;
         // mmrContract = mmrAddress;
     }
 
@@ -79,11 +81,11 @@ contract Fight {
 
             if (myDmg > enemyDmg) {
                 // I win 
-                // transfer token
+                gemContract.transferFrom(enemy, msg.sender, (myDmg - enemyDmg) / 10);
                 emit outcomeWin(msg.sender);
             } else if (myDmg < enemyDmg) {
                 // Enemy win
-                // transfer token
+                gemContract.transferFrom(msg.sender, enemy, (enemyDmg - myDmg) / 10);
                 emit outcomeWin(enemy);
             } else {
                 // Draw
