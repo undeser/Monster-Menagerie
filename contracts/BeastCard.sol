@@ -93,6 +93,14 @@ contract BeastCard {
         return _cardStates[_cardId];
     }
 
+    function costOf(uint256 _cardId) public view returns (uint256) {
+        return _beasts[_cardId].cost;
+    }
+
+    function natureOf(uint256 _cardId) public view returns (string) {
+        return _beasts[_cardId].nature;
+    }
+
     function balanceOf(address _owner) public view returns(uint256) {
         require(_owner != address(0), "Null address specified");
         return _balances[_owner];
