@@ -9,7 +9,7 @@ contract Gem {
     address owner;
     
     constructor() public {
-        ERC20 e = new ERC20();
+        ERC20 e = new ERC20(Gem, GEM);
         erc20Contract = e;
         owner = msg.sender;
     }
@@ -47,7 +47,7 @@ contract Gem {
         erc20Contract.approve(receipt, amt);
     }
 
-    function checkAllowance(addres owner) public returns (uint256) {
+    function checkAllowance(address owner) public returns (uint256) {
         // function allowance(address owner, address spender) external view returns (uint256);
         erc20Contract.allowance(owner, msg.sender);
     }
