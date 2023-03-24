@@ -11,6 +11,7 @@ A project for a module, IS4302 - Blockchain and Distributed Ledeger Technologies
 - Seah Zhi Han Mervyn
 
 ### Problem Definition
+Up till 2021, the concept of Non-Fungible Tokens (NFTs) was a foregin concept to the general public until the world witnessed tokens being sold in the millions [()]()
 
 ### Proposed Solution
 
