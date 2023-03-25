@@ -92,7 +92,7 @@ contract Fight {
             // Outcome determination
             // Fight contract takes a commission of 10% per fight 
             // Commission goes to the developing team + a "prize pool" that will be disbursed to top 10 players of the season
-            // Divide by 1000 to unscale the scaling effects from elemental scaling and cost scaling
+            // Divide by 100 to unscale the scaling effects from elemental scaling and cost scaling
             if (dmg[0] > dmg[1]) {
                 // I win 
                 // Gems transfer from loser to winner
