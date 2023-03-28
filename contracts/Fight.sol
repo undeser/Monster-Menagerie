@@ -1,28 +1,30 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
+import "./Gem.sol";
 import "./BeastCard.sol";
+import "./MMR.sol";
 
 contract Fight {
     BeastCard cardContract;
     Gem gemContract;
-    // MMR mmrContract;
+    MMR mmrContract;
     address[] matchmakingQueue; 
 
-    constructor(Gem gemAddress, BeastCard cardAddress) {
+    constructor(Gem gemAddress, BeastCard cardAddress, MMR mmrAddress) {
         cardContract = cardAddress;
         gemContract = gemAddress;
-        // mmrContract = mmrAddress;
+        mmrContract = mmrAddress;
     }
 
     mapping(address => uint256[]) internal _cardsOfPlayersInQueue;
     mapping(address => uint256) internal _scale;
-    // mapping(address => uint256) internal _playerMMR;
 
     event inQueue(address player);
     event outcomeWin(address winner);
     event outcomeDraw();
 
+    // Main fight function
     function fight(uint256[] memory cards) public isOwnerOfCards(cards) isCorrectNumCards(cards) cardsNotBroken(cards) {
         // Get cost
         uint256 cost = 0;
@@ -39,13 +41,6 @@ contract Fight {
         // Determine the scale of MY TEAM
         // Our algorithm to scale the team stats based on the total cost used
         scales[1] = (((65 / cost) / 20 ) + 1) * 10;
-
-        // if (!mmrContract.exists(msg.sender)) {
-        //     // Sets the MMR for the new player
-        //     mmrContract.setNewPlayer(msg.sender); 
-        // } else {
-
-        // }
 
         if (matchmakingQueue.length == 0) {
             // Matchmaking
@@ -89,12 +84,23 @@ contract Fight {
                 }
             }
 
+            // Initialise if they are new users
+            if (mmrContract.isNew(enemy)) {
+                mmrContract.initialiseUser(enemy);
+            }
+
+            if (mmrContract.isNew(msg.sender)) {
+                mmrContract.initialiseUser(msg.sender);
+            }
+
             // Outcome determination
             // Fight contract takes a commission of 10% per fight 
             // Commission goes to the developing team + a "prize pool" that will be disbursed to top 10 players of the season
             // Divide by 100 to unscale the scaling effects from elemental scaling and cost scaling
             if (dmg[0] > dmg[1]) {
                 // I win 
+                mmrContract.updateMMR(msg.sender, enemy);
+
                 // Gems transfer from loser to winner
                 gemContract.transferFrom(enemy, msg.sender, (dmg[0] - dmg[1]) * 9 / 100);
 
@@ -103,6 +109,8 @@ contract Fight {
                 emit outcomeWin(msg.sender);
             } else if (dmg[0] < dmg[1]) {
                 // Enemy wins
+                mmrContract.updateMMR(enemy, msg.sender);
+
                 // Gems transfer from loser to winner
                 gemContract.transferFrom(msg.sender, enemy, (dmg[1] - dmg[0]) * 9 / 100);
 
@@ -133,6 +141,8 @@ contract Fight {
             return elementalScales;
     }
 
+
+    // Modifiers
     modifier isOwnerOfCards(uint256[] memory cards) {
         for (uint i = 0; i < cards.length; i++) {
             // Requires all the cards to be owned by the player
