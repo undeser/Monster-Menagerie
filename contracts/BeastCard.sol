@@ -53,8 +53,10 @@ contract BeastCard {
         maxTokens = 1000;
         contractOwner = msg.sender;
     }
-
-    function cardDestroyed(uint256 _cardId) internal {
+    
+    // Set as public so as to allow Fight.sol to call it
+    // Any better way to do it?
+    function cardDestroyed(uint256 _cardId) public {
         _cardStates[_cardId] = cardState.broken;
     }
 
@@ -108,6 +110,16 @@ contract BeastCard {
 
     function ownerOf(uint256 _tokenId) public view returns(address) {
         return _owners[_tokenId];
+    }
+
+    function effective(uint256 myCard, uint256 enemyCard) public view returns (bool) {
+        string memory myNature = _beasts[myCard].nature;
+        string memory enemyNature = _beasts[enemyCard].nature;
+        if ((compareStrings(myNature, "Aquatic") && compareStrings(enemyNature, "Infernal")) || (compareStrings(myNature, "Verdant") && compareStrings(enemyNature, "Aquatic")) || (compareStrings(myNature, "Infernal") && compareStrings(enemyNature, "Verdant"))) {
+            return true;
+        }  else {
+            return false;
+        }
     }
 
     function safeTransferFrom(address _from, address _to, uint256 _tokenId) public payable {
