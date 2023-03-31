@@ -70,6 +70,14 @@ contract BeastCard {
         return _tokenUris[_tokenId];
     }
 
+    function name() external view returns (string memory) {
+        return collectionName;
+    }
+
+    function symbol() external view returns (string memory) {
+        return symbol;
+    }
+
     function restoreCard(uint256 _cardId) public {
         require(_owners[_cardId] == msg.sender, "Not owner of Beast");
         require(_cardStates[_cardId] == cardState.broken, "Beast is not broken");
