@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 
 import './ERC20.sol';
 import './SafeMath.sol';
+import './Gem.sol';
 
 contract LPstaking {
     ERC20 public lpToken;
@@ -23,7 +24,7 @@ contract LPstaking {
 
     constructor(address _lpToken, address _rewardToken) {
         lpToken = ERC20(_lpToken);
-        rewardToken = Gem(_rewardToken);
+        gem = Gem(_rewardToken);
     }
 
     function deposit(uint256 amount) public {
@@ -49,7 +50,7 @@ contract LPstaking {
         stakes[msg.sender].rewardDebt = 0;
         require(totalRewardDistributed + reward <= rewardPool, "Not enough rewards left in the pool");
         totalRewardDistributed += reward;
-        rewardToken.Transfer(msg.sender, reward);
+        gem.Transfer(msg.sender, reward);
         emit ClaimReward(msg.sender, reward);
     }
 
