@@ -1,12 +1,12 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeidwhydtxejwzvzarkyapy3e6vu3574ufb2foxkjny4d653nlb5wr4",
     "tokenId": 598,
-    "name": "Verdant Gazelle, thomson's",
+    "name": "Verdant Starfish, crown of thorns",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Rare"
+            "value": "Epic"
         },
         {
             "trait_type": "Nature",
@@ -14,15 +14,15 @@
         },
         {
             "trait_type": "Cost",
-            "value": 10
+            "value": 15
         },
         {
             "trait_type": "Attack",
-            "value": 1
+            "value": 8
         },
         {
             "trait_type": "Health",
-            "value": 11
+            "value": 9
         }
     ]
 }

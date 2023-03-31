@@ -1,28 +1,28 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeifzsn2xl2uspgq5dd74tlq373u7myjdnrcg67ku6sxsb5u4logxfm",
     "tokenId": 672,
-    "name": "Aquatic Rainbow lory",
+    "name": "Infernal Southern hairy-nosed wombat",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Rare"
+            "value": "Common"
         },
         {
             "trait_type": "Nature",
-            "value": "Aquatic"
+            "value": "Infernal"
         },
         {
             "trait_type": "Cost",
-            "value": 10
+            "value": 1
         },
         {
             "trait_type": "Attack",
-            "value": 14
+            "value": 5
         },
         {
             "trait_type": "Health",
-            "value": 1
+            "value": 4
         }
     ]
 }

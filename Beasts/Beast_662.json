@@ -1,8 +1,8 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeih53pdeujcfoagpc5waebhorinqt2bzesxabiagbzqipidibc2jze",
     "tokenId": 662,
-    "name": "Verdant Silver-backed fox",
+    "name": "Verdant Green-winged trumpeter",
     "attributes": [
         {
             "trait_type": "Rarity",
@@ -18,11 +18,11 @@
         },
         {
             "trait_type": "Attack",
-            "value": 10
+            "value": 12
         },
         {
             "trait_type": "Health",
-            "value": 9
+            "value": 7
         }
     ]
 }

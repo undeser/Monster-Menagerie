@@ -1,12 +1,12 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeigxhirwctn7n6xwuideiaif3jt66yje4jdirddfg5zkbzfwoxwemq",
     "tokenId": 104,
-    "name": "Aquatic Rainbow lory",
+    "name": "Aquatic Tinamou, elegant crested",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Epic"
+            "value": "Common"
         },
         {
             "trait_type": "Nature",
@@ -14,15 +14,15 @@
         },
         {
             "trait_type": "Cost",
-            "value": 15
+            "value": 1
         },
         {
             "trait_type": "Attack",
-            "value": 17
+            "value": 6
         },
         {
             "trait_type": "Health",
-            "value": 1
+            "value": 5
         }
     ]
 }

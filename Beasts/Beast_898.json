@@ -1,28 +1,28 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeih53pdeujcfoagpc5waebhorinqt2bzesxabiagbzqipidibc2jze",
     "tokenId": 898,
-    "name": "Aquatic Seal, northern elephant",
+    "name": "Verdant Pelican, brown",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Common"
+            "value": "Legendary"
         },
         {
             "trait_type": "Nature",
-            "value": "Aquatic"
+            "value": "Verdant"
         },
         {
             "trait_type": "Cost",
-            "value": 1
+            "value": 20
         },
         {
             "trait_type": "Attack",
-            "value": 2
+            "value": 18
         },
         {
             "trait_type": "Health",
-            "value": 8
+            "value": 1
         }
     ]
 }

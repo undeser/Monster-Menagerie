@@ -1,28 +1,28 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeigsrt5ymf2upm6fblksf2osrjamd6ixx5olp5fnwi6jal6eqdc3h4",
     "tokenId": 248,
-    "name": "Infernal Common green iguana",
+    "name": "Aquatic Field flicker",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Epic"
+            "value": "Rare"
         },
         {
             "trait_type": "Nature",
-            "value": "Infernal"
+            "value": "Aquatic"
         },
         {
             "trait_type": "Cost",
-            "value": 15
+            "value": 10
         },
         {
             "trait_type": "Attack",
-            "value": 15
+            "value": 8
         },
         {
             "trait_type": "Health",
-            "value": 2
+            "value": 5
         }
     ]
 }

@@ -1,28 +1,28 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeiette5rlqa2dyqtp5opznouor66dssmnou5oswvgpt7sgoham7ufy",
     "tokenId": 148,
-    "name": "Aquatic Horned rattlesnake",
+    "name": "Verdant Common genet",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Legendary"
+            "value": "Rare"
         },
         {
             "trait_type": "Nature",
-            "value": "Aquatic"
+            "value": "Verdant"
         },
         {
             "trait_type": "Cost",
-            "value": 20
+            "value": 10
         },
         {
             "trait_type": "Attack",
-            "value": 5
+            "value": 8
         },
         {
             "trait_type": "Health",
-            "value": 14
+            "value": 7
         }
     ]
 }

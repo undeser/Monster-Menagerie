@@ -1,12 +1,12 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeigxhirwctn7n6xwuideiaif3jt66yje4jdirddfg5zkbzfwoxwemq",
     "tokenId": 450,
-    "name": "Aquatic Secretary bird",
+    "name": "Aquatic White-bellied sea eagle",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Rare"
+            "value": "Common"
         },
         {
             "trait_type": "Nature",
@@ -14,15 +14,15 @@
         },
         {
             "trait_type": "Cost",
-            "value": 10
-        },
-        {
-            "trait_type": "Attack",
             "value": 1
         },
         {
+            "trait_type": "Attack",
+            "value": 5
+        },
+        {
             "trait_type": "Health",
-            "value": 12
+            "value": 2
         }
     ]
 }
