@@ -58,7 +58,7 @@ contract BeastCard {
     
     // Set as public so as to allow Fight.sol to call it
     // Any better way to do it?
-    function cardDestroyed(uint256 _cardId) internal {
+    function cardDestroyed(uint256 _cardId) public {
         _cardStates[_cardId] = cardState.broken;
     }
 
@@ -70,11 +70,11 @@ contract BeastCard {
         return _tokenUris[_tokenId];
     }
 
-    function name() external view returns (string memory) {
+    function getName() external view returns (string memory) {
         return collectionName;
     }
 
-    function symbol() external view returns (string memory) {
+    function getSymbol() external view returns (string memory) {
         return symbol;
     }
 
@@ -189,7 +189,7 @@ contract BeastCard {
     }
 
     function withdraw() public {
-        uint256 amt = gemContract.checkCredit();
+        uint256 amt = gemContract.checkGems();
         gemContract.giveGemApproval(contractOwner, amt);
         gemContract.transferGemsFrom(address(this), contractOwner, amt);
     }
