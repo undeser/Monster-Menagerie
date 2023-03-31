@@ -83,13 +83,14 @@ contract Marketplace {
         listPrice[cardID] = 0;
     }
 
-    function checkOfferExists(uint256 cardID, address offerer) private view returns(bool) {
+    function checkOfferExists(uint256 cardID, address offerer) public view returns(bool exists) {
         // Offer[] offerArray = offers[cardID];
         uint256 numOffers = offers[cardID].length;
         for (uint i = 0; i < numOffers; i++) {
             // Offer storage offer = offerArray[i];
             if(offers[cardID][i].owner == offerer) {
-                return true;
+                exists = true;
+                return exists;
             }
         }
     }

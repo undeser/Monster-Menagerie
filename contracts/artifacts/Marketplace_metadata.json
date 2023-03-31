@@ -58,6 +58,30 @@
 						"internalType": "uint256",
 						"name": "cardID",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "offerer",
+						"type": "address"
+					}
+				],
+				"name": "checkOfferExists",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "exists",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "cardID",
+						"type": "uint256"
 					}
 				],
 				"name": "checkOffers",
@@ -258,11 +282,11 @@
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Marketplace.sol": {
-			"keccak256": "0xc2468237da0b39023caf895f30daa83f415248af58131f951e62a4b1f90c748e",
+			"keccak256": "0x0bb99d5d1a90e122d729e172cb2ebb0a2cfa9a9177eb789367414f5ff28462c3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d21eda779fa217878bd97579062dfc2faa066f77c947e204064a135a1089c0dd",
-				"dweb:/ipfs/QmSHtvkdDF6gAQMC2w6F3u1YGJY7L3QZ5eMpey8smqtFQC"
+				"bzz-raw://f70b17db04975152398dec37cf0057e17c0c26159f5ae39d581dd092c55dea5a",
+				"dweb:/ipfs/QmTcCx1nAokAx44sHaZrWJY49z3aphnx1zUECCsQDUfjDK"
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/extensions/IERC20Metadata.sol": {
