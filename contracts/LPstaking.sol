@@ -15,12 +15,11 @@ contract LPstaking {
     uint256 public rewardPerTokenStored;
     uint256 public periodFinish;
 
-
     constructor (address lpTokenAddress, uint256 stakingRewardRate) {
         lpToken = lpTokenAddress;
         rewardRate = stakingRewardRate;
         lastUpdateTime = block.timestamp;
-        periodFinish = block.timestamp.add(30 days); // staking for 30 days
+        periodFinish = block.timestamp.add(30 days); 
     }
 
     function stake(uint256 amount) public {
@@ -38,9 +37,10 @@ contract LPstaking {
         balances[msg.sender] = balances[msg.sender].sub(amount);
         totalStaked = totalStaked.sub(amount);
     }
+
     function updateReward(address account) internal {
-        rewardPerTokenStored = rewardPerToken();
-        lastUpdateTime = lastTimeRewardApplicable();
+        rewardPerTokenStored = rewardPerToken(); // The staking yield
+        lastUpdateTime = lastTimeRewardApplicable(); 
         if (account != address(0)) {
             balances[account] = earned(account);
         }
@@ -51,19 +51,19 @@ contract LPstaking {
             return rewardPerTokenStored;
         }
         return rewardPerTokenStored.add(
-        lastTimeRewardApplicable()
-            .sub(lastUpdateTime)
-            .mul(rewardRate)
-            .mul(1e18)
-            .div(totalStaked)
+            lastTimeRewardApplicable()
+                .sub(lastUpdateTime)
+                .mul(rewardRate)
+                .mul(1e18)
+                .div(totalStaked)
         );
     }
 
     function earned(address account) public view returns (uint256) {
         return balances[account]
-        .mul(rewardPerToken().sub(userRewardPerTokenPaid[account]))
-        .div(1e18)
-        .add(rewards[account]);
+            .mul(rewardPerToken().sub(userRewardPerTokenPaid[account]))
+            .div(1e18)
+            .add(rewards[account]);
     }
 
     function lastTimeRewardApplicable() public view returns (uint256) {
