@@ -17,7 +17,7 @@ contract Gem is ERC20("BEAST GEM", "BGM") {
     }
 
     function getGems() public payable {
-        uint256 amt = msg.value * 1000; //???
+        uint256 amt = msg.value * 1000;
         require(totalSupply() + amt < supplyLimit, "Warning: Insufficient Gems!");
         // erc.mint(address account, uint256 amount);
         mint(msg.sender, amt);
@@ -32,12 +32,11 @@ contract Gem is ERC20("BEAST GEM", "BGM") {
     }
 
     function transferGems(address recipient, uint256 value) public returns (bool) {
-
         return transfer(recipient, value * 1000000000000000000);
     }
 
     function transferGemsFrom(address from, address to, uint256 amt) public {
-        require(allowance(from, msg.sender) > amt, "Warning: You are not allowed to transfer!");
+        require(allowance(from, msg.sender) > amt * 1000000000000000000, "Warning: You are not allowed to transfer!");
         transferFrom(from, to, amt * 1000000000000000000);
     }
 
