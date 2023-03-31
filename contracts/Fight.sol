@@ -1,89 +1,166 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
+import "./Gem.sol";
 import "./BeastCard.sol";
+import "./MMR.sol";
 
 contract Fight {
     BeastCard cardContract;
+    Gem gemContract;
+    MMR mmrContract;
     address[] matchmakingQueue; 
 
-    constructor(BeastCard cardAddress) {
+    constructor(Gem gemAddress, BeastCard cardAddress, MMR mmrAddress) {
         cardContract = cardAddress;
+        gemContract = gemAddress;
+        mmrContract = mmrAddress;
     }
 
     mapping(address => uint256[]) internal _cardsOfPlayersInQueue;
-    mapping(address => uint256) internal _playerMMR;
+    mapping(address => uint256) internal _scale;
 
     event inQueue(address player);
     event outcomeWin(address winner);
     event outcomeDraw();
 
+    // Main fight function
     function fight(uint256[] memory cards) public isOwnerOfCards(cards) isCorrectNumCards(cards) cardsNotBroken(cards) {
-        // Matchmaking
+        // Get cost
+        uint256 cost = 0;
+        for (uint i = 0; i < cards.length; i++) {
+            cost += cardContract.costOf(cards[i]);
+        }
+        require(cost <= 65, "Cost exceeded threshold");
+
+        uint[] memory scales = new uint[](3);
+
+        // Default scale
+        scales[0] = 10;
+
+        // Determine the scale of MY TEAM
+        // Our algorithm to scale the team stats based on the total cost used
+        scales[1] = (((65 / cost) / 20 ) + 1) * 10;
+
         if (matchmakingQueue.length == 0) {
-            // when nobody is in the queue to battle, join the queue
+            // Matchmaking
+            // When nobody is in the queue to battle, join the queue
             matchmakingQueue.push(msg.sender);
             _cardsOfPlayersInQueue[msg.sender] = cards;
+            _scale[msg.sender] = scales[1];
 
             emit inQueue(msg.sender);
         } else {
-            // Battle
+            // Battle of cards
             // Loop through both the arrays of the cards and fight with each other in that order
             address enemy = matchmakingQueue[0];
             matchmakingQueue.pop();
+
+            // Enemy's scale
+            scales[2] = _scale[enemy];
+
             // uint256 enemyMMR = _playerMMR[enemy];
-            uint256 myDmg = 0;
-            uint256 enemyDmg = 0;
+            uint256[] memory dmg = new uint256[](2);
             uint256[] memory enemyCards = _cardsOfPlayersInQueue[enemy];
+            
             for (uint i = 0; i < cards.length; i++) {
-                if (cardContract.attackOf(cards[i]) > cardContract.healthOf(enemyCards[i])) {
-                    // enemy card dies
+                // Elemental scaling
+                uint[] memory elementalScales = getElementalScales(cards[i], enemyCards[i]);
+
+                if (cardContract.attackOf(cards[i]) * scales[1] * elementalScales[0] > cardContract.healthOf(enemyCards[i]) * scales[2] * elementalScales[1]) {
+                    // Enemy card is broken
                     cardContract.cardDestroyed(enemyCards[i]);
 
-                    // extra dmg 
-                    myDmg += (cardContract.attackOf(cards[i]) - cardContract.healthOf(enemyCards[i]));
+                    // Extra dmg 
+                    dmg[0] += (cardContract.attackOf(cards[i]) * scales[1] * elementalScales[0] - cardContract.healthOf(enemyCards[i]) * scales[2] * elementalScales[1]);
                 } 
                 
-                if (cardContract.attackOf(enemyCards[i]) > cardContract.healthOf(cards[i])) {
-                    // my card dies 
+                if (cardContract.attackOf(enemyCards[i]) * scales[2] * elementalScales[1] > cardContract.healthOf(cards[i]) * scales[1] * elementalScales[0]) {
+                    // My card is broken
                     cardContract.cardDestroyed(cards[i]);
 
-                    // extra dmg
-                    enemyDmg += (cardContract.attackOf(enemyCards[i]) - cardContract.healthOf(cards[i]));
+                    // Extra dmg 
+                    dmg[1] += (cardContract.attackOf(enemyCards[i]) * scales[2] * elementalScales[1] - cardContract.healthOf(cards[i]) * scales[1] * elementalScales[0]);
                 }
             }
 
-            if (myDmg > enemyDmg) {
+            // Initialise if they are new users
+            if (mmrContract.isNew(enemy)) {
+                mmrContract.initialiseUser(enemy);
+            }
+
+            if (mmrContract.isNew(msg.sender)) {
+                mmrContract.initialiseUser(msg.sender);
+            }
+
+            // Outcome determination
+            // Fight contract takes a commission of 10% per fight 
+            // Commission goes to the developing team + a "prize pool" that will be disbursed to top 10 players of the season
+            // Divide by 100 to unscale the scaling effects from elemental scaling and cost scaling
+            if (dmg[0] > dmg[1]) {
                 // I win 
-                // transfer token
+                mmrContract.updateMMR(msg.sender, enemy);
+
+                // Gems transfer from loser to winner
+                gemContract.transferFrom(enemy, msg.sender, (dmg[0] - dmg[1]) * 9 / 100);
+
+                // Gems transfer from loser to Fight contract
+                gemContract.transferFrom(enemy, address(this), (dmg[0] - dmg[1]) / 100);
                 emit outcomeWin(msg.sender);
-            } else if (myDmg < enemyDmg) {
-                // Enemy win
-                // transfer token
+            } else if (dmg[0] < dmg[1]) {
+                // Enemy wins
+                mmrContract.updateMMR(enemy, msg.sender);
+
+                // Gems transfer from loser to winner
+                gemContract.transferFrom(msg.sender, enemy, (dmg[1] - dmg[0]) * 9 / 100);
+
+                // Gems transfer from loser to Fight contract
+                gemContract.transferFrom(msg.sender, address(this), (dmg[1] - dmg[0]) / 100);
                 emit outcomeWin(enemy);
             } else {
                 // Draw
+                // No gems are being transferred anywhere
                 emit outcomeDraw();
             }
         }
     }
 
+    function getElementalScales(uint256 myCard, uint256 enemyCard) internal view returns (uint[] memory) {
+            uint[] memory elementalScales = new uint[](2);
+            // Set default elementalScales for mine and enemy's 
+            // 10 means 1x multiplier
+            elementalScales[0] = 10; 
+            elementalScales[1] = 10;
+
+            if (cardContract.effective(myCard, enemyCard)) {
+                elementalScales[0] += 1;
+            } else if (cardContract.effective(enemyCard, myCard)) {
+                elementalScales[1] += 1;
+            }
+
+            return elementalScales;
+    }
+
+
+    // Modifiers
     modifier isOwnerOfCards(uint256[] memory cards) {
         for (uint i = 0; i < cards.length; i++) {
             // Requires all the cards to be owned by the player
-            require(cardContract.ownerOf(cards[i]) == msg.sender, "Card does not belong to player");
+            require(cardContract.ownerOf(cards[i]) == msg.sender, "Beast does not belong to player");
         }
         _;
     }
 
     modifier isCorrectNumCards(uint256[] memory cards) {
+        // Require the number of cards to be exactly 5
         require(cards.length == 5, "Too little cards");
         _;
     }
 
     modifier cardsNotBroken(uint256[] memory cards) {
+        // Require the cards to be functional
         for (uint i = 0; i < cards.length; i++) {
-            require(cardContract.stateOf(cards[i]) != BeastCard.cardState.broken, "Card is broken");
+            require(cardContract.stateOf(cards[i]) != BeastCard.cardState.broken, "Beast is broken, please repair the Beast");
         }
         _;
     }

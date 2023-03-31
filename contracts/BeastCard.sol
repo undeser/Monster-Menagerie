@@ -5,7 +5,6 @@ import './IERC721Receiver.sol';
 import './Gem.sol';
 
 contract BeastCard {
-
     Gem gemContract;
     string public collectionName;
     string public symbol;
@@ -45,7 +44,7 @@ contract BeastCard {
     event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
     event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
 
-    constructor(address gemAddress, string memory _name, string memory _symbol) {
+    constructor(Gem gemAddress, string memory _name, string memory _symbol) {
         gemContract = gemAddress;
         collectionName = _name;
         symbol = _symbol;
@@ -54,29 +53,32 @@ contract BeastCard {
         maxTokens = 1000;
         contractOwner = msg.sender;
     }
-
+    
+    // Set as public so as to allow Fight.sol to call it
+    // Any better way to do it?
     function cardDestroyed(uint256 _cardId) public {
         _cardStates[_cardId] = cardState.broken;
     }
 
-    function cardRevived(uint256 _cardId) public {
+    function cardRevived(uint256 _cardId) internal {
         _cardStates[_cardId] = cardState.functional;
     }
 
     function restoreCard(uint256 _cardId) public {
-        require(_cardStates[_cardId] == cardState.broken, "Card is not broken");
-        string rarity = _beasts[cardId].rarity;
-        if (rarity == "Legendary") {
+        require(_owners[_cardId] == msg.sender, "Not owner of Beast");
+        require(_cardStates[_cardId] == cardState.broken, "Beast is not broken");
+        string memory rarity = _beasts[_cardId].rarity;
+        if (compareStrings(rarity, "Legendary")) {
+            gemContract.transferFrom(msg.sender, address(this), 8);
+            cardRevived(_cardId);
+        } else if (compareStrings(rarity, "Epic")) {
+            gemContract.transferFrom(msg.sender, address(this), 4);
+            cardRevived(_cardId);
+        } else if (compareStrings(rarity, "Rare")) {
             gemContract.transferFrom(msg.sender, address(this), 2);
             cardRevived(_cardId);
-        } else if (rarity == "Epic") {
+        } else if (compareStrings(rarity, "Common")) {
             gemContract.transferFrom(msg.sender, address(this), 1);
-            cardRevived(_cardId);
-        } else if (rarity == "Rare") {
-            gemContract.transferFrom(msg.sender, address(this), 0.5);
-            cardRevived(_cardId);
-        } else if (rarity == "Common") {
-            gemContract.transferFrom(msg.sender, address(this), 0.25);
             cardRevived(_cardId);
         }
     }
@@ -93,6 +95,14 @@ contract BeastCard {
         return _cardStates[_cardId];
     }
 
+    function costOf(uint256 _cardId) public view returns (uint256) {
+        return _beasts[_cardId].cost;
+    }
+
+    function natureOf(uint256 _cardId) public view returns (string memory) {
+        return _beasts[_cardId].nature;
+    }
+
     function balanceOf(address _owner) public view returns(uint256) {
         require(_owner != address(0), "Null address specified");
         return _balances[_owner];
@@ -100,6 +110,16 @@ contract BeastCard {
 
     function ownerOf(uint256 _tokenId) public view returns(address) {
         return _owners[_tokenId];
+    }
+
+    function effective(uint256 myCard, uint256 enemyCard) public view returns (bool) {
+        string memory myNature = _beasts[myCard].nature;
+        string memory enemyNature = _beasts[enemyCard].nature;
+        if ((compareStrings(myNature, "Aquatic") && compareStrings(enemyNature, "Infernal")) || (compareStrings(myNature, "Verdant") && compareStrings(enemyNature, "Aquatic")) || (compareStrings(myNature, "Infernal") && compareStrings(enemyNature, "Verdant"))) {
+            return true;
+        }  else {
+            return false;
+        }
     }
 
     function safeTransferFrom(address _from, address _to, uint256 _tokenId) public payable {
@@ -138,9 +158,9 @@ contract BeastCard {
         return _operatorApprovals[_owner][_operator];
     }
 
-    function mint(address _to, string memory name, string memory rarity, string nature, uint256 cost, uint256 attack, uint256 health) public {
-        require(gemContract.checkBal(_to) > 1, "Not enough Gem in wallet");
-        gemContract.transferFrom(_to, address(this), 1);
+    function mint(address _to, string memory name, string memory rarity, string memory nature, uint256 cost, uint256 attack, uint256 health) public {
+        require(gemContract.balanceOf(_to) > 1, "Not enough Gem in wallet");
+        gemContract.transferFrom(_to, address(this), 5);
         _owners[nextTokenIdToMint] = _to;
         _balances[_to] += 1;
         //_tokenUris[nextTokenIdToMint] = string.concat(baseURI, "Beast_", uint2str(nextTokenIdToMint), ".json");
@@ -155,8 +175,8 @@ contract BeastCard {
     }
 
     function withdraw() public {
-        uint256 amt = gemContract.checkBal(address(this));
-        gemContract.giveApproval(contractOwner, amt);
+        uint256 amt = gemContract.balanceOf(address(this));
+        gemContract.approve(contractOwner, amt);
         gemContract.transferFrom(address(this), contractOwner, amt);
     }
 
@@ -197,6 +217,10 @@ contract BeastCard {
         _owners[_tokenId] = _to;
 
         emit Transfer(_from, _to, _tokenId);
+    }
+
+    function compareStrings(string memory a, string memory b) public pure returns (bool) {
+        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }
 
     function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
