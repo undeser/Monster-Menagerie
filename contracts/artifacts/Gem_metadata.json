@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.19+commit.7dd6d404"
 	},
 	"language": "Solidity",
 	"output": {
@@ -59,6 +59,24 @@
 				],
 				"name": "Transfer",
 				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "_mint",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -317,6 +335,9 @@
 			},
 			"kind": "dev",
 			"methods": {
+				"_mint(address,uint256)": {
+					"details": "Creates `amount` tokens and assigns them to `account`, increasing the total supply. Emits a {Transfer} event with `from` set to the zero address. Requirements: - `account` cannot be the zero address."
+				},
 				"allowance(address,address)": {
 					"details": "See {IERC20-allowance}."
 				},
@@ -361,7 +382,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Gem.sol": "Gem"
+			"contracts/Gem.sol": "Gem"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -375,44 +396,44 @@
 		"remappings": []
 	},
 	"sources": {
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/ERC20.sol": {
-			"keccak256": "0x4a232dcf98adeda029da250d94466913fec42e6af4071da331bdb55010d23535",
+		"contracts/ERC20.sol": {
+			"keccak256": "0x1dc3d1e6ff0d2192485c8c15cfc98bf04e90796561f77e5345a0cdc440759c92",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a27750d35e1a241b072f3e7eb71b4a388c02db81fb30ca8e571fb2a298a0dcdf",
-				"dweb:/ipfs/QmUcexUqFAhn2FguHSWoR5zE7EGLPEBPjX38gEsMAn7ftC"
+				"bzz-raw://0890494188eed218d98dcd295f09bf7f9424426141afe5c2fd299e95a2573dcb",
+				"dweb:/ipfs/QmSc4yAENYacX2RyZGSMPReHKcDf1RutY9PASPjEnDzPqR"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Gem.sol": {
-			"keccak256": "0xa6146a0459534fc8772859711ae4cd11bd605c5f2e11eea525b65a289dab9f91",
+		"contracts/Gem.sol": {
+			"keccak256": "0xbac9cc467c89272fb10d09479480e422df417e414ae8e40a40af4580084457ee",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e2c61c1de1df0f8b72e4971299674e54c643a8f00415c670c317dc310d6629ff",
-				"dweb:/ipfs/QmSchfLCGwmQuvuaJ7xNvw48rBPxycCpP2dxb7BwPjz7sc"
+				"bzz-raw://2bd934c64386c3e6f90cfc063c812f087099ad258f6b3d8cadbb1bb0344cf52e",
+				"dweb:/ipfs/Qmd18unKaG1i19q531uy1xyiJveqwzd6z8v9exFrddjufV"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/IERC20.sol": {
-			"keccak256": "0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b",
+		"contracts/IERC20.sol": {
+			"keccak256": "0xdd286f7283325eb12ee50e41dac6be9665262e827b66f4f8952111ff77b6a130",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34",
-				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
+				"bzz-raw://567e5cfe5c64fb8c5f041393d42178447cf00880a2a2172a5a8e83131e1c24fa",
+				"dweb:/ipfs/QmY6KVSBk5xbtZuyhcQPNyJAATMZnmJ45TcBBAE7rzD5du"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/extensions/IERC20Metadata.sol": {
-			"keccak256": "0x8de418a5503946cabe331f35fe242d3201a73f67f77aaeb7110acb1f30423aca",
+		"contracts/extensions/IERC20Metadata.sol": {
+			"keccak256": "0x0270cb4e50d6bcdd780df229606076d39df796860d266b5426f374c36f34fe89",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5a376d3dda2cb70536c0a45c208b29b34ac560c4cb4f513a42079f96ba47d2dd",
-				"dweb:/ipfs/QmZQg6gn1sUpM8wHzwNvSnihumUCAhxD119MpXeKp8B9s8"
+				"bzz-raw://511db944b3f0a57b56fda90d1e466cca6a0dea2297d816251966c8f025313973",
+				"dweb:/ipfs/QmRgu5uCaKkoRr3amWGfhy6bVwhpH5tr1vynaNQyEYiE4p"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/utils/Context.sol": {
-			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+		"contracts/utils/Context.sol": {
+			"keccak256": "0x81d5fc973a522c8909d60be6a201869d46aa47b030b8813f60616404628c2b94",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
-				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+				"bzz-raw://9755b505799e622d964a843a8ed1fd60fedffca230178e5cb95ae9280df4dcd2",
+				"dweb:/ipfs/QmRkhUYUUgRZ2QYJjmtQct2ubyYwS3bdUMhbuFYM12VfYn"
 			]
 		}
 	},
