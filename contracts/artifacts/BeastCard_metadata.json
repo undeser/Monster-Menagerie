@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.19+commit.7dd6d404"
 	},
 	"language": "Solidity",
 	"output": {
@@ -616,7 +616,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/BeastCard.sol": "BeastCard"
+			"contracts/BeastCard.sol": "BeastCard"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -630,7 +630,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/BeastCard.sol": {
+		"contracts/BeastCard.sol": {
 			"keccak256": "0x99eaf12df8b69c658c329ca840bc078d17fb13940875ff2636e7bd79449656d6",
 			"license": "MIT",
 			"urls": [
@@ -638,7 +638,7 @@
 				"dweb:/ipfs/QmcFm1F6P4VvfYvJq5qKYRVwTaPodxnyyVg6P7pWGL5Lxy"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/ERC20.sol": {
+		"contracts/ERC20.sol": {
 			"keccak256": "0x4a232dcf98adeda029da250d94466913fec42e6af4071da331bdb55010d23535",
 			"license": "MIT",
 			"urls": [
@@ -646,7 +646,7 @@
 				"dweb:/ipfs/QmUcexUqFAhn2FguHSWoR5zE7EGLPEBPjX38gEsMAn7ftC"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Gem.sol": {
+		"contracts/Gem.sol": {
 			"keccak256": "0xa6146a0459534fc8772859711ae4cd11bd605c5f2e11eea525b65a289dab9f91",
 			"license": "MIT",
 			"urls": [
@@ -654,7 +654,7 @@
 				"dweb:/ipfs/QmSchfLCGwmQuvuaJ7xNvw48rBPxycCpP2dxb7BwPjz7sc"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/IERC20.sol": {
+		"contracts/IERC20.sol": {
 			"keccak256": "0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b",
 			"license": "MIT",
 			"urls": [
@@ -662,7 +662,7 @@
 				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/IERC721Receiver.sol": {
+		"contracts/IERC721Receiver.sol": {
 			"keccak256": "0x19f22a7556750c06430924d8698b6d67b570086d0301644f2ca3a419c5be079d",
 			"license": "MIT",
 			"urls": [
@@ -670,7 +670,7 @@
 				"dweb:/ipfs/QmYnQSzE2xD54sgYEb2bmf3DuRqEBKD3j95LCUSjNMobkB"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/extensions/IERC20Metadata.sol": {
+		"contracts/extensions/IERC20Metadata.sol": {
 			"keccak256": "0x8de418a5503946cabe331f35fe242d3201a73f67f77aaeb7110acb1f30423aca",
 			"license": "MIT",
 			"urls": [
@@ -678,7 +678,7 @@
 				"dweb:/ipfs/QmZQg6gn1sUpM8wHzwNvSnihumUCAhxD119MpXeKp8B9s8"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/utils/Context.sol": {
+		"contracts/utils/Context.sol": {
 			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
 			"license": "MIT",
 			"urls": [
