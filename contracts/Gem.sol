@@ -13,45 +13,43 @@ contract Gem is ERC20("BEAST GEM", "BGM") {
         // ERC20 e = new ERC20("Beast Gem", "BGM");
         // erc20Contract = e;
         owner = msg.sender;
-        supplyLimit = 1000000;
+        supplyLimit = 1000000 * 1000000000000000000;
     }
 
-    function getCredit() public payable {
-        uint256 amt = msg.value / 1000000000000000; //???
+    function getGems() public payable {
+        uint256 amt = msg.value * 1000;
         require(totalSupply() + amt < supplyLimit, "Warning: Insufficient Gems!");
         // erc.mint(address account, uint256 amount);
         mint(msg.sender, amt);
     }
 
-    // function checkCredit() public view returns(uint256) {
-    //     // erc.balanceOf(address account);
-    //     return erc20Contract.balanceOf(msg.sender);
-    // }
+    function checkGems() public view returns(uint256) {
+        return balanceOf(msg.sender) / 1000000000000000000;
+    }
 
-    // function checkBal(address myAdd) public view returns (uint256) {
-    //     // erc.balanceOf(address account);
-    //     return erc20Contract.balanceOf(myAdd);
-    // }
+    function checkGemsOf(address myAdd) public view returns (uint256) {
+        return balanceOf(myAdd) / 1000000000000000000;
+    }
 
-    // function transfer(address recipient, uint256 value) public returns (bool) {
-    //     // erc.transfer(address to, uint256 amount);
-    //     return erc20Contract.transfer(recipient, value);
-    // }
+    function transferGems(address recipient, uint256 value) public returns (bool) {
+        return transfer(recipient, value * 1000000000000000000);
+    }
 
-    // function transferFrom(address from, address to, uint256 amt) public {
-    //     // function transferFrom(address from, address to, uint256 amount)
-    //     require(erc20Contract.allowance(from, msg.sender) > amt, "Warning: You are not allowed to transfer!");
-    //     erc20Contract.transferFrom(from, to, amt);
-    // }
+    function transferGemsFrom(address from, address to, uint256 amt) public {
+        require(allowance(from, msg.sender) > amt * 1000000000000000000, "Warning: You are not allowed to transfer!");
+        transferFrom(from, to, amt * 1000000000000000000);
+    }
 
-    // function giveApproval(address receipt, uint256 amt) public {
-    //     // function approve(address spender, uint256 amount)
-    //     erc20Contract.approve(receipt, amt);
-    // }
+    function giveGemApproval(address receipt, uint256 amt) public {
+        approve(receipt, amt * 1000000000000000000);
+    }
 
-    // function checkAllowance(address user, address spender) public view returns (uint256) {
-    //     // function allowance(address owner, address spender) external view returns (uint256);
-    //     return erc20Contract.allowance(user, spender);
-    // }
+    function checkGemAllowance(address user, address spender) public view returns (uint256) {
+        return allowance(user, spender) / 1000000000000000000;
+    }
+
+    function currentGemSupply() public view returns (uint256) {
+        return totalSupply() / 1000000000000000000;
+    }
 
 }

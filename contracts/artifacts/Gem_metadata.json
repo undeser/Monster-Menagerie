@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.19+commit.7dd6d404"
+		"version": "0.8.18+commit.87f61d96"
 	},
 	"language": "Solidity",
 	"output": {
@@ -146,6 +146,75 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					}
+				],
+				"name": "checkGemAllowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "checkGems",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "myAdd",
+						"type": "address"
+					}
+				],
+				"name": "checkGemsOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "currentGemSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "decimals",
 				"outputs": [
@@ -184,9 +253,27 @@
 			},
 			{
 				"inputs": [],
-				"name": "getCredit",
+				"name": "getGems",
 				"outputs": [],
 				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receipt",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amt",
+						"type": "uint256"
+					}
+				],
+				"name": "giveGemApproval",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -322,6 +409,53 @@
 				],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "transferGems",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amt",
+						"type": "uint256"
+					}
+				],
+				"name": "transferGemsFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -397,19 +531,19 @@
 	},
 	"sources": {
 		"contracts/ERC20.sol": {
-			"keccak256": "0x3b5d43ee64c559d84ec7b8ec217b16dd909edd2cb07104884905fbc6340d0884",
+			"keccak256": "0x543c17d55e68d2325d1e0517bdb09c67987a7d66938663a9f4c7d93f1692cde9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a501a1a7f0def6e90c7e9ba2aab9873e1e4eb7e5df09a24afd0970f47765f00c",
-				"dweb:/ipfs/QmVzAZnmAKsybbKpaJuo2tCGzdgnTr9nVpHuZgagzW8Jfc"
+				"bzz-raw://0890494188eed218d98dcd295f09bf7f9424426141afe5c2fd299e95a2573dcb",
+				"dweb:/ipfs/QmSc4yAENYacX2RyZGSMPReHKcDf1RutY9PASPjEnDzPqR"
 			]
 		},
 		"contracts/Gem.sol": {
-			"keccak256": "0x293109cde37189dd5d434e5f61d166b891aacc6e5128cd54ec9c7aa956035965",
+			"keccak256": "0xbac9cc467c89272fb10d09479480e422df417e414ae8e40a40af4580084457ee",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c676e37f274d410a73607d1c8844b8f3b1e6979b5f34f360ad90cfc4e584e427",
-				"dweb:/ipfs/QmTdA4Qqqa8rCkevdfFapi8BdYebWECpegA6JWEfjwNFNr"
+				"bzz-raw://2bd934c64386c3e6f90cfc063c812f087099ad258f6b3d8cadbb1bb0344cf52e",
+				"dweb:/ipfs/Qmd18unKaG1i19q531uy1xyiJveqwzd6z8v9exFrddjufV"
 			]
 		},
 		"contracts/IERC20.sol": {

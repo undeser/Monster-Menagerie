@@ -28,6 +28,8 @@ contract BeastCard {
     mapping(uint256 => Beast) _beasts;
     // card id => card state
     mapping(uint256 => cardState) _cardStates;
+    // card id => URI
+    mapping(uint256 => string) _tokenUris;
 
 
     struct Beast {
@@ -48,7 +50,7 @@ contract BeastCard {
         gemContract = gemAddress;
         collectionName = _name;
         symbol = _symbol;
-        //baseURI = "https://ipfs.io/ipfs/bafybeihjukhqan3okv5kpoqh6aqxmncjp75a76rgmm6zet6x3l7kugck5e/";
+        baseURI = "https://ipfs.io/ipfs/bafybeihjukhqan3okv5kpoqh6aqxmncjp75a76rgmm6zet6x3l7kugck5e/";
         nextTokenIdToMint = 0;
         maxTokens = 1000;
         contractOwner = msg.sender;
@@ -64,21 +66,33 @@ contract BeastCard {
         _cardStates[_cardId] = cardState.functional;
     }
 
+    function tokenURI(uint256 _tokenId) public view returns (string memory) {
+        return _tokenUris[_tokenId];
+    }
+
+    function getName() external view returns (string memory) {
+        return collectionName;
+    }
+
+    function getSymbol() external view returns (string memory) {
+        return symbol;
+    }
+
     function restoreCard(uint256 _cardId) public {
         require(_owners[_cardId] == msg.sender, "Not owner of Beast");
         require(_cardStates[_cardId] == cardState.broken, "Beast is not broken");
         string memory rarity = _beasts[_cardId].rarity;
         if (compareStrings(rarity, "Legendary")) {
-            gemContract.transferFrom(msg.sender, address(this), 8);
+            gemContract.transferGemsFrom(msg.sender, address(this), 8);
             cardRevived(_cardId);
         } else if (compareStrings(rarity, "Epic")) {
-            gemContract.transferFrom(msg.sender, address(this), 4);
+            gemContract.transferGemsFrom(msg.sender, address(this), 4);
             cardRevived(_cardId);
         } else if (compareStrings(rarity, "Rare")) {
-            gemContract.transferFrom(msg.sender, address(this), 2);
+            gemContract.transferGemsFrom(msg.sender, address(this), 2);
             cardRevived(_cardId);
         } else if (compareStrings(rarity, "Common")) {
-            gemContract.transferFrom(msg.sender, address(this), 1);
+            gemContract.transferGemsFrom(msg.sender, address(this), 1);
             cardRevived(_cardId);
         }
     }
@@ -160,10 +174,10 @@ contract BeastCard {
 
     function mint(address _to, string memory name, string memory rarity, string memory nature, uint256 cost, uint256 attack, uint256 health) public {
         require(gemContract.balanceOf(_to) > 1, "Not enough Gem in wallet");
-        gemContract.transferFrom(_to, address(this), 5);
+        gemContract.transferGemsFrom(_to, address(this), 5);
         _owners[nextTokenIdToMint] = _to;
         _balances[_to] += 1;
-        //_tokenUris[nextTokenIdToMint] = string.concat(baseURI, "Beast_", uint2str(nextTokenIdToMint), ".json");
+        _tokenUris[nextTokenIdToMint] = string.concat(baseURI, "Beast_", uint2str(nextTokenIdToMint), ".json");
         _beasts[nextTokenIdToMint] = Beast(nextTokenIdToMint, name, rarity, nature, cost, attack, health);
         _cardStates[nextTokenIdToMint] = cardState.functional;
         emit Transfer(address(0), _to, nextTokenIdToMint);
@@ -175,9 +189,9 @@ contract BeastCard {
     }
 
     function withdraw() public {
-        uint256 amt = gemContract.balanceOf(address(this));
-        gemContract.approve(contractOwner, amt);
-        gemContract.transferFrom(address(this), contractOwner, amt);
+        uint256 amt = gemContract.checkGems();
+        gemContract.giveGemApproval(contractOwner, amt);
+        gemContract.transferGemsFrom(address(this), contractOwner, amt);
     }
 
     // INTERNAL FUNCTIONS

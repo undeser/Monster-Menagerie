@@ -102,20 +102,20 @@ contract Fight {
                 mmrContract.updateMMR(msg.sender, enemy);
 
                 // Gems transfer from loser to winner
-                gemContract.transferFrom(enemy, msg.sender, (dmg[0] - dmg[1]) * 9 / 100);
+                gemContract.transferGemsFrom(enemy, msg.sender, (dmg[0] - dmg[1]) * 9 / 100);
 
                 // Gems transfer from loser to Fight contract
-                gemContract.transferFrom(enemy, address(this), (dmg[0] - dmg[1]) / 100);
+                gemContract.transferGemsFrom(enemy, address(this), (dmg[0] - dmg[1]) / 100);
                 emit outcomeWin(msg.sender);
             } else if (dmg[0] < dmg[1]) {
                 // Enemy wins
                 mmrContract.updateMMR(enemy, msg.sender);
 
                 // Gems transfer from loser to winner
-                gemContract.transferFrom(msg.sender, enemy, (dmg[1] - dmg[0]) * 9 / 100);
+                gemContract.transferGemsFrom(msg.sender, enemy, (dmg[1] - dmg[0]) * 9 / 100);
 
                 // Gems transfer from loser to Fight contract
-                gemContract.transferFrom(msg.sender, address(this), (dmg[1] - dmg[0]) / 100);
+                gemContract.transferGemsFrom(msg.sender, address(this), (dmg[1] - dmg[0]) / 100);
                 emit outcomeWin(enemy);
             } else {
                 // Draw
