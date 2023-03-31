@@ -1,8 +1,8 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeihba5325c72lvjxrgahocpu7vvlkd2sh5dhbbspzlxzt7fgzo7q24",
     "tokenId": 301,
-    "name": "Aquatic Stork, black-necked",
+    "name": "Aquatic Bleu, blue-breasted cordon",
     "attributes": [
         {
             "trait_type": "Rarity",
@@ -18,11 +18,11 @@
         },
         {
             "trait_type": "Attack",
-            "value": 17
+            "value": 10
         },
         {
             "trait_type": "Health",
-            "value": 1
+            "value": 8
         }
     ]
 }

@@ -1,12 +1,12 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeieqfutd5d6cf3efonkayii5dnwilzibrzuy7cl3k4xakjtonrc2i4",
     "tokenId": 117,
-    "name": "Infernal Raven, white-necked",
+    "name": "Infernal Pocket gopher (unidentified)",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Rare"
+            "value": "Legendary"
         },
         {
             "trait_type": "Nature",
@@ -14,15 +14,15 @@
         },
         {
             "trait_type": "Cost",
-            "value": 10
+            "value": 20
         },
         {
             "trait_type": "Attack",
-            "value": 4
+            "value": 18
         },
         {
             "trait_type": "Health",
-            "value": 11
+            "value": 2
         }
     ]
 }

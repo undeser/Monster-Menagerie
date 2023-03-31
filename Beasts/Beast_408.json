@@ -1,28 +1,28 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeihyp6gt3rfh73pisj5ts3543uqhr57v5zccatyb34l2zo34ar7ckm",
     "tokenId": 408,
-    "name": "Verdant Jungle kangaroo",
+    "name": "Infernal Tailless tenrec",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Legendary"
+            "value": "Epic"
         },
         {
             "trait_type": "Nature",
-            "value": "Verdant"
+            "value": "Infernal"
         },
         {
             "trait_type": "Cost",
-            "value": 20
+            "value": 15
         },
         {
             "trait_type": "Attack",
-            "value": 3
+            "value": 9
         },
         {
             "trait_type": "Health",
-            "value": 17
+            "value": 9
         }
     ]
 }

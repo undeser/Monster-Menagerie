@@ -1,12 +1,12 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeihba5325c72lvjxrgahocpu7vvlkd2sh5dhbbspzlxzt7fgzo7q24",
     "tokenId": 136,
-    "name": "Aquatic Komodo dragon",
+    "name": "Aquatic Flamingo, lesser",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Rare"
+            "value": "Epic"
         },
         {
             "trait_type": "Nature",
@@ -14,15 +14,15 @@
         },
         {
             "trait_type": "Cost",
-            "value": 10
+            "value": 15
         },
         {
             "trait_type": "Attack",
-            "value": 1
+            "value": 3
         },
         {
             "trait_type": "Health",
-            "value": 12
+            "value": 15
         }
     ]
 }

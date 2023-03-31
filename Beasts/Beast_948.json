@@ -1,28 +1,28 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeievoen6bkrhacupf6pmf3jgnjnf6zcdn3w6nnkd3yoy2cbvh5igvu",
     "tokenId": 948,
-    "name": "Aquatic Cereopsis goose",
+    "name": "Infernal Savanna baboon",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Epic"
+            "value": "Rare"
         },
         {
             "trait_type": "Nature",
-            "value": "Aquatic"
+            "value": "Infernal"
         },
         {
             "trait_type": "Cost",
-            "value": 15
+            "value": 10
         },
         {
             "trait_type": "Attack",
-            "value": 5
+            "value": 7
         },
         {
             "trait_type": "Health",
-            "value": 12
+            "value": 7
         }
     ]
 }

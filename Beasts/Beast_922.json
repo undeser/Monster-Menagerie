@@ -1,12 +1,12 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeidwhydtxejwzvzarkyapy3e6vu3574ufb2foxkjny4d653nlb5wr4",
     "tokenId": 922,
-    "name": "Verdant Bee-eater (unidentified)",
+    "name": "Verdant Trumpeter swan",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Common"
+            "value": "Epic"
         },
         {
             "trait_type": "Nature",
@@ -14,15 +14,15 @@
         },
         {
             "trait_type": "Cost",
-            "value": 1
+            "value": 15
         },
         {
             "trait_type": "Attack",
-            "value": 2
+            "value": 11
         },
         {
             "trait_type": "Health",
-            "value": 8
+            "value": 6
         }
     ]
 }

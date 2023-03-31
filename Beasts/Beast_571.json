@@ -1,12 +1,12 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeigsrt5ymf2upm6fblksf2osrjamd6ixx5olp5fnwi6jal6eqdc3h4",
     "tokenId": 571,
-    "name": "Aquatic Dark-winged trumpeter",
+    "name": "Aquatic Malabar squirrel",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Common"
+            "value": "Rare"
         },
         {
             "trait_type": "Nature",
@@ -14,15 +14,15 @@
         },
         {
             "trait_type": "Cost",
-            "value": 1
+            "value": 10
         },
         {
             "trait_type": "Attack",
-            "value": 3
+            "value": 7
         },
         {
             "trait_type": "Health",
-            "value": 5
+            "value": 6
         }
     ]
 }

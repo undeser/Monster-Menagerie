@@ -1,8 +1,8 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeihvxrwfvgfkc4am6htdchzzak7hqz5pd2jbfjce6fvs7wktkpqdby",
     "tokenId": 221,
-    "name": "Verdant Wallaroo, common",
+    "name": "Verdant Bateleur eagle",
     "attributes": [
         {
             "trait_type": "Rarity",
@@ -18,11 +18,11 @@
         },
         {
             "trait_type": "Attack",
-            "value": 1
+            "value": 3
         },
         {
             "trait_type": "Health",
-            "value": 9
+            "value": 4
         }
     ]
 }

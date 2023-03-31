@@ -1,28 +1,28 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeibigu2fido4wq2z3d36ph2h7euellvua5tcoxwedviklr3q37hl7a",
     "tokenId": 438,
-    "name": "Verdant Wallaby, bennett's",
+    "name": "Aquatic Dove, ring",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Epic"
+            "value": "Legendary"
         },
         {
             "trait_type": "Nature",
-            "value": "Verdant"
+            "value": "Aquatic"
         },
         {
             "trait_type": "Cost",
-            "value": 15
+            "value": 20
         },
         {
             "trait_type": "Attack",
-            "value": 6
+            "value": 1
         },
         {
             "trait_type": "Health",
-            "value": 11
+            "value": 19
         }
     ]
 }

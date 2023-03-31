@@ -1,28 +1,28 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeihba5325c72lvjxrgahocpu7vvlkd2sh5dhbbspzlxzt7fgzo7q24",
     "tokenId": 790,
-    "name": "Verdant Eagle, crowned",
+    "name": "Aquatic Cuis",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Rare"
+            "value": "Epic"
         },
         {
             "trait_type": "Nature",
-            "value": "Verdant"
+            "value": "Aquatic"
         },
         {
             "trait_type": "Cost",
-            "value": 10
+            "value": 15
         },
         {
             "trait_type": "Attack",
-            "value": 12
+            "value": 9
         },
         {
             "trait_type": "Health",
-            "value": 3
+            "value": 8
         }
     ]
 }

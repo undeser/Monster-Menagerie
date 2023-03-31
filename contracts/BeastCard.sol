@@ -48,7 +48,7 @@ contract BeastCard {
         gemContract = gemAddress;
         collectionName = _name;
         symbol = _symbol;
-        //baseURI = "https://ipfs.io/ipfs/bafybeihxrnzopq3srhjms4rmg2nulen7aiet2cid7rbyczuj2vtnkrpumy/";
+        //baseURI = "https://ipfs.io/ipfs/bafybeihjukhqan3okv5kpoqh6aqxmncjp75a76rgmm6zet6x3l7kugck5e/";
         nextTokenIdToMint = 0;
         maxTokens = 1000;
         contractOwner = msg.sender;

@@ -1,12 +1,12 @@
 {
     "description": "Beast that fights along 4 other beasts against 5 other beasts, pitting their health and attack against the beast opposite them",
-    "image": "https://drive.google.com/file/d/1tGekFrC7gzO-cJKk001gLQk3P3x4ea8k/preview",
+    "image": "ipfs://bafybeievoen6bkrhacupf6pmf3jgnjnf6zcdn3w6nnkd3yoy2cbvh5igvu",
     "tokenId": 318,
-    "name": "Infernal Long-finned pilot whale",
+    "name": "Infernal Tyrant flycatcher",
     "attributes": [
         {
             "trait_type": "Rarity",
-            "value": "Common"
+            "value": "Rare"
         },
         {
             "trait_type": "Nature",
@@ -14,15 +14,15 @@
         },
         {
             "trait_type": "Cost",
-            "value": 1
+            "value": 10
         },
         {
             "trait_type": "Attack",
-            "value": 8
+            "value": 4
         },
         {
             "trait_type": "Health",
-            "value": 3
+            "value": 9
         }
     ]
 }
