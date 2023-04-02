@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.19+commit.7dd6d404"
 	},
 	"language": "Solidity",
 	"output": {
@@ -531,19 +531,19 @@
 	},
 	"sources": {
 		"contracts/ERC20.sol": {
-			"keccak256": "0x543c17d55e68d2325d1e0517bdb09c67987a7d66938663a9f4c7d93f1692cde9",
+			"keccak256": "0x3b5d43ee64c559d84ec7b8ec217b16dd909edd2cb07104884905fbc6340d0884",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0890494188eed218d98dcd295f09bf7f9424426141afe5c2fd299e95a2573dcb",
-				"dweb:/ipfs/QmSc4yAENYacX2RyZGSMPReHKcDf1RutY9PASPjEnDzPqR"
+				"bzz-raw://a501a1a7f0def6e90c7e9ba2aab9873e1e4eb7e5df09a24afd0970f47765f00c",
+				"dweb:/ipfs/QmVzAZnmAKsybbKpaJuo2tCGzdgnTr9nVpHuZgagzW8Jfc"
 			]
 		},
 		"contracts/Gem.sol": {
-			"keccak256": "0xbac9cc467c89272fb10d09479480e422df417e414ae8e40a40af4580084457ee",
+			"keccak256": "0xb254bc724fad6fe4f202ff438495d11f7a683b97bea1c6cef4d0068ba0ef8db9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2bd934c64386c3e6f90cfc063c812f087099ad258f6b3d8cadbb1bb0344cf52e",
-				"dweb:/ipfs/Qmd18unKaG1i19q531uy1xyiJveqwzd6z8v9exFrddjufV"
+				"bzz-raw://c27f1ea8d43fbede99333beaf1316585ada869ed679b5123d701fb745e12eb84",
+				"dweb:/ipfs/QmYDDcJycSD8hoiToCSuUEoixKmAXnRD5Pq8pFQDSSqnHJ"
 			]
 		},
 		"contracts/IERC20.sol": {

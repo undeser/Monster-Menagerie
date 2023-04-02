@@ -8,7 +8,7 @@ contract LPstaking {
     ERC20 public lpToken;
     Gem public gem;
     uint256 public rewardPool = 100000 * 10**18; // 100,000 tokens with 18 decimals
-    uint256 public totalRewardDistributed;
+    uint256 public totalRewardDistributed = 0;
 
     struct StakeInfo {
         uint256 amount;
@@ -25,13 +25,14 @@ contract LPstaking {
     constructor(address _lpToken, address _rewardToken) {
         lpToken = ERC20(_lpToken);
         gem = Gem(_rewardToken);
+
     }
 
     function deposit(uint256 amount) public {
         updateReward(msg.sender);
         stakes[msg.sender].amount += amount;
         totalStaked += amount;
-        lpToken.TransferFrom(msg.sender, address(this), amount);
+        lpToken.transferFrom(msg.sender, address(this), amount);
         emit Deposit(msg.sender, amount);
     }
 
@@ -40,7 +41,7 @@ contract LPstaking {
         updateReward(msg.sender);
         stakes[msg.sender].amount -= amount;
         totalStaked -= amount;
-        lpToken.Transfer(msg.sender, amount);
+        lpToken.transfer(msg.sender, amount);
         emit Withdraw(msg.sender, amount);
     }
 
@@ -50,7 +51,7 @@ contract LPstaking {
         stakes[msg.sender].rewardDebt = 0;
         require(totalRewardDistributed + reward <= rewardPool, "Not enough rewards left in the pool");
         totalRewardDistributed += reward;
-        gem.Transfer(msg.sender, reward);
+        gem.transfer(msg.sender, reward);
         emit ClaimReward(msg.sender, reward);
     }
 
@@ -58,10 +59,13 @@ contract LPstaking {
         uint256 reward = (stakes[user].amount * currentAPR()) / 1e18;
         stakes[user].rewardDebt += reward;
     }
+    
     // reward distribution for a year
     function currentAPR() public view returns (uint256) {
+        if (totalStaked == 0) {
+            return 0;
+        }
         uint256 remainingRewardPool = rewardPool - totalRewardDistributed;
         return (remainingRewardPool * 1e18) / totalStaked;
     }
-
 }
