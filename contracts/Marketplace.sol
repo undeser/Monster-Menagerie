@@ -31,8 +31,9 @@ contract Marketplace {
     }
 
     function unlist(uint256 cardID) public {
-        require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot list this card as you are not the owner");
+        require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot unlist this card as you are not the owner");
         listPrice[cardID] = 0;
+        delete offers[cardID];
     }
 
     function checkPrice(uint256 cardID) public view returns(uint) {
@@ -42,6 +43,7 @@ contract Marketplace {
     function makeOffer(uint256 cardID, uint256 offerPrice) public {
         require(listPrice[cardID] != 0, "Card is not listed for sale");
         require(GemContract.balanceOf(msg.sender) >= offerPrice, "Insufficient Gems");
+        require(checkOfferExists(cardID, address(msg.sender)) == false, "You have already made an offer for this card");
         Offer memory newOffer = Offer({
             owner: address(msg.sender),
             offerValue: offerPrice,
@@ -64,9 +66,7 @@ contract Marketplace {
     function acceptOffer(uint256 cardID, address offerer) public {
         require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot accept offers for this card as you are not the owner");
         require(checkOfferExists(cardID, offerer) == true, "Offer does not exists");
-        
-        address recipent = address(uint160(CardContract.ownerOf(cardID)));
-        address seller = recipent;
+        require(checkOfferExists(cardID, address(msg.sender)) == false, "You have not made an offer for this card");
         uint256 price;
 
         uint256 numOffers = offers[cardID].length;
@@ -76,11 +76,12 @@ contract Marketplace {
             }
         }
 
-        GemContract.transferFrom(offerer, seller, price);
-        GemContract.transferFrom(offerer, address(this), price* 5/100);
-        CardContract.safeTransferFrom(seller, offerer, cardID);
+        GemContract.transferGemsFrom(offerer, msg.sender, price);
+        GemContract.transferGemsFrom(offerer, address(this), price* 5/100);
+        CardContract.safeTransferFrom(msg.sender, offerer, cardID);
 
         listPrice[cardID] = 0;
+        delete offers[cardID];
     }
 
     function checkOfferExists(uint256 cardID, address offerer) public view returns(bool exists) {
@@ -103,7 +104,7 @@ contract Marketplace {
     */
 
     function retractOffer(uint256 cardID) public {
-        require(checkOfferExists(cardID, address(msg.sender)) == true, "Offer does not exists");
+        require(checkOfferExists(cardID, address(msg.sender)) == true, "You have not made an offer for this card");
         // Offer[] offerArray = offers[cardID];
         address Offerer = address(msg.sender);
         uint256 numOffers = offers[cardID].length;
@@ -123,11 +124,12 @@ contract Marketplace {
 
         address recipent = address(uint160(CardContract.ownerOf(cardID)));
         address seller = recipent;
-        GemContract.transfer(recipent, listPrice[cardID]); // transfer price to seller
-        GemContract.transfer(address(this), listPrice[cardID]*5/100); // transfer commission to this contract
+        GemContract.transferGemsFrom(msg.sender ,recipent, listPrice[cardID]); // transfer price to seller
+        GemContract.transferGemsFrom(msg.sender, address(this), listPrice[cardID]*5/100); // transfer commission to this contract
         CardContract.safeTransferFrom(seller, address(msg.sender), cardID);
 
         listPrice[cardID] = 0;
+        delete offers[cardID];
     }
 
     function getContractOwner() public view returns(address) {
@@ -137,7 +139,12 @@ contract Marketplace {
     function withDraw() public { // Withdraw commission
         require(msg.sender == _owner, "Sorry, you are not allowed to do that");
         if(msg.sender == _owner) {
-            GemContract.transferFrom(address(this), msg.sender, address(this).balance);
+            GemContract.transferGems(msg.sender, address(this).balance);
         }
+    }
+
+    function checkComission() public view returns(uint256) {
+        require(msg.sender == _owner, "Sorry, you are not allowed to do that");
+        return GemContract.checkGemsOf(address(this));
     }
 }
