@@ -7,7 +7,7 @@ import './Gem.sol';
 contract BeastCard {
     Gem gemContract;
     string public collectionName;
-    string public symbol;
+    string public collectionSymbol;
     string public baseURI;
 
     enum cardState { broken, functional }
@@ -49,11 +49,23 @@ contract BeastCard {
     constructor(Gem gemAddress, string memory _name, string memory _symbol) {
         gemContract = gemAddress;
         collectionName = _name;
-        symbol = _symbol;
+        collectionSymbol = _symbol;
         baseURI = "https://ipfs.io/ipfs/bafybeihjukhqan3okv5kpoqh6aqxmncjp75a76rgmm6zet6x3l7kugck5e/";
         nextTokenIdToMint = 0;
         maxTokens = 1000;
         contractOwner = msg.sender;
+    }
+
+    function name() external view returns (string memory) {
+        return collectionName;
+    }
+
+    function symbol() external view returns (string memory) {
+        return collectionSymbol;
+    }
+
+    function tokenURI(uint256 _tokenId) public view returns (string memory) {
+        return _tokenUris[_tokenId];
     }
     
     // Set as public so as to allow Fight.sol to call it
@@ -64,18 +76,6 @@ contract BeastCard {
 
     function cardRevived(uint256 _cardId) internal {
         _cardStates[_cardId] = cardState.functional;
-    }
-
-    function tokenURI(uint256 _tokenId) public view returns (string memory) {
-        return _tokenUris[_tokenId];
-    }
-
-    function getName() external view returns (string memory) {
-        return collectionName;
-    }
-
-    function getSymbol() external view returns (string memory) {
-        return symbol;
     }
 
     function restoreCard(uint256 _cardId) public {
@@ -172,13 +172,13 @@ contract BeastCard {
         return _operatorApprovals[_owner][_operator];
     }
 
-    function mint(address _to, string memory name, string memory rarity, string memory nature, uint256 cost, uint256 attack, uint256 health) public {
+    function mint(address _to, string memory bname, string memory rarity, string memory nature, uint256 cost, uint256 attack, uint256 health) public {
         require(gemContract.balanceOf(_to) > 1, "Not enough Gem in wallet");
         gemContract.transferGemsFrom(_to, address(this), 5);
         _owners[nextTokenIdToMint] = _to;
         _balances[_to] += 1;
         _tokenUris[nextTokenIdToMint] = string.concat(baseURI, "Beast_", uint2str(nextTokenIdToMint), ".json");
-        _beasts[nextTokenIdToMint] = Beast(nextTokenIdToMint, name, rarity, nature, cost, attack, health);
+        _beasts[nextTokenIdToMint] = Beast(nextTokenIdToMint, bname, rarity, nature, cost, attack, health);
         _cardStates[nextTokenIdToMint] = cardState.functional;
         emit Transfer(address(0), _to, nextTokenIdToMint);
         nextTokenIdToMint += 1;
@@ -190,8 +190,7 @@ contract BeastCard {
 
     function withdraw() public {
         uint256 amt = gemContract.checkGems();
-        gemContract.giveGemApproval(contractOwner, amt);
-        gemContract.transferGemsFrom(address(this), contractOwner, amt);
+        gemContract.transferGems(contractOwner, amt);
     }
 
     // INTERNAL FUNCTIONS
