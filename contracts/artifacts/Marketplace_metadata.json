@@ -53,6 +53,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "checkComission",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -242,27 +255,27 @@
 	},
 	"sources": {
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/BeastCard.sol": {
-			"keccak256": "0x99eaf12df8b69c658c329ca840bc078d17fb13940875ff2636e7bd79449656d6",
+			"keccak256": "0xdd15cdfd66fd29f2511e1504efc7c62542a4906204b03026e6c8fa3bd1c98919",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2d27a590e6ac7b026fac50b4a97cfa71852b4e17942c5cc2ee99bd50b70645b6",
-				"dweb:/ipfs/QmcFm1F6P4VvfYvJq5qKYRVwTaPodxnyyVg6P7pWGL5Lxy"
+				"bzz-raw://8a033323d0db68485a5d58c771aea6b0d00e98b5309c5cb0a2f646a243d505d5",
+				"dweb:/ipfs/QmZHhiGmJv6m2YF6MtZ9BkYx6VPEQkPyyU9fJrXq1fGdqt"
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/ERC20.sol": {
-			"keccak256": "0x4a232dcf98adeda029da250d94466913fec42e6af4071da331bdb55010d23535",
+			"keccak256": "0x543c17d55e68d2325d1e0517bdb09c67987a7d66938663a9f4c7d93f1692cde9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a27750d35e1a241b072f3e7eb71b4a388c02db81fb30ca8e571fb2a298a0dcdf",
-				"dweb:/ipfs/QmUcexUqFAhn2FguHSWoR5zE7EGLPEBPjX38gEsMAn7ftC"
+				"bzz-raw://9e4a31e3bdc339ad1626de50c81eee9805efe2434cc2d2424a890812d4f91f85",
+				"dweb:/ipfs/QmVaTPwoPQ9fAbCJio6qzr92FfphpWLo6iX49cWRQeoHhs"
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Gem.sol": {
-			"keccak256": "0xa6146a0459534fc8772859711ae4cd11bd605c5f2e11eea525b65a289dab9f91",
+			"keccak256": "0xac7b3670499f4b866a4cf900796ee562164aefabf546726d7b4b7789b00ae3a5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e2c61c1de1df0f8b72e4971299674e54c643a8f00415c670c317dc310d6629ff",
-				"dweb:/ipfs/QmSchfLCGwmQuvuaJ7xNvw48rBPxycCpP2dxb7BwPjz7sc"
+				"bzz-raw://4a2df020b22268ecb0cca0f5803b97ba40a2d2bfc2b326dc91b332093e3ecdac",
+				"dweb:/ipfs/QmNn3fqE9DMqMqkhNPWxPYGcKzHrbkiLXULZqqNALemFK8"
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/IERC20.sol": {
@@ -282,11 +295,11 @@
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Marketplace.sol": {
-			"keccak256": "0x0bb99d5d1a90e122d729e172cb2ebb0a2cfa9a9177eb789367414f5ff28462c3",
+			"keccak256": "0xcc278f60c506adbbdfc2de98e0c235caaa64d380107d7941a964ad0888f66031",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f70b17db04975152398dec37cf0057e17c0c26159f5ae39d581dd092c55dea5a",
-				"dweb:/ipfs/QmTcCx1nAokAx44sHaZrWJY49z3aphnx1zUECCsQDUfjDK"
+				"bzz-raw://585e800197a784a2faf0c5c61b427451f5658bf14795e92dcf4136c5c17909ef",
+				"dweb:/ipfs/QmX22718DLBBgyUumcrkJoLnWgsV9X5FX5ZYoRsuCUPWjo"
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/extensions/IERC20Metadata.sol": {
