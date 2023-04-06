@@ -68,9 +68,8 @@ contract BeastCard {
         return _tokenUris[_tokenId];
     }
     
-    // Set as public so as to allow Fight.sol to call it
-    // Any better way to do it?
     function cardDestroyed(uint256 _cardId) public {
+        require(isContract(), "You cannot destroy cards");
         _cardStates[_cardId] = cardState.broken;
     }
 
@@ -256,5 +255,14 @@ contract BeastCard {
             _i /= 10;
         }
         return string(bstr);
+    }
+
+    function isContract() public view returns (bool) {
+      uint32 size;
+      address a = msg.sender;
+      assembly {
+        size := extcodesize(a)
+      }
+      return (size > 0);
     }
 }
