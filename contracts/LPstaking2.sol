@@ -22,12 +22,13 @@ contract LPstaking2 {
     event Deposit(address indexed user, uint256 amount);
     event Withdraw(address indexed user, uint256 amount);
     event ClaimReward(address indexed user, uint256 reward);
+    event RewardClaimed(address indexed user, uint256 amount);
 
     constructor(address _lpToken, address _rewardToken, uint256 _rewardPool) {
         lpToken = ERC20(_lpToken);
         gem = Gem(_rewardToken);
         lastUpdateBlock = block.number;
-        totalRewardPool = _rewardPool;
+        totalRewardPool = _rewardPool * 1e18;
     }
 
     function deposit(uint256 amount) public {
@@ -81,7 +82,7 @@ contract LPstaking2 {
         accRewardPerShare += (reward * 1e18) / totalStaked;
         lastUpdateBlock = block.number;
     }
-    
+
     function getPendingReward(address _user) public view returns (uint256) {
         UserInfo storage user = userInfo[_user];
         uint256 _accRewardPerShare = accRewardPerShare;
@@ -92,4 +93,19 @@ contract LPstaking2 {
         }
         return user.stakedAmount * _accRewardPerShare / 1e18 - user.rewardDebt;
     }
+
+    function claimRewards() public {
+        UserInfo storage user = userInfo[msg.sender];
+        updatePool();
+
+        uint256 pendingReward = user.stakedAmount * accRewardPerShare / 1e18 - user.rewardDebt;
+
+        if (pendingReward > 0) {
+            gem.transfer(msg.sender, pendingReward);
+
+            user.rewardDebt = user.stakedAmount * accRewardPerShare / 1e18;
+            emit RewardClaimed(msg.sender, pendingReward);
+        }
+    }
+
 }
