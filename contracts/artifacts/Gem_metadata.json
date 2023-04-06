@@ -531,6 +531,7 @@
 	},
 	"sources": {
 		"contracts/ERC20.sol": {
+
 			"keccak256": "0x1dc3d1e6ff0d2192485c8c15cfc98bf04e90796561f77e5345a0cdc440759c92",
 			"license": "MIT",
 			"urls": [
@@ -544,6 +545,7 @@
 			"urls": [
 				"bzz-raw://ada63cf26e1b526711a8f51de6dd9630e271fad02a9ee391dcee3fc036c20f29",
 				"dweb:/ipfs/QmbT6K2FLQgBce85Hfkdcn5yKcpMgJBkxo2dccz6SdKgXV"
+
 			]
 		},
 		"contracts/IERC20.sol": {
