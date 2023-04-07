@@ -2,7 +2,7 @@ const Gem = artifacts.require("Gem");
 const BeastCard = artifacts.require("BeastCard");
 const MMR = artifacts.require("MMR");
 const Fight = artifacts.require("Fight");
-// const Marketplace = artifacts.require("Marketplace");
+const Menagerie = artifacts.require("Menagerie");
 
 module.exports = (deployer, network, accounts) => {
     deployer
@@ -15,5 +15,8 @@ module.exports = (deployer, network, accounts) => {
       })
       .then(function () {
         return deployer.deploy(Fight, Gem.address, BeastCard.address, MMR.address); // deploy fight contract
+      })
+      .then(function () {
+        return deployer.deploy(Menagerie, BeastCard.address, Gem.address); // deploy menagerie
       });
   };

@@ -14,13 +14,15 @@ var beast6 = require("../Beasts/Beast_6.json");
 var beast7 = require("../Beasts/Beast_7.json");
 var beast8 = require("../Beasts/Beast_8.json");
 var beast9 = require("../Beasts/Beast_9.json");
+var beast10 = require("../Beasts/Beast_10.json");
+var beast11 = require("../Beasts/Beast_11.json");
 
 
 var Gem = artifacts.require("../contracts/Gem.sol");
 var BeastCard = artifacts.require("../contracts/BeastCard.sol");
 var MMR = artifacts.require("../contract/MMR.sol");
 var Fight = artifacts.require("../contracts/Fight.sol");
-// var Marketplace = artifacts.require("../contracts/Marketplace.sol");
+var Menagerie = artifacts.require("../contracts/Menagerie.sol");
 
 const oneEth = new BigNumber(1000000000000000000); // 1 eth
 
@@ -30,6 +32,7 @@ contract("Game", function (accounts) {
     beastCardInstance = await BeastCard.deployed();
     MMRinstance = await MMR.deployed();
     fightInstance = await Fight.deployed();
+    menagerieInstance = await Menagerie.deployed();
   });
 
   console.log("Testing Game contract");
@@ -98,7 +101,6 @@ contract("Game", function (accounts) {
     // Give allowance to Fight contract
     await gemInstance.giveGemApproval(fightInstance.address, 1000, { from: accounts[1]}); 
 
-
     // First player enters the queue if the queue is empty
     let joinQueue = await fightInstance.fight([0,1,2,3,4], { from: accounts[1]});
 
@@ -113,18 +115,10 @@ contract("Game", function (accounts) {
     await beastCardInstance.mint(accounts[2], beast8.name, beast8.attributes[0].value, beast8.attributes[1].value, beast8.attributes[2].value, beast8.attributes[3].value, beast8.attributes[4].value);
     await beastCardInstance.mint(accounts[2], beast9.name, beast9.attributes[0].value, beast9.attributes[1].value, beast9.attributes[2].value, beast9.attributes[3].value, beast9.attributes[4].value);
 
-    // const numCards1 = new BigNumber(await beastCardInstance.balanceOf(accounts[1]));
-    // const numCards2 = new BigNumber(await beastCardInstance.balanceOf(accounts[2]));
-    // const correctNum = new BigNumber(5);
-
-    // assert(numCards1.isEqualTo(correctNum), "Incorrect number of cards minted for account 1");
-    // assert(numCards2.isEqualTo(correctNum), "Incorrect number of cards minted for account 2");
-
     // Give allowance to Fight contract
     await gemInstance.giveGemApproval(fightInstance.address, 1000, { from: accounts[2] }); 
 
     let fight = await fightInstance.fight([5,6,7,8,9], { from: accounts[2] });
-    console.log(fight);
 
     let balance1 = new BigNumber(await gemInstance.checkGems({ from: accounts[1]}));
     let balance2 = new BigNumber(await gemInstance.checkGems({ from: accounts[2]}));
@@ -138,5 +132,74 @@ contract("Game", function (accounts) {
     await assert(balance3.isEqualTo(correctBalance3), "Incorrect Gem Balance for Fight contract");
 
     truffleAssert.eventEmitted(fight, "outcomeWin", { winner: accounts[1] }, "Incorrect outcome");
+  });
+
+  it("Buy card on menagerie at listed price", async () => {
+    // Mint new card
+    await beastCardInstance.mint(accounts[1], beast10.name, beast10.attributes[0].value, beast10.attributes[1].value, beast10.attributes[2].value, beast10.attributes[3].value, beast10.attributes[4].value);
+
+    let originalBalance1 = new BigNumber(await gemInstance.checkGems({ from: accounts[1] }));
+    let originalBalance2 = new BigNumber(await gemInstance.checkGems({ from: accounts[2] }));
+    let originalCommsBalance = new BigNumber(await menagerieInstance.checkCommission());
+  
+    // Set approval for beast card for marketplace to transfer 
+    await beastCardInstance.approve(menagerieInstance.address, 10, { from: accounts[1] });
+
+    // Set approval for marketplace to spend gems
+    await gemInstance.giveGemApproval(menagerieInstance.address, 10000, { from: accounts[1]}); 
+    await gemInstance.giveGemApproval(menagerieInstance.address, 10000, { from: accounts[2]}); 
+
+    // List card
+    await menagerieInstance.list(10, 20, { from: accounts[1] });
+
+    // Buy card using account 2
+    await menagerieInstance.buy(10, { from: accounts[2] });
+
+    let newOwner = await beastCardInstance.ownerOf(10);
+    assert.equal(newOwner, accounts[2], "Unsuccessful purchase of cards");
+
+    let newBalance1 = new BigNumber(await gemInstance.checkGems({ from: accounts[1] }));
+    let newBalance2 = new BigNumber(await gemInstance.checkGems({ from: accounts[2] }));
+    let commsBalance = new BigNumber(await menagerieInstance.checkCommission());
+    let price = new BigNumber(20);
+    let comms = price * 5 / 100;
+
+    assert((originalBalance1.plus(price)).isEqualTo(newBalance1), "Incorrect transfer of gems for account 1");
+    assert((originalBalance2.minus(price.plus(comms))).isEqualTo(newBalance2), "Incorrect transfer of gems for account 2");
+    assert((originalCommsBalance.plus(comms)).isEqualTo(commsBalance), "Incorrect transfer of gems for commissions");
+  });
+
+  it("Buy on marketplace via offer", async () => {
+    // Mint new card
+    await beastCardInstance.mint(accounts[1], beast11.name, beast11.attributes[0].value, beast11.attributes[1].value, beast11.attributes[2].value, beast11.attributes[3].value, beast11.attributes[4].value);
+    
+    let originalBalance1 = new BigNumber(await gemInstance.checkGems({ from: accounts[1] }));
+    let originalBalance2 = new BigNumber(await gemInstance.checkGems({ from: accounts[2] }));
+    let originalCommsBalance = new BigNumber(await menagerieInstance.checkCommission());
+
+    // Set approval for beast card for marketplace to transfer 
+    await beastCardInstance.approve(menagerieInstance.address, 11, { from: accounts[1] });
+
+    // List card
+    await menagerieInstance.list(11, 40, { from: accounts[1] });
+
+    // Make offer
+    await menagerieInstance.makeOffer(11, 20, { from: accounts[2] });
+
+    // Accept offer
+    await menagerieInstance.acceptOffer(11, accounts[2], { from: accounts[1] });
+
+    let newOwner = await beastCardInstance.ownerOf(11);
+    assert.equal(newOwner, accounts[2], "Unsuccessful purchase of cards");
+
+    let newBalance1 = new BigNumber(await gemInstance.checkGems({ from: accounts[1] }));
+    let newBalance2 = new BigNumber(await gemInstance.checkGems({ from: accounts[2] }));
+    let commsBalance = new BigNumber(await menagerieInstance.checkCommission());
+    let price = new BigNumber(20);
+    let comms = price * 5 / 100;
+
+    assert((originalBalance1.plus(price)).isEqualTo(newBalance1), "Incorrect transfer of gems for account 1");
+    assert((originalBalance2.minus(price.plus(comms))).isEqualTo(newBalance2), "Incorrect transfer of gems for account 2");
+    assert((originalCommsBalance.plus(comms)).isEqualTo(commsBalance), "Incorrect transfer of gems for commissions");
   });
 });
