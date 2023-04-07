@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@openzeppelin/contracts": "^4.8.2",
     "@remix-project/remixd": "^0.6.12",
     "assert": "^2.0.0",
     "bignumber.js": "^9.1.1",

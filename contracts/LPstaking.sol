@@ -1,7 +1,6 @@
 pragma solidity ^0.8.0;
 
 import './ERC20.sol';
-import './SafeMath.sol';
 import './Gem.sol';
 
 contract LPstaking {
