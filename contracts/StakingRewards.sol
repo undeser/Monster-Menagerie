@@ -25,16 +25,18 @@ contract StakingRewards {
 
     mapping(address => StakeInfo) public stakers;
 
-    event Staked(address indexed user, uint256 amount);
+    event Staked(address indexed user, uint256 amount, uint256 currentTime, uint256 lastUpdateTime, uint256 timeElapsed, uint256 rewardRate, uint256 rewardAmount);
     event Withdrawn(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
+    event RewardUpdated(uint256 currentTime, uint256 timeElapsed, uint256 rewardAmount, uint256 rewardToDistribute);
+    event RewardToDistribute(uint256 rewardToDistribute);
 
     constructor(address _stakingToken, address _rewardsToken, uint256 _rewardPool) {
         lpToken = ERC20(_stakingToken);
         gem = Gem(_rewardsToken);
         totalRewardPool = _rewardPool;
-        maxDailyReward = totalRewardPool/ 365;
-        rewardRate = maxDailyReward/ 86400; // Assuming rewards are distributed evenly over 24 hours
+        maxDailyReward = (totalRewardPool * 1e18) / 365;
+        rewardRate = maxDailyReward / 86400; // Assuming rewards are distributed evenly over 24 hours
         lastUpdateTime = block.timestamp;
         stakingPoolLive = false; // this variable will turn to true once the contract deployer sends the gem (_rewardPool) 
                                 //into the contract
@@ -54,43 +56,75 @@ contract StakingRewards {
         }
     }
 
-    function _updateRewards(address account) internal {
+    // function _updateRewards(address account) public {
+    //     _resetDailyRewardCounterIfNeeded();
+    //     uint256 currentTime = block.timestamp;
+    //     uint256 timeElapsed = currentTime - lastUpdateTime;
+    //     if (totalStaked > 0) {
+    //         uint256 rewardAmount = (timeElapsed * rewardRate) / 1e18;
+    //         uint256 rewardToDistribute = (dailyRewardCounter + rewardAmount <= maxDailyReward) ? rewardAmount : maxDailyReward - dailyRewardCounter;
+
+    //         rewardPerTokenStored = rewardPerTokenStored + (rewardToDistribute/ totalStaked);
+    //         dailyRewardCounter += rewardToDistribute;
+    //         emit RewardUpdated(currentTime, timeElapsed, rewardAmount, rewardToDistribute);
+    //     }
+    //     lastUpdateTime = currentTime;
+    //     if (account != address(0)) {
+    //         stakers[account].rewards = earned(account);
+    //         stakers[account].rewardPerTokenPaid = rewardPerTokenStored;
+    //     }
+    // }
+    function _updateRewards(address account) public{
         _resetDailyRewardCounterIfNeeded();
         uint256 currentTime = block.timestamp;
+
         uint256 timeElapsed = currentTime - lastUpdateTime;
         if (totalStaked > 0) {
-            uint256 rewardAmount = timeElapsed * rewardRate;
+            uint256 rewardAmount = (timeElapsed * rewardRate);
             uint256 rewardToDistribute = (dailyRewardCounter + rewardAmount <= maxDailyReward) ? rewardAmount : maxDailyReward - dailyRewardCounter;
 
-            rewardPerTokenStored = rewardPerTokenStored + (rewardToDistribute/ totalStaked);
+            rewardPerTokenStored = rewardPerTokenStored + (rewardToDistribute / totalStaked);
             dailyRewardCounter += rewardToDistribute;
         }
+
         lastUpdateTime = currentTime;
+        
         if (account != address(0)) {
             stakers[account].rewards = earned(account);
             stakers[account].rewardPerTokenPaid = rewardPerTokenStored;
         }
     }
 
+
+
     function rewardPerToken() public view returns (uint256) {
         if (totalStaked == 0) {
             return rewardPerTokenStored;
         }
-        return rewardPerTokenStored + (((block.timestamp - lastUpdateTime) * rewardRate) / totalStaked);
+        return rewardPerTokenStored + ((((block.timestamp - lastUpdateTime) * rewardRate)/ 1e18) / totalStaked);
     }
 
     function earned(address account) public view returns (uint256) {
         return (stakers[account].amount * (rewardPerToken() - stakers[account].rewardPerTokenPaid)) + stakers[account].rewards;
     }
 
+    // function stake(uint256 amount) external {
+    //     require(amount > 0, "Cannot stake 0 tokens");
+    //     _updateRewards(msg.sender);
+    //     lpToken.transferFrom(msg.sender, address(this), amount);
+    //     totalStaked = totalStaked + amount;
+    //     stakers[msg.sender].amount = stakers[msg.sender].amount + amount;
+    //     emit Staked(msg.sender, amount);
+    // }
+
     function stake(uint256 amount) external {
         require(amount > 0, "Cannot stake 0 tokens");
         _updateRewards(msg.sender);
         lpToken.transferFrom(msg.sender, address(this), amount);
         totalStaked = totalStaked + amount;
-        stakers[msg.sender].amount = stakers[msg.sender].amount + amount;
-        emit Staked(msg.sender, amount);
+        stakers[msg.sender].amount += amount;        
     }
+
 
     function withdraw(uint256 amount) external {
         require(stakers[msg.sender].amount >= amount, "Insufficient staked balance");
@@ -99,12 +133,8 @@ contract StakingRewards {
         stakers[msg.sender].amount = stakers[msg.sender].amount - amount;
         totalStaked = totalStaked - amount;
         lpToken.transfer(msg.sender, amount);
+        //this.claimReward();
         emit Withdrawn(msg.sender, amount);
-    }
-
-    function exit() external {
-        this.withdraw(stakers[msg.sender].amount);
-        this.claimReward();
     }
 
     function claimReward() external {
@@ -118,9 +148,15 @@ contract StakingRewards {
         }
     }
 
-    function getPendingReward(address account) public returns (uint256) {
-        _updateRewards(msg.sender);
-        return earned(account);
+    // function getPendingReward(address account) public returns (uint256) {
+    //     _updateRewards(msg.sender);
+    //     return earned(account);
+    // }
+
+    function getPendingReward(address account) public view returns (uint256) {
+        StakeInfo memory user = stakers[account];
+        uint256 _rewardPerToken = rewardPerToken();
+        return (user.amount * (_rewardPerToken - user.rewardPerTokenPaid)) + user.rewards;
     }
 
     modifier onlyOwner() {

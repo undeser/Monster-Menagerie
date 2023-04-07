@@ -8253,7 +8253,7 @@
     "absolutePath": "project:/contracts/LPstaking.sol",
     "exportedSymbols": {
       "Context": [
-        4644
+        4672
       ],
       "ERC20": [
         1634
@@ -8265,13 +8265,13 @@
         2578
       ],
       "IERC20Metadata": [
-        4622
+        4650
       ],
       "LPstaking": [
         3142
       ],
       "SafeMath": [
-        4025
+        3992
       ]
     },
     "id": 3143,
@@ -8307,7 +8307,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 3143,
-        "sourceUnit": 4026,
+        "sourceUnit": 3993,
         "src": "47:24:6",
         "symbolAliases": [],
         "unitAlias": ""
@@ -15163,7 +15163,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-04-06T18:51:06.710Z",
+  "updatedAt": "2023-04-07T13:40:30.644Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

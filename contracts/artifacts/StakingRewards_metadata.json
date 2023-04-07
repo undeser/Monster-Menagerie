@@ -49,6 +49,50 @@
 				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardToDistribute",
+						"type": "uint256"
+					}
+				],
+				"name": "RewardToDistribute",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "currentTime",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timeElapsed",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardToDistribute",
+						"type": "uint256"
+					}
+				],
+				"name": "RewardUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
 						"indexed": true,
 						"internalType": "address",
 						"name": "user",
@@ -58,6 +102,36 @@
 						"indexed": false,
 						"internalType": "uint256",
 						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "currentTime",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "lastUpdateTime",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timeElapsed",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardRate",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardAmount",
 						"type": "uint256"
 					}
 				],
@@ -82,6 +156,19 @@
 				],
 				"name": "Withdrawn",
 				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "_updateRewards",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			},
 			{
 				"inputs": [],
@@ -133,13 +220,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "exit",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -296,6 +376,11 @@
 						"internalType": "uint256",
 						"name": "rewards",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lastUpdateTimeForAccount",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -367,7 +452,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/testing.sol": "StakingRewards"
+			"contracts/StakingRewards.sol": "StakingRewards"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -405,19 +490,19 @@
 				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
 			]
 		},
+		"contracts/StakingRewards.sol": {
+			"keccak256": "0x15f64773dc0b2fd10609238c05f986adda16ec308789c26ce338901d82bbed45",
+			"urls": [
+				"bzz-raw://248c70e6b9348738728c3a63b7226face3df6d15c91f3f2a18c21dd9890affe5",
+				"dweb:/ipfs/QmNvhqyZV41bFq5KvadW7i7CjkCQSQN1FuxUEAF6pfZar2"
+			]
+		},
 		"contracts/extensions/IERC20Metadata.sol": {
 			"keccak256": "0x8de418a5503946cabe331f35fe242d3201a73f67f77aaeb7110acb1f30423aca",
 			"license": "MIT",
 			"urls": [
 				"bzz-raw://5a376d3dda2cb70536c0a45c208b29b34ac560c4cb4f513a42079f96ba47d2dd",
 				"dweb:/ipfs/QmZQg6gn1sUpM8wHzwNvSnihumUCAhxD119MpXeKp8B9s8"
-			]
-		},
-		"contracts/testing.sol": {
-			"keccak256": "0xde87cf1981f57ffb6fa633661452b13c80ed8dcac094d191980825db9f048998",
-			"urls": [
-				"bzz-raw://69881a1c33e4e228dfc13c1a1d721b942700a75f583b9dceb58a16030050bcf3",
-				"dweb:/ipfs/QmS9hpk32JWzv4QgY2AaqnecMf24P99MUuQs9Whawdrrtq"
 			]
 		},
 		"contracts/utils/Context.sol": {
