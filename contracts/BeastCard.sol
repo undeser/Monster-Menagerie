@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.17;
 
 import './IERC721Receiver.sol';
 import './Gem.sol';
@@ -114,6 +114,14 @@ contract BeastCard {
 
     function natureOf(uint256 _cardId) public view returns (string memory) {
         return _beasts[_cardId].nature;
+    }
+
+    function nameOf(uint256 _cardId) public view returns (string memory) {
+        return _beasts[_cardId].name;
+    }
+
+    function rarityOf(uint256 _cardId) public view returns (string memory) {
+        return _beasts[_cardId].rarity;
     }
 
     function balanceOf(address _owner) public view returns(uint256) {
