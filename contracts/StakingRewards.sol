@@ -124,6 +124,7 @@ contract StakingRewards {
         require(pending > 0, "claimReward: no rewards to claim");
         user.rewardDebt = user.amount.mul(accGemPerShare).div(1e18);
         gem.transfer(msg.sender, pending);
+        emit ClaimReward(msg.sender, pending);
     }
 
     modifier onlyOwner() {
