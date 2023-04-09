@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.17;
 
 import "./ERC20.sol"; 
 
@@ -23,7 +23,7 @@ contract Gem is ERC20("BEAST GEM", "BGM") {
         mint(msg.sender, amt);
     }
 
-    function checkGems() public view returns(uint256) {
+    function checkGems() public view returns (uint256) {
         return balanceOf(msg.sender) / 1000000000000000000;
     }
 
