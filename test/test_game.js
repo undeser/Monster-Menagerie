@@ -16,6 +16,8 @@ var beast8 = require("../Beasts/Beast_8.json");
 var beast9 = require("../Beasts/Beast_9.json");
 var beast10 = require("../Beasts/Beast_10.json");
 var beast11 = require("../Beasts/Beast_11.json");
+var beast12 = require("../Beasts/Beast_12.json");
+var beast13 = require("../Beasts/Beast_13.json");
 
 
 var Gem = artifacts.require("../contracts/Gem.sol");
@@ -202,4 +204,58 @@ contract("Game", function (accounts) {
     assert((originalBalance2.minus(price.plus(comms))).isEqualTo(newBalance2), "Incorrect transfer of gems for account 2");
     assert((originalCommsBalance.plus(comms)).isEqualTo(commsBalance), "Incorrect transfer of gems for commissions");
   });
+
+  it("Check offers", async () => {
+    // Mint new card
+    await beastCardInstance.mint(accounts[1], beast12.name, beast12.attributes[0].value, beast12.attributes[1].value, beast12.attributes[2].value, beast12.attributes[3].value, beast12.attributes[4].value);
+    
+    // List card
+    await menagerieInstance.list(12, 40, { from: accounts[1] });
+
+    // Get gems for account 3
+    await gemInstance.getGems({
+      from: accounts[3],
+      value: oneEth,
+    })
+
+    // Make Offers
+    await menagerieInstance.makeOffer(12, 20, { from: accounts[2] });
+    await menagerieInstance.makeOffer(12, 25, { from: accounts[3] });
+
+    let output = await menagerieInstance.checkOffers(12, {from: accounts[1]})
+
+    await assert.equal(output[0]['owner'], accounts[2], "Incorrect owner of offer 1");
+    await assert.equal(output[1]['owner'], accounts[3], "Incorrect owner of offer 2");
+    await assert.equal(output[0]['offerValue'], 20, "Incorrect owner of offer 1");
+    await assert.equal(output[1]['offerValue'], 25, "Incorrect owner of offer 2");
+    await assert.equal(output[0]['offerCardId'], 12, "Incorrect owner of offer 1");
+    await assert.equal(output[1]['offerCardId'], 12, "Incorrect owner of offer 2");
+  });
+
+  /*
+  it("Check Withdrawal", async () => {
+    // Mint new card
+    await beastCardInstance.mint(accounts[1], beast13.name, beast13.attributes[0].value, beast13.attributes[1].value, beast13.attributes[2].value, beast13.attributes[3].value, beast13.attributes[4].value);
+    
+    // List card
+    await menagerieInstance.list(13, 100, { from: accounts[1] });
+
+    // Set approval for beast card for marketplace to transfer 
+    await beastCardInstance.approve(menagerieInstance.address, 13, { from: accounts[1] });
+
+    // Set approval for marketplace to spend gems
+    await gemInstance.giveGemApproval(menagerieInstance.address, 10000, { from: accounts[1]}); 
+    await gemInstance.giveGemApproval(menagerieInstance.address, 10000, { from: accounts[2]}); 
+
+    await menagerieInstance.buy(13, { from: accounts[2] });
+
+    let balance = new BigNumber(await menagerieInstance.checkCommission({from: accounts[0]}));
+    await menagerieInstance.withDraw( {from: accounts[0]});
+    let withdrawalBalance = new BigNumber(await gemInstance.checkGems({from: accounts[0]}))
+    //console.log(withdrawalBalance)
+    await assert.equal(withdrawalBalance, balance, "Incorrect owner withdrawal amount");
+  });
+  */
+  
+
 });
