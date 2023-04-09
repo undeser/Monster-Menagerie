@@ -22,10 +22,10 @@ module.exports = (deployer, network, accounts) => {
         return deployer.deploy(Menagerie, BeastCard.address, Gem.address); // deploy menagerie
       })
       .then (function () {
-        return deployer.deploy(LPtoken)
+        return deployer.deploy(LPtoken);
       })
       .then(function () {
-        return deployer.deploy(StakingRewards, LPtoken.address, Gem.address, 1000) 
+        return deployer.deploy(StakingRewards, LPtoken.address, Gem.address, 1000);
         // 1000 Gem for the rewardPool distribution
       });
     }

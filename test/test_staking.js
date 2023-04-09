@@ -10,7 +10,7 @@ var StakingRewards = artifacts.require("../contracts/StakingRewards.sol");
 
 const oneEth = new BigNumber(1000000000000000000); // 1 eth
 
-contract("staking", function(accounts) {
+contract("Staking", function(accounts) {
     before(async () => {
         gemInstance = await Gem.deployed();
         LPinstance = await LPtoken.deployed();
