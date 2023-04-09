@@ -17,7 +17,9 @@ contract Fight {
         mmrContract = mmrAddress;
     }
 
+    // owner => array of cards (for players in queue)
     mapping(address => uint256[]) internal _cardsOfPlayersInQueue;
+    // owner => scale
     mapping(address => uint256) internal _scale;
 
     event inQueue(address player);
@@ -35,6 +37,7 @@ contract Fight {
         }
         require(cost <= 65, "Cost exceeded threshold");
 
+        // Store in an array of scales due to solidity variable limits
         uint[] memory scales = new uint[](3);
 
         // Default scale
@@ -132,6 +135,7 @@ contract Fight {
         }
     }
 
+    // Function to get the scales of my card against enemy card
     function getElementalScales(uint256 myCard, uint256 enemyCard) internal view returns (uint[] memory) {
             uint[] memory elementalScales = new uint[](2);
             // Set default elementalScales for mine and enemy's 

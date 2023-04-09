@@ -25,7 +25,7 @@ contract("staking", function(accounts) {
         await gemInstance.giveGemApproval(Stakingcontract.address, oneEth, {from: accounts[0]});
         // initialise the staking pool to go live
         await Stakingcontract.setStakingPoolLive({from: accounts[0]});
-    })
+    });
 
     // Creating the advance time function to simulate the staking of several days
     const advanceTime = async (time) => {
@@ -120,6 +120,10 @@ contract("staking", function(accounts) {
         // console.log(pendingRewards2.toString())
         // console.log(pendingRewards1.toString())
         // console.log(rewardSplit.toString())
+        console.log(pendingRewards1);
+        console.log(pendingRewards2)
+        console.log(rewardSplit)
+        console.log(pendingRewards1.isEqualTo(rewardSplit))
         assert(pendingRewards2.isEqualTo(rewardSplit),"reward did not update accordingly")
         assert(pendingRewards1.isEqualTo(rewardSplit),"reward did not update accordingly")
     });
