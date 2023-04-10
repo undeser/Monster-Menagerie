@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import './IERC721Receiver.sol';
 import './Gem.sol';
 
-contract Monsters {
+contract Beasts {
     Gem gemContract;
     string public collectionName;
     string public collectionSymbol;
@@ -32,7 +32,7 @@ contract Monsters {
     mapping(uint256 => string) _tokenUris;
     
     /**
-     * @dev Structure to store the properties of each Monster
+     * @dev Structure to store the properties of each Beast Card
      */
     struct Beast {
         uint256 id;
@@ -65,8 +65,8 @@ contract Monsters {
     }
     
     /**
-     * @dev Destroys Monster and sets state to broken
-     * @param id ID of Monster  
+     * @dev Destroys Beast Card and sets state to broken
+     * @param id ID of Beast Card  
      */
     function cardDestroyed(uint256 id) public {
         require(isContract(), "You cannot destroy cards");
@@ -74,7 +74,7 @@ contract Monsters {
     }
 
     /**
-     * @dev Revives Beast and sets state to functional
+     * @dev Revives Beast Card and sets state to functional
      * @param id ID of Beast
      */
     function cardRevived(uint256 id) internal {
@@ -82,12 +82,12 @@ contract Monsters {
     }
 
     /**
-     * @dev Revives Monster when owner pays a fee
-     * @param id ID of Monster
+     * @dev Revives Beast Card when owner pays a fee
+     * @param id ID of Beast Card
      */
     function restoreCard(uint256 id) public {
-        require(_owners[id] == msg.sender, "Not owner of Monster");
-        require(_cardStates[id] == cardState.broken, "Monster is not broken");
+        require(_owners[id] == msg.sender, "Not owner of Beast Card");
+        require(_cardStates[id] == cardState.broken, "Beast Card is not broken");
         string memory rarity = _beasts[id].rarity;
         if (compareStrings(rarity, "Legendary")) {
             gemContract.transferGemsFrom(msg.sender, address(this), 8);
@@ -137,10 +137,10 @@ contract Monsters {
     }
 
     /**
-     * @dev Transfer Monster from an address to another address
-     * @param _from Address of current owner of Monster 
-     * @param _to Address of new owner of Monster
-     * @param _tokenId ID of Monster being transferred
+     * @dev Transfer Beast Card from an address to another address
+     * @param _from Address of current owner of Beast Card 
+     * @param _to Address of new owner of Beast Card
+     * @param _tokenId ID of Beast Card being transferred
      */
     function transferFrom(address _from, address _to, uint256 _tokenId) public payable {
         // unsafe transfer without onERC721Received, used for contracts that dont implement
@@ -149,26 +149,26 @@ contract Monsters {
     }
 
     /**
-     * @dev Give approval to an address to transfer a Monster
-     * @param _approved Address that is approved by owner of Monster
-     * @param _tokenId ID of Monster
+     * @dev Give approval to an address to transfer a Beast Card
+     * @param _approved Address that is approved by owner of Beast Card
+     * @param _tokenId ID of Beast Card
      */
     function approve(address _approved, uint256 _tokenId) public payable {
-        require(ownerOf(_tokenId) == msg.sender, "Not owner of Monster");
+        require(ownerOf(_tokenId) == msg.sender, "Not owner of Beast Card");
         _tokenApprovals[_tokenId] = _approved;
         emit Approval(ownerOf(_tokenId), _approved, _tokenId);
     }
 
     /**
-     * @dev Getter for address approved for transfer of a Monster
-     * @param _tokenId ID of Monster
+     * @dev Getter for address approved for transfer of a Beast Card
+     * @param _tokenId ID of Beast Card
      */
     function getApproved(uint256 _tokenId) public view returns (address) {
         return _tokenApprovals[_tokenId];
     }
 
     /**
-     * @dev Give approval to an address to transfer all Monsters owned by user
+     * @dev Give approval to an address to transfer all Beast Cards owned by user
      * @param _operator Address that is approved by owner
      * @param _approved Boolean of whether operator is approved
      */
@@ -178,8 +178,8 @@ contract Monsters {
     }
 
     /**
-     * @dev Getter for approval of Monster to an address
-     * @param _owner Address of owner of Monster
+     * @dev Getter for approval of Beast Card to an address
+     * @param _owner Address of owner of Beast Card
      * @param _operator Address being given approval
      */
     function isApprovedForAll(address _owner, address _operator) public view returns (bool) {
@@ -187,14 +187,14 @@ contract Monsters {
     }
     
     /**
-     * @dev Mint new Monster
-     * @param _to Address of owner of new Monster
-     * @param bname Name of Monster
-     * @param rarity Rarity of Monster
-     * @param nature Nature of Monster
-     * @param cost Cost of Monster
-     * @param attack Attack of Monster
-     * @param health Health of Monster
+     * @dev Mint new Beast Card
+     * @param _to Address of owner of new Beast Card
+     * @param bname Name of Beast Card
+     * @param rarity Rarity of Beast Card
+     * @param nature Nature of Beast Card
+     * @param cost Cost of Beast Card
+     * @param attack Attack of Beast Card
+     * @param health Health of Beast Card
      */
     function mint(address _to, string memory bname, string memory rarity, string memory nature, uint256 cost, uint256 attack, uint256 health) public {
         require(gemContract.balanceOf(_to) > 1, "Not enough Gem in wallet");
@@ -216,7 +216,7 @@ contract Monsters {
     }
 
     /**
-     * @dev Withdraw gems in Monsters contract to contract owner 
+     * @dev Withdraw gems in Beast Cards contract to contract owner 
      */
     function withdraw() public {
         uint256 amt = gemContract.checkGems();
@@ -297,6 +297,9 @@ contract Monsters {
         return string(bstr);
     }
 
+    /**
+     * @dev Check if msg.sender is a contract
+     */
     function isContract() public view returns (bool) {
       uint32 size;
       address a = msg.sender;
@@ -321,71 +324,71 @@ contract Monsters {
     }
 
     /**
-     * @dev Getter for URI of Monster
-     * @param _tokenId ID of Monster
+     * @dev Getter for URI of Beast Card
+     * @param _tokenId ID of Beast Card
      */
     function tokenURI(uint256 _tokenId) public view returns (string memory) {
         return _tokenUris[_tokenId];
     }
 
     /**
-     * @dev Getter for attack of Monster
-     * @param id ID of Monster
+     * @dev Getter for attack of Beast Card
+     * @param id ID of Beast Card
      */
     function attackOf(uint256 id) public view returns(uint256) {
         return _beasts[id].attack;
     }
 
     /**
-     * @dev Getter for health of Monster
-     * @param id ID of Monster
+     * @dev Getter for health of Beast Card
+     * @param id ID of Beast Card
      */
     function healthOf(uint256 id) public view returns(uint256) {
         return _beasts[id].health;
     }
 
     /**
-     * @dev Getter for state of Monster
-     * @param id ID of Monster
+     * @dev Getter for state of Beast Card
+     * @param id ID of Beast Card
      */
     function stateOf(uint256 id) public view returns(cardState) {
         return _cardStates[id];
     }
 
     /**
-     * @dev Getter for cost of Monster
-     * @param id ID of Monster
+     * @dev Getter for cost of Beast Card
+     * @param id ID of Beast Card
      */
     function costOf(uint256 id) public view returns (uint256) {
         return _beasts[id].cost;
     }
 
     /**
-     * @dev Getter for nature of Monster
-     * @param id ID of Monster
+     * @dev Getter for nature of Beast Card
+     * @param id ID of Beast Card
      */
     function natureOf(uint256 id) public view returns (string memory) {
         return _beasts[id].nature;
     }
 
     /**
-     * @dev Getter for name of Monster
-     * @param id ID of Monster
+     * @dev Getter for name of Beast Card
+     * @param id ID of Beast Card
      */
     function nameOf(uint256 id) public view returns (string memory) {
         return _beasts[id].name;
     }
 
     /**
-     * @dev Getter for rarity of Monster
-     * @param id ID of Monster
+     * @dev Getter for rarity of Beast Card
+     * @param id ID of Beast Card
      */
     function rarityOf(uint256 id) public view returns (string memory) {
         return _beasts[id].rarity;
     }
 
     /**
-     * @dev Getter for number of Monsters owned by user
+     * @dev Getter for number of Beast Cards owned by user
      * @param _owner Address of user 
      */
     function balanceOf(address _owner) public view returns(uint256) {
@@ -394,8 +397,8 @@ contract Monsters {
     }
 
     /**
-     * @dev Getter for address of owner of Monster
-     * @param id ID of Monster
+     * @dev Getter for address of owner of Beast Card
+     * @param id ID of Beast Card
      */
     function ownerOf(uint256 id) public view returns(address) {
         return _owners[id];
