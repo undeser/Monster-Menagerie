@@ -1,5 +1,5 @@
 const Gem = artifacts.require("Gem");
-const BeastCard = artifacts.require("BeastCard");
+const Monsters = artifacts.require("Monsters");
 const MMR = artifacts.require("MMR");
 const Fight = artifacts.require("Fight");
 const StakingRewards = artifacts.require("StakingRewards");
@@ -10,16 +10,16 @@ module.exports = (deployer, network, accounts) => {
     deployer
       .deploy(Gem) // deploy gem contract
       .then(function () {
-        return deployer.deploy(BeastCard, Gem.address, "Beast", "BST"); // deploy beast card contract
+        return deployer.deploy(Monsters, Gem.address, "Monster", "M"); // deploy beast card contract
       })
       .then(function () {
         return deployer.deploy(MMR); // deploy MMR contract
       })
       .then(function () {
-        return deployer.deploy(Fight, Gem.address, BeastCard.address, MMR.address); // deploy fight contract
+        return deployer.deploy(Fight, Gem.address, Monsters.address, MMR.address); // deploy fight contract
       })
       .then(function () {
-        return deployer.deploy(Menagerie, BeastCard.address, Gem.address); // deploy menagerie
+        return deployer.deploy(Menagerie, Monsters.address, Gem.address); // deploy menagerie
       })
       .then (function () {
         return deployer.deploy(LPtoken)

@@ -2,16 +2,16 @@
 pragma solidity ^0.8.17;
 
 import "./Gem.sol";
-import "./BeastCard.sol";
+import "./Monsters.sol";
 import "./MMR.sol";
 
 contract Fight {
-    BeastCard cardContract;
+    Monsters cardContract;
     Gem gemContract;
     MMR mmrContract;
     address[] matchmakingQueue; 
 
-    constructor(Gem gemAddress, BeastCard cardAddress, MMR mmrAddress) {
+    constructor(Gem gemAddress, Monsters cardAddress, MMR mmrAddress) {
         cardContract = cardAddress;
         gemContract = gemAddress;
         mmrContract = mmrAddress;
@@ -171,7 +171,7 @@ contract Fight {
     modifier cardsNotBroken(uint256[] memory cards) {
         // Require the cards to be functional
         for (uint i = 0; i < cards.length; i++) {
-            require(cardContract.stateOf(cards[i]) != BeastCard.cardState.broken, "Beast is broken, please repair the Beast");
+            require(cardContract.stateOf(cards[i]) != Monsters.cardState.broken, "Beast is broken, please repair the Beast");
         }
         _;
     }

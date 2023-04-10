@@ -7,7 +7,7 @@ import "./ERC20.sol";
  * @title Gem
  * @dev Gem is the ERC20 token used for MonsterMenagerie.
  */
-contract Gem is ERC20("BEAST GEM", "BGM") {
+contract Gem is ERC20("GEM", "GM") {
     uint256 supplyLimit;
     uint256 currentSupply;
     address owner;

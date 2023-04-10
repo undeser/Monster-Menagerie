@@ -4,7 +4,6 @@ pragma solidity ^0.8.18;
 import "./ERC20.sol"; 
 
 contract LPtoken is ERC20("BEAST GEM", "BGM") {
-    // ERC20 erc20Contract;
     uint256 supplyLimit;
     uint256 currentSupply;
     address owner;
