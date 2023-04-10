@@ -2,16 +2,16 @@
 pragma solidity ^0.8.17;
 
 import "./Gem.sol";
-import "./Monsters.sol";
+import "./Beasts.sol";
 import "./MMR.sol";
 
 /**
  * @title Fight
- * @dev Fight is the main functionality of our game, where an array of 5 monsters fight with another 5 monsters and 
+ * @dev Fight is the main functionality of our game, where an array of 5 Beasts fight with another 5 Beasts and 
  * and the winner wins gems based on the difference in damage dealt to the opponent.
  */
 contract Fight {
-    Monsters cardContract;
+    Beasts cardContract;
     Gem gemContract;
     MMR mmrContract;
     address[] matchmakingQueue; 
@@ -20,10 +20,10 @@ contract Fight {
     /**
      * Sets the values for the owner of contract, gemContract, cardContract and mmrContract
      * @param gemAddress Address of deployed Gem contract
-     * @param cardAddress Address of deployed Monsters contract
+     * @param cardAddress Address of deployed Beasts contract
      * @param mmrAddress Address of deployed MMR contract
      */
-    constructor(Gem gemAddress, Monsters cardAddress, MMR mmrAddress) {
+    constructor(Gem gemAddress, Beasts cardAddress, MMR mmrAddress) {
         owner = msg.sender;
         cardContract = cardAddress;
         gemContract = gemAddress;
@@ -43,7 +43,7 @@ contract Fight {
 
     /**
      * @dev Places a user to the matchmaking queue if queue is empty, else battle with the person at the top of the queue
-     * @param cards Array of 5 IDs of Monsters in a specified order
+     * @param cards Array of 5 IDs of Beasts in a specified order
      */
     function fight(uint256[] memory cards) public isOwnerOfCards(cards) isCorrectNumCards(cards) cardsNotBroken(cards) {
         // Get cost
@@ -152,7 +152,7 @@ contract Fight {
     }
 
     /**
-     * @dev Getter for the elemental scales of 2 Monsters
+     * @dev Getter for the elemental scales of 2 Beasts
      * @param myCard ID of my Monster
      * @param enemyCard ID of enemy Monster
      */
@@ -186,7 +186,7 @@ contract Fight {
     modifier isOwnerOfCards(uint256[] memory cards) {
         for (uint i = 0; i < cards.length; i++) {
             // Requires all the cards to be owned by the player
-            require(cardContract.ownerOf(cards[i]) == msg.sender, "Monster does not belong to player");
+            require(cardContract.ownerOf(cards[i]) == msg.sender, "Beast does not belong to player");
         }
         _;
     }
@@ -206,7 +206,7 @@ contract Fight {
     modifier cardsNotBroken(uint256[] memory cards) {
         // Require the cards to be functional
         for (uint i = 0; i < cards.length; i++) {
-            require(cardContract.stateOf(cards[i]) != Monsters.cardState.broken, "Beast is broken, please repair the Beast");
+            require(cardContract.stateOf(cards[i]) != Beasts.cardState.broken, "Beast is broken, please repair the Beast");
         }
         _;
     }

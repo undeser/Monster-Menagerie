@@ -21,7 +21,7 @@ var beast13 = require("../Beasts/Beast_13.json");
 
 
 var Gem = artifacts.require("../contracts/Gem.sol");
-var Monsters = artifacts.require("../contracts/Monsters.sol");
+var Beasts = artifacts.require("../contracts/Beasts.sol");
 var MMR = artifacts.require("../contract/MMR.sol");
 var Fight = artifacts.require("../contracts/Fight.sol");
 var Menagerie = artifacts.require("../contracts/Menagerie.sol");
@@ -31,7 +31,7 @@ const oneEth = new BigNumber(1000000000000000000); // 1 eth
 contract("Game", function (accounts) {
   before(async () => {
     gemInstance = await Gem.deployed();
-    monstersInstance = await Monsters.deployed();
+    BeastsInstance = await Beasts.deployed();
     MMRinstance = await MMR.deployed();
     fightInstance = await Fight.deployed();
     menagerieInstance = await Menagerie.deployed();
@@ -58,29 +58,29 @@ contract("Game", function (accounts) {
     await assert(amt2.isEqualTo(correctAmt1), "Incorrect amount of gems issued for account 2");
   });
 
-  it("Approve Monsters Contract", async () => {
-    // Give approval to Monster contract
-    await gemInstance.giveGemApproval(monstersInstance.address, 1000, { from: accounts[1]}); 
-    await gemInstance.giveGemApproval(monstersInstance.address, 1000, { from: accounts[2]}); 
+  it("Approve Beasts Contract", async () => {
+    // Give approval to Beast contract
+    await gemInstance.giveGemApproval(BeastsInstance.address, 1000, { from: accounts[1]}); 
+    await gemInstance.giveGemApproval(BeastsInstance.address, 1000, { from: accounts[2]}); 
 
-    const allowance1 = new BigNumber(await gemInstance.checkGemAllowance(accounts[1], monstersInstance.address));
-    const allowance2 = new BigNumber(await gemInstance.checkGemAllowance(accounts[2], monstersInstance.address));
+    const allowance1 = new BigNumber(await gemInstance.checkGemAllowance(accounts[1], BeastsInstance.address));
+    const allowance2 = new BigNumber(await gemInstance.checkGemAllowance(accounts[2], BeastsInstance.address));
     const correctAllowance = new BigNumber(1000);
 
     await assert(allowance1.isEqualTo(correctAllowance), "Allowance not given to contract correctly for account 1");
     await assert(allowance2.isEqualTo(correctAllowance), "Allowance not given to contract correctly for account 2");
   });
 
-  it("Mint Monster", async () => {
+  it("Mint Beast", async () => {
     // Mint card (Beast 0) to account 1
-    await monstersInstance.mint(accounts[1], beast0.name, beast0.attributes[0].value, beast0.attributes[1].value, beast0.attributes[2].value, beast0.attributes[3].value, beast0.attributes[4].value);
+    await BeastsInstance.mint(accounts[1], beast0.name, beast0.attributes[0].value, beast0.attributes[1].value, beast0.attributes[2].value, beast0.attributes[3].value, beast0.attributes[4].value);
 
-    const name = await monstersInstance.nameOf(0);
-    const rarity = await monstersInstance.rarityOf(0);
-    const nature = await monstersInstance.natureOf(0);
-    const cost = await monstersInstance.costOf(0);
-    const attack = await monstersInstance.attackOf(0);
-    const health = await monstersInstance.healthOf(0);
+    const name = await BeastsInstance.nameOf(0);
+    const rarity = await BeastsInstance.rarityOf(0);
+    const nature = await BeastsInstance.natureOf(0);
+    const cost = await BeastsInstance.costOf(0);
+    const attack = await BeastsInstance.attackOf(0);
+    const health = await BeastsInstance.healthOf(0);
     const balance = new BigNumber(await gemInstance.checkGems({ from: accounts[1] }));
     const correctBalance = new BigNumber(995);
 
@@ -95,10 +95,10 @@ contract("Game", function (accounts) {
 
   it("Enter queue", async () => {
     // Mints 4 more cards for first player
-    await monstersInstance.mint(accounts[1], beast1.name, beast1.attributes[0].value, beast1.attributes[1].value, beast1.attributes[2].value, beast1.attributes[3].value, beast1.attributes[4].value);
-    await monstersInstance.mint(accounts[1], beast2.name, beast2.attributes[0].value, beast2.attributes[1].value, beast2.attributes[2].value, beast2.attributes[3].value, beast2.attributes[4].value);
-    await monstersInstance.mint(accounts[1], beast3.name, beast3.attributes[0].value, beast3.attributes[1].value, beast3.attributes[2].value, beast3.attributes[3].value, beast3.attributes[4].value);
-    await monstersInstance.mint(accounts[1], beast4.name, beast4.attributes[0].value, beast4.attributes[1].value, beast4.attributes[2].value, beast4.attributes[3].value, beast4.attributes[4].value);
+    await BeastsInstance.mint(accounts[1], beast1.name, beast1.attributes[0].value, beast1.attributes[1].value, beast1.attributes[2].value, beast1.attributes[3].value, beast1.attributes[4].value);
+    await BeastsInstance.mint(accounts[1], beast2.name, beast2.attributes[0].value, beast2.attributes[1].value, beast2.attributes[2].value, beast2.attributes[3].value, beast2.attributes[4].value);
+    await BeastsInstance.mint(accounts[1], beast3.name, beast3.attributes[0].value, beast3.attributes[1].value, beast3.attributes[2].value, beast3.attributes[3].value, beast3.attributes[4].value);
+    await BeastsInstance.mint(accounts[1], beast4.name, beast4.attributes[0].value, beast4.attributes[1].value, beast4.attributes[2].value, beast4.attributes[3].value, beast4.attributes[4].value);
 
     // Give allowance to Fight contract
     await gemInstance.giveGemApproval(fightInstance.address, 1000, { from: accounts[1]}); 
@@ -111,11 +111,11 @@ contract("Game", function (accounts) {
 
   it("Fight between 2 players", async () => {
     // Mint 5 cards for player 2
-    await monstersInstance.mint(accounts[2], beast5.name, beast5.attributes[0].value, beast5.attributes[1].value, beast5.attributes[2].value, beast5.attributes[3].value, beast5.attributes[4].value);
-    await monstersInstance.mint(accounts[2], beast6.name, beast6.attributes[0].value, beast6.attributes[1].value, beast6.attributes[2].value, beast6.attributes[3].value, beast6.attributes[4].value);
-    await monstersInstance.mint(accounts[2], beast7.name, beast7.attributes[0].value, beast7.attributes[1].value, beast7.attributes[2].value, beast7.attributes[3].value, beast7.attributes[4].value);
-    await monstersInstance.mint(accounts[2], beast8.name, beast8.attributes[0].value, beast8.attributes[1].value, beast8.attributes[2].value, beast8.attributes[3].value, beast8.attributes[4].value);
-    await monstersInstance.mint(accounts[2], beast9.name, beast9.attributes[0].value, beast9.attributes[1].value, beast9.attributes[2].value, beast9.attributes[3].value, beast9.attributes[4].value);
+    await BeastsInstance.mint(accounts[2], beast5.name, beast5.attributes[0].value, beast5.attributes[1].value, beast5.attributes[2].value, beast5.attributes[3].value, beast5.attributes[4].value);
+    await BeastsInstance.mint(accounts[2], beast6.name, beast6.attributes[0].value, beast6.attributes[1].value, beast6.attributes[2].value, beast6.attributes[3].value, beast6.attributes[4].value);
+    await BeastsInstance.mint(accounts[2], beast7.name, beast7.attributes[0].value, beast7.attributes[1].value, beast7.attributes[2].value, beast7.attributes[3].value, beast7.attributes[4].value);
+    await BeastsInstance.mint(accounts[2], beast8.name, beast8.attributes[0].value, beast8.attributes[1].value, beast8.attributes[2].value, beast8.attributes[3].value, beast8.attributes[4].value);
+    await BeastsInstance.mint(accounts[2], beast9.name, beast9.attributes[0].value, beast9.attributes[1].value, beast9.attributes[2].value, beast9.attributes[3].value, beast9.attributes[4].value);
 
     // Give allowance to Fight contract
     await gemInstance.giveGemApproval(fightInstance.address, 1000, { from: accounts[2] }); 
@@ -136,16 +136,16 @@ contract("Game", function (accounts) {
     truffleAssert.eventEmitted(fight, "outcomeWin", { winner: accounts[1] }, "Incorrect outcome");
   });
 
-  it("Buy Monster on menagerie at listed price", async () => {
+  it("Buy Beast on menagerie at listed price", async () => {
     // Mint new card
-    await monstersInstance.mint(accounts[1], beast10.name, beast10.attributes[0].value, beast10.attributes[1].value, beast10.attributes[2].value, beast10.attributes[3].value, beast10.attributes[4].value);
+    await BeastsInstance.mint(accounts[1], beast10.name, beast10.attributes[0].value, beast10.attributes[1].value, beast10.attributes[2].value, beast10.attributes[3].value, beast10.attributes[4].value);
 
     let originalBalance1 = new BigNumber(await gemInstance.checkGems({ from: accounts[1] }));
     let originalBalance2 = new BigNumber(await gemInstance.checkGems({ from: accounts[2] }));
     let originalCommsBalance = new BigNumber(await menagerieInstance.checkCommission());
   
     // Set approval for beast card for marketplace to transfer 
-    await monstersInstance.approve(menagerieInstance.address, 10, { from: accounts[1] });
+    await BeastsInstance.approve(menagerieInstance.address, 10, { from: accounts[1] });
 
     // Set approval for marketplace to spend gems
     await gemInstance.giveGemApproval(menagerieInstance.address, 10000, { from: accounts[1]}); 
@@ -157,7 +157,7 @@ contract("Game", function (accounts) {
     // Buy card using account 2
     await menagerieInstance.buy(10, { from: accounts[2] });
 
-    let newOwner = await monstersInstance.ownerOf(10);
+    let newOwner = await BeastsInstance.ownerOf(10);
     assert.equal(newOwner, accounts[2], "Unsuccessful purchase of cards");
 
     let newBalance1 = new BigNumber(await gemInstance.checkGems({ from: accounts[1] }));
@@ -171,16 +171,16 @@ contract("Game", function (accounts) {
     assert((originalCommsBalance.plus(comms)).isEqualTo(commsBalance), "Incorrect transfer of gems for commissions");
   });
 
-  it("Buy Monster on marketplace via offer", async () => {
+  it("Buy Beast on marketplace via offer", async () => {
     // Mint new card
-    await monstersInstance.mint(accounts[1], beast11.name, beast11.attributes[0].value, beast11.attributes[1].value, beast11.attributes[2].value, beast11.attributes[3].value, beast11.attributes[4].value);
+    await BeastsInstance.mint(accounts[1], beast11.name, beast11.attributes[0].value, beast11.attributes[1].value, beast11.attributes[2].value, beast11.attributes[3].value, beast11.attributes[4].value);
     
     let originalBalance1 = new BigNumber(await gemInstance.checkGems({ from: accounts[1] }));
     let originalBalance2 = new BigNumber(await gemInstance.checkGems({ from: accounts[2] }));
     let originalCommsBalance = new BigNumber(await menagerieInstance.checkCommission());
 
     // Set approval for beast card for marketplace to transfer 
-    await monstersInstance.approve(menagerieInstance.address, 11, { from: accounts[1] });
+    await BeastsInstance.approve(menagerieInstance.address, 11, { from: accounts[1] });
 
     // List card
     await menagerieInstance.list(11, 40, { from: accounts[1] });
@@ -191,7 +191,7 @@ contract("Game", function (accounts) {
     // Accept offer
     await menagerieInstance.acceptOffer(11, accounts[2], { from: accounts[1] });
 
-    let newOwner = await monstersInstance.ownerOf(11);
+    let newOwner = await BeastsInstance.ownerOf(11);
     assert.equal(newOwner, accounts[2], "Unsuccessful purchase of cards");
 
     let newBalance1 = new BigNumber(await gemInstance.checkGems({ from: accounts[1] }));
@@ -207,7 +207,7 @@ contract("Game", function (accounts) {
 
   it("Check offers", async () => {
     // Mint new card
-    await monstersInstance.mint(accounts[1], beast12.name, beast12.attributes[0].value, beast12.attributes[1].value, beast12.attributes[2].value, beast12.attributes[3].value, beast12.attributes[4].value);
+    await BeastsInstance.mint(accounts[1], beast12.name, beast12.attributes[0].value, beast12.attributes[1].value, beast12.attributes[2].value, beast12.attributes[3].value, beast12.attributes[4].value);
     
     // List card
     await menagerieInstance.list(12, 40, { from: accounts[1] });
@@ -235,13 +235,13 @@ contract("Game", function (accounts) {
   /*
   it("Check Withdrawal", async () => {
     // Mint new card
-    await monstersInstance.mint(accounts[1], beast13.name, beast13.attributes[0].value, beast13.attributes[1].value, beast13.attributes[2].value, beast13.attributes[3].value, beast13.attributes[4].value);
+    await BeastsInstance.mint(accounts[1], beast13.name, beast13.attributes[0].value, beast13.attributes[1].value, beast13.attributes[2].value, beast13.attributes[3].value, beast13.attributes[4].value);
     
     // List card
     await menagerieInstance.list(13, 100, { from: accounts[1] });
 
     // Set approval for beast card for marketplace to transfer 
-    await monstersInstance.approve(menagerieInstance.address, 13, { from: accounts[1] });
+    await BeastsInstance.approve(menagerieInstance.address, 13, { from: accounts[1] });
 
     // Set approval for marketplace to spend gems
     await gemInstance.giveGemApproval(menagerieInstance.address, 10000, { from: accounts[1]}); 

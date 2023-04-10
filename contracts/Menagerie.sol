@@ -2,10 +2,10 @@
 pragma solidity ^0.8.17;
 
 import "./Gem.sol";
-import "./Monsters.sol";
+import "./Beasts.sol";
 
 contract Menagerie {
-    Monsters CardContract;
+    Beasts CardContract;
     Gem GemContract;
     address _owner = msg.sender;
 
@@ -18,48 +18,48 @@ contract Menagerie {
     mapping(uint256 => uint256) listPrice;
     mapping(uint256 => Offer[]) offers;
 
-    constructor(Monsters cardAddress, Gem gemAddress) {
+    constructor(Beasts cardAddress, Gem gemAddress) {
         CardContract = cardAddress;
         GemContract = gemAddress;
     }
 
     /**
-     * @dev List Monster for sale on marketplace
-     * @param id ID of Monster
-     * @param price Listed price of Monster
+     * @dev List Beast for sale on marketplace
+     * @param id ID of Beast
+     * @param price Listed price of Beast
      */
     function list(uint256 id, uint256 price) public {
-        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot list Monster as you are not the owner");
+        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot list Beast as you are not the owner");
         listPrice[id] = price;
     }
 
     /**
-     * @dev Unlist Monster from marketplace
-     * @param id ID of Monster
+     * @dev Unlist Beast from marketplace
+     * @param id ID of Beast
      */
     function unlist(uint256 id) public {
-        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot unlist Monster as you are not the owner");
+        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot unlist Beast as you are not the owner");
         listPrice[id] = 0;
         delete offers[id];
     }
 
     /**
-     * @dev Getter for listed price of Monster on marketplace
-     * @param id ID of Monster
+     * @dev Getter for listed price of Beast on marketplace
+     * @param id ID of Beast
      */
     function checkPrice(uint256 id) public view returns(uint) {
         return uint(listPrice[id])*105/100; // Charge 5% commission
     }
 
     /**
-     * @dev Make an offer to listing to purchase Monster
-     * @param id ID of Monster
-     * @param offerPrice Price of offer for Monster
+     * @dev Make an offer to listing to purchase Beast
+     * @param id ID of Beast
+     * @param offerPrice Price of offer for Beast
      */
     function makeOffer(uint256 id, uint256 offerPrice) public {
-        require(listPrice[id] != 0, "Monster is not listed for sale");
+        require(listPrice[id] != 0, "Beast is not listed for sale");
         require(GemContract.balanceOf(msg.sender) >= offerPrice, "Insufficient Gems");
-        require(checkOfferExists(id, address(msg.sender)) == false, "You have already made an offer for this Monster");
+        require(checkOfferExists(id, address(msg.sender)) == false, "You have already made an offer for this Beast");
         Offer memory newOffer = Offer({
             owner: address(msg.sender),
             offerValue: offerPrice,
@@ -69,11 +69,11 @@ contract Menagerie {
     }
 
     /**
-     * @dev View the offers for the Monster
-     * @param id ID of Monster
+     * @dev View the offers for the Beast
+     * @param id ID of Beast
      */
     function checkOffers(uint256 id) public view returns(Offer[] memory) {
-        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot view the offers for this Monster as you are not the owner");
+        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot view the offers for this Beast as you are not the owner");
         uint256 numOffers = offers[id].length;
         Offer[] memory offerIds = new Offer[](numOffers);
         for (uint i = 0; i < numOffers; i++) {
@@ -84,12 +84,12 @@ contract Menagerie {
     }
 
     /**
-     * @dev Accept offer made by offerer for Monster
-     * @param id ID of Monster
-     * @param offerer Address of offerer for the Monster
+     * @dev Accept offer made by offerer for Beast
+     * @param id ID of Beast
+     * @param offerer Address of offerer for the Beast
      */
     function acceptOffer(uint256 id, address offerer) public {
-        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot accept offers for this Monster as you are not the owner");
+        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot accept offers for this Beast as you are not the owner");
         require(checkOfferExists(id, offerer) == true, "Offer does not exist");
         uint256 price;
 
@@ -110,7 +110,7 @@ contract Menagerie {
 
     /**
      * @dev Check if an offer exists
-     * @param id ID of Monster
+     * @param id ID of Beast
      * @param offerer Address of offerer
      */
     function checkOfferExists(uint256 id, address offerer) public view returns(bool exists) {
@@ -124,11 +124,11 @@ contract Menagerie {
     }
 
     /**
-     * @dev Retract offer that was already made for a Monster
-     * @param id ID of Monster
+     * @dev Retract offer that was already made for a Beast
+     * @param id ID of Beast
      */
     function retractOffer(uint256 id) public {
-        require(checkOfferExists(id, address(msg.sender)) == true, "You have not made an offer for this Monster");
+        require(checkOfferExists(id, address(msg.sender)) == true, "You have not made an offer for this Beast");
         address Offerer = address(msg.sender);
         uint256 numOffers = offers[id].length;
         for (uint i = 0; i < numOffers; i++) {
@@ -140,11 +140,11 @@ contract Menagerie {
     }
 
     /**
-     * @dev Buy Monster at listed price
-     * @param id ID of Monster
+     * @dev Buy Beast at listed price
+     * @param id ID of Beast
      */
     function buy(uint256 id) public {
-        require(listPrice[id] != 0, "Monster is not listed for sale");
+        require(listPrice[id] != 0, "Beast is not listed for sale");
         require(GemContract.balanceOf(msg.sender) >= this.checkPrice(id), "Insufficient Gems");
 
         address recipent = address(uint160(CardContract.ownerOf(id)));
