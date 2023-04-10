@@ -9,12 +9,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_lpToken",
+						"name": "_stakingToken",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "_rewardToken",
+						"name": "_rewardsToken",
 						"type": "address"
 					},
 					{
@@ -42,7 +42,100 @@
 						"type": "uint256"
 					}
 				],
-				"name": "ClaimReward",
+				"name": "RewardPaid",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardToDistribute",
+						"type": "uint256"
+					}
+				],
+				"name": "RewardToDistribute",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "currentTime",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timeElapsed",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardToDistribute",
+						"type": "uint256"
+					}
+				],
+				"name": "RewardUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "currentTime",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "lastUpdateTime",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timeElapsed",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardRate",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "Staked",
 				"type": "event"
 			},
 			{
@@ -61,63 +154,25 @@
 						"type": "uint256"
 					}
 				],
-				"name": "Deposit",
+				"name": "Withdrawn",
 				"type": "event"
 			},
 			{
-				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": true,
 						"internalType": "address",
-						"name": "user",
+						"name": "account",
 						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
 					}
 				],
-				"name": "RewardClaimed",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "Withdraw",
-				"type": "event"
-			},
-			{
-				"inputs": [],
-				"name": "accRewardPerShare",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
+				"name": "_updateRewards",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "claimRewards",
+				"name": "claimReward",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -136,16 +191,35 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
+				"inputs": [],
+				"name": "dailyRewardCounter",
+				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "",
 						"type": "uint256"
 					}
 				],
-				"name": "deposit",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "earned",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -165,7 +239,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_user",
+						"name": "account",
 						"type": "address"
 					}
 				],
@@ -182,7 +256,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "lastUpdateBlock",
+				"name": "lastUpdateTime",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -208,9 +282,108 @@
 			},
 			{
 				"inputs": [],
+				"name": "maxDailyReward",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rewardPerToken",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rewardPerTokenStored",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rewardRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "setStakingPoolLive",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "stake",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "stakers",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "rewardPerTokenPaid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "rewards",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lastUpdateTimeForAccount",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -253,37 +426,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "updatePool",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "userInfo",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "stakedAmount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "rewardDebt",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -310,7 +452,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/LPstaking.sol": "LPstaking"
+			"contracts/StakingRewards.sol": "StakingRewards"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -348,18 +490,11 @@
 				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
 			]
 		},
-		"contracts/LPstaking.sol": {
-			"keccak256": "0x6fc6af893999f6062a7c6d23366d7e66f83a6619fcff1839208b8f65da2a7788",
+		"contracts/StakingRewards.sol": {
+			"keccak256": "0x15f64773dc0b2fd10609238c05f986adda16ec308789c26ce338901d82bbed45",
 			"urls": [
-				"bzz-raw://dffbd89994609bf31cfc0452343d3749c22a44a02f1ff5cf8edfbb3fd4ab24c9",
-				"dweb:/ipfs/Qmetbfyw9PV6XtwzABwmgu8fMQ8rNLvzNxTwVbo2UGH4B8"
-			]
-		},
-		"contracts/SafeMath.sol": {
-			"keccak256": "0xe081821ebff57d2d2a52722bdb5ae75ff21773869bbb37de20f873131c00a428",
-			"urls": [
-				"bzz-raw://fc0a41c2ab68fe2dd1d9645ca55aadd6ea7e225314e1d552ad7f91b2ba29ad41",
-				"dweb:/ipfs/QmRdLfGs6frELuZNnMruNTkaoA79HPT8onogh3UdyGrBnZ"
+				"bzz-raw://248c70e6b9348738728c3a63b7226face3df6d15c91f3f2a18c21dd9890affe5",
+				"dweb:/ipfs/QmNvhqyZV41bFq5KvadW7i7CjkCQSQN1FuxUEAF6pfZar2"
 			]
 		},
 		"contracts/extensions/IERC20Metadata.sol": {

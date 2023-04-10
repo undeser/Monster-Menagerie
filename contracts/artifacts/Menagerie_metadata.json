@@ -54,7 +54,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "checkComission",
+				"name": "checkCommission",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -117,7 +117,7 @@
 								"type": "uint256"
 							}
 						],
-						"internalType": "struct Marketplace.Offer[]",
+						"internalType": "struct Menagerie.Offer[]",
 						"name": "",
 						"type": "tuple[]"
 					}
@@ -240,7 +240,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Marketplace.sol": "Marketplace"
+			"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Menagerie.sol": "Menagerie"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -255,27 +255,27 @@
 	},
 	"sources": {
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/BeastCard.sol": {
-			"keccak256": "0xdd15cdfd66fd29f2511e1504efc7c62542a4906204b03026e6c8fa3bd1c98919",
+			"keccak256": "0x72b37d895e550caf03632ba34d8455a2ab6e3de26c0e86ddc20b18327b3e537a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8a033323d0db68485a5d58c771aea6b0d00e98b5309c5cb0a2f646a243d505d5",
-				"dweb:/ipfs/QmZHhiGmJv6m2YF6MtZ9BkYx6VPEQkPyyU9fJrXq1fGdqt"
+				"bzz-raw://7504a51dcfe240da328358078a00b027b9817ecae7b5a7561129ec571ef59a60",
+				"dweb:/ipfs/QmQMKv8Qk8txBCWxVDnMJRtPavroY5mmzfiXEfBZtqai9Y"
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/ERC20.sol": {
-			"keccak256": "0x543c17d55e68d2325d1e0517bdb09c67987a7d66938663a9f4c7d93f1692cde9",
+			"keccak256": "0xf1d1c01c73e45a75e5e756af3b5005a0314eb4ade9c0215f2705cdfeee8e3dbb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9e4a31e3bdc339ad1626de50c81eee9805efe2434cc2d2424a890812d4f91f85",
-				"dweb:/ipfs/QmVaTPwoPQ9fAbCJio6qzr92FfphpWLo6iX49cWRQeoHhs"
+				"bzz-raw://9dd51ca2397e2d178fbc5c3fa81e649a8b0449bf80696331875a7c1e407e6c14",
+				"dweb:/ipfs/Qme9ytQhuXHovvDvqRH26oQ5suWhqwGQJFreWhh3FSMrmt"
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Gem.sol": {
-			"keccak256": "0xac7b3670499f4b866a4cf900796ee562164aefabf546726d7b4b7789b00ae3a5",
+			"keccak256": "0x5a8a12cf78953270b6f61708919e3b1c16be8e7288c23a6c1d897374a10434de",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4a2df020b22268ecb0cca0f5803b97ba40a2d2bfc2b326dc91b332093e3ecdac",
-				"dweb:/ipfs/QmNn3fqE9DMqMqkhNPWxPYGcKzHrbkiLXULZqqNALemFK8"
+				"bzz-raw://3d95f506d9ecc2269380351a880d6b3c2ed56b3c2f3567c73514849090913792",
+				"dweb:/ipfs/QmciZvW1TdfuwN7g9SoWhddqfEeMvkhFwHhia3RKqMuzTz"
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/IERC20.sol": {
@@ -294,12 +294,12 @@
 				"dweb:/ipfs/QmYnQSzE2xD54sgYEb2bmf3DuRqEBKD3j95LCUSjNMobkB"
 			]
 		},
-		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Marketplace.sol": {
-			"keccak256": "0xcc278f60c506adbbdfc2de98e0c235caaa64d380107d7941a964ad0888f66031",
+		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/Menagerie.sol": {
+			"keccak256": "0xf5446e9f92552335eed95dec185a1550037b9bc607a6e09ddd4813b7f8395f6e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://585e800197a784a2faf0c5c61b427451f5658bf14795e92dcf4136c5c17909ef",
-				"dweb:/ipfs/QmX22718DLBBgyUumcrkJoLnWgsV9X5FX5ZYoRsuCUPWjo"
+				"bzz-raw://7a4af19bb7d6fd8fcd87cb78065a7e848de678f111dc2b59b1f2b3a8c3a1a2b7",
+				"dweb:/ipfs/QmVYCacfs9ptFi5UiMoCbsEENwaU84e7b6VHHN4oms9ou6"
 			]
 		},
 		"Documents/Documents/Y3S2/IS4302/is4302placeholdername/contracts/extensions/IERC20Metadata.sol": {

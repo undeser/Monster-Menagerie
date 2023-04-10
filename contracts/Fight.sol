@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.2;
+pragma solidity ^0.8.17;
 
 import "./Gem.sol";
 import "./BeastCard.sol";
@@ -17,10 +17,14 @@ contract Fight {
         mmrContract = mmrAddress;
     }
 
+    // owner => array of cards (for players in queue)
     mapping(address => uint256[]) internal _cardsOfPlayersInQueue;
+    // owner => scale
     mapping(address => uint256) internal _scale;
 
     event inQueue(address player);
+    event cardBroken(uint256 cardId);
+    event damageDifference(uint256 diff);
     event outcomeWin(address winner);
     event outcomeDraw();
 
@@ -33,6 +37,7 @@ contract Fight {
         }
         require(cost <= 65, "Cost exceeded threshold");
 
+        // Store in an array of scales due to solidity variable limits
         uint[] memory scales = new uint[](3);
 
         // Default scale
@@ -40,7 +45,8 @@ contract Fight {
 
         // Determine the scale of MY TEAM
         // Our algorithm to scale the team stats based on the total cost used
-        scales[1] = (((65 / cost) / 20 ) + 1) * 10;
+        // scales[1] = (((65 / cost) / 20 ) + 1) * 10;
+        scales[1] = ((65 - cost) / 10) + 10;
 
         if (matchmakingQueue.length == 0) {
             // Matchmaking
@@ -71,6 +77,8 @@ contract Fight {
                     // Enemy card is broken
                     cardContract.cardDestroyed(enemyCards[i]);
 
+                    emit cardBroken(enemyCards[i]);
+
                     // Extra dmg 
                     dmg[0] += (cardContract.attackOf(cards[i]) * scales[1] * elementalScales[0] - cardContract.healthOf(enemyCards[i]) * scales[2] * elementalScales[1]);
                 } 
@@ -78,6 +86,8 @@ contract Fight {
                 if (cardContract.attackOf(enemyCards[i]) * scales[2] * elementalScales[1] > cardContract.healthOf(cards[i]) * scales[1] * elementalScales[0]) {
                     // My card is broken
                     cardContract.cardDestroyed(cards[i]);
+
+                    emit cardBroken(cards[i]);
 
                     // Extra dmg 
                     dmg[1] += (cardContract.attackOf(enemyCards[i]) * scales[2] * elementalScales[1] - cardContract.healthOf(cards[i]) * scales[1] * elementalScales[0]);
@@ -125,6 +135,7 @@ contract Fight {
         }
     }
 
+    // Function to get the scales of my card against enemy card
     function getElementalScales(uint256 myCard, uint256 enemyCard) internal view returns (uint[] memory) {
             uint[] memory elementalScales = new uint[](2);
             // Set default elementalScales for mine and enemy's 

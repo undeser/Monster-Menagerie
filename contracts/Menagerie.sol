@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import "./Gem.sol";
 import "./BeastCard.sol";
 
-contract Marketplace {
+contract Menagerie {
     BeastCard CardContract;
     Gem GemContract;
     //uint256 public comissionFee;
@@ -19,10 +19,10 @@ contract Marketplace {
     mapping(uint256 => uint256) listPrice;
     mapping(uint256 => Offer[]) offers;
 
-        constructor(BeastCard beastAddress, Gem gemAddress) {
-            CardContract = beastAddress;
-            GemContract = gemAddress;
-        }
+    constructor(BeastCard beastAddress, Gem gemAddress) {
+        CardContract = beastAddress;
+        GemContract = gemAddress;
+    }
 
     function list(uint256 cardID, uint256 price) public {
         require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot list this card as you are not the owner");
@@ -143,7 +143,7 @@ contract Marketplace {
         }
     }
 
-    function checkComission() public view returns(uint256) {
+    function checkCommission() public view returns(uint256) {
         require(msg.sender == _owner, "Sorry, you are not allowed to do that");
         return GemContract.checkGemsOf(address(this));
     }
