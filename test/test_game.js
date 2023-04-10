@@ -228,11 +228,11 @@ contract("Game", function (accounts) {
     await assert.equal(output[1]['owner'], accounts[3], "Incorrect owner of offer 2");
     await assert.equal(output[0]['offerValue'], 20, "Incorrect owner of offer 1");
     await assert.equal(output[1]['offerValue'], 25, "Incorrect owner of offer 2");
-    await assert.equal(output[0]['offerCardId'], 12, "Incorrect owner of offer 1");
-    await assert.equal(output[1]['offerCardId'], 12, "Incorrect owner of offer 2");
+    await assert.equal(output[0]['offerCardId'], 12, "Incorrect card of offer 1");
+    await assert.equal(output[1]['offerCardId'], 12, "Incorrect card of offer 2");
   });
 
-  /*
+  
   it("Check Withdrawal", async () => {
     // Mint new card
     await BeastsInstance.mint(accounts[1], beast13.name, beast13.attributes[0].value, beast13.attributes[1].value, beast13.attributes[2].value, beast13.attributes[3].value, beast13.attributes[4].value);
@@ -249,13 +249,12 @@ contract("Game", function (accounts) {
 
     await menagerieInstance.buy(13, { from: accounts[2] });
 
-    let balance = new BigNumber(await menagerieInstance.checkCommission({from: accounts[0]}));
     await menagerieInstance.withDraw( {from: accounts[0]});
+
     let withdrawalBalance = new BigNumber(await gemInstance.checkGems({from: accounts[0]}))
-    //console.log(withdrawalBalance)
-    await assert.equal(withdrawalBalance, balance, "Incorrect owner withdrawal amount");
+    let balance = new BigNumber(7);
+    await assert(withdrawalBalance.isEqualTo(balance), "Incorrect owner withdrawal amount");
   });
-  */
   
 
 });
