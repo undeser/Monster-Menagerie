@@ -1,26 +1,52 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+/**
+ * @title MMR - Matchmaking Rating
+ * @dev MMR stores the users' MMR.
+ */
 contract MMR {
+    address owner;
+
+    constructor() {
+        owner = msg.sender;    
+    }
+
     mapping(address => uint256) internal _playerMMR;
 
+    /**
+     * @dev Check if user is new to the game
+     * @param user Address of user
+     */
     function isNew(address user) public view returns (bool) {
         return _playerMMR[user] == 0;
     }
 
+    /**
+     * @dev Initialise new user
+     * @param user Address of user
+     */
     function initialiseUser(address user) public {
         if(_playerMMR[user] == 0) {
             _playerMMR[user] = 100;
         }
     }
 
-    // Lowest MMR is 1
-    // MMR = 0 means user has not been initialised
+    /**
+     * @dev Getter for user MMR
+     * @param user Address of user
+     */
     function getMMR(address user) public view returns (uint256) {
+        // Lowest MMR is 1
+        // MMR = 0 means user has not been initialised
         return _playerMMR[user];
     }
 
-    // Function to update MMR given a loser and winner
+    /**
+     * @dev Update MMR for winner and loser
+     * @param winner Address of winner
+     * @param loser Address of loser
+     */
     function updateMMR(address winner, address loser) public {
         uint256 winnerMMR = _playerMMR[winner];
         uint256 loserMMR = _playerMMR[loser];
