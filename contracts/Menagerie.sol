@@ -2,10 +2,10 @@
 pragma solidity ^0.8.17;
 
 import "./Gem.sol";
-import "./Beasts.sol";
+import "./BeastCard.sol";
 
 contract Menagerie {
-    Beasts CardContract;
+    BeastCard CardContract;
     Gem GemContract;
     //uint256 public comissionFee;
     address _owner = msg.sender;
@@ -19,7 +19,7 @@ contract Menagerie {
     mapping(uint256 => uint256) listPrice;
     mapping(uint256 => Offer[]) offers;
 
-    constructor(Beasts beastAddress, Gem gemAddress) {
+    constructor(BeastCard beastAddress, Gem gemAddress) {
         CardContract = beastAddress;
         GemContract = gemAddress;
     }
@@ -66,6 +66,7 @@ contract Menagerie {
     function acceptOffer(uint256 cardID, address offerer) public {
         require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot accept offers for this card as you are not the owner");
         require(checkOfferExists(cardID, offerer) == true, "Offer does not exists");
+        require(checkOfferExists(cardID, address(msg.sender)) == false, "You have not made an offer for this card");
         uint256 price;
 
         uint256 numOffers = offers[cardID].length;
@@ -137,9 +138,8 @@ contract Menagerie {
 
     function withDraw() public { // Withdraw commission
         require(msg.sender == _owner, "Sorry, you are not allowed to do that");
-        uint256 balance = GemContract.checkGemsOf(address(this));
         if(msg.sender == _owner) {
-            GemContract.transferGems(msg.sender, balance);
+            GemContract.transferGems(msg.sender, address(this).balance);
         }
     }
 
