@@ -4,6 +4,10 @@ pragma solidity ^0.8.17;
 import './IERC721Receiver.sol';
 import './Gem.sol';
 
+/**
+ * @title Beasts
+ * @dev Beasts is an ERC721 token that we use to battle each other in our game, to earn Gems.
+ */
 contract Beasts {
     Gem gemContract;
     string public collectionName;
