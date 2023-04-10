@@ -7,6 +7,10 @@ import'./LPtoken.sol';
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol"; // npm install @openzeppelin/contracts
 
+/**
+ * @title StakingRewards
+ * @dev Staking Rewards that are given out to Stakers of LPtokens.
+ */
 contract StakingRewards {
     using SafeMath for uint256;
     LPtoken public lpToken;
@@ -34,6 +38,12 @@ contract StakingRewards {
 
     mapping(address => StakeInfo) public stakers;
 
+    /**
+     * Set values for address of LPtoken, address of Gem token and total amount of rewards
+     * @param stakingToken Address of LPtoken contract deployed
+     * @param rewardsToken Address of Gem contract deployed
+     * @param rewardPool Total reward pool amount
+     */
     constructor(address stakingToken, address rewardsToken, uint256 rewardPool) {
         lpToken = LPtoken(stakingToken);
         gem = Gem(rewardsToken);
@@ -46,7 +56,10 @@ contract StakingRewards {
                                 //into the contract
         owner = msg.sender;
     }
-
+    
+    /**
+     * @dev Enable the staking pool and set it to live
+     */
     function setStakingPoolLive() public onlyOwner {
         require(gem.checkGemsOf(msg.sender) >= totalRewardPool, "You do not have sufficient Gem for the rewardPool");
         require(stakingPoolLive == false, "Staking pool is already live");
@@ -55,6 +68,9 @@ contract StakingRewards {
         emit StakingPoolLive(true);
     }
 
+    /**
+     * @dev Update the staking pool
+     */
     function updatePool() internal {
         if (block.timestamp <= lastRewardTimestamp) {
             return;
@@ -71,6 +87,10 @@ contract StakingRewards {
         lastRewardTimestamp = block.timestamp;
     }
 
+    /**
+     * Getter for the pending rewards for the user
+     * @param _user Address of user
+     */
     function pendingReward(address _user) external view checkStakingPoolStatus returns (uint256) {
         StakeInfo storage user = stakers[_user];
         uint256 _accGemPerShare = accGemPerShare;
@@ -82,6 +102,10 @@ contract StakingRewards {
         return user.amount.mul(_accGemPerShare).div(1e18).sub(user.rewardDebt);
     }
 
+    /**
+     * @dev Stake LPtokens in the staking pool to earn rewards
+     * @param amountToStake Amount of LPtokens to stake
+     */
     function stake(uint256 amountToStake) external checkStakingPoolStatus {
         require(amountToStake > 0, "Cannot stake 0 tokens");
         updatePool();
@@ -101,6 +125,10 @@ contract StakingRewards {
         emit Stake(msg.sender, amountToStake);
     }
 
+    /**
+     * @dev Withdraw staked LPtokens from the staking pool
+     * @param amountToWithdraw Amount of LPtokens to withdraw
+     */
     function withdraw(uint256 amountToWithdraw) external checkStakingPoolStatus {
         StakeInfo storage user = stakers[msg.sender];
         require(user.amount >= amountToWithdraw, "withdraw: not enough balance");
@@ -118,6 +146,9 @@ contract StakingRewards {
         emit Withdraw(msg.sender, amountToWithdraw);
     }
 
+    /**
+     * @dev Claim rewards earned from staking
+     */
     function claimReward() external checkStakingPoolStatus {
         updatePool();
         StakeInfo storage user = stakers[msg.sender];
