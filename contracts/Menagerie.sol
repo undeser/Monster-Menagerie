@@ -7,7 +7,7 @@ import "./Beasts.sol";
 contract Menagerie {
     Beasts cardContract;
     Gem gemContract;
-    address _owner = msg.sender;
+    address owner = msg.sender;
 
     struct Offer {
         address owner;
@@ -161,15 +161,15 @@ contract Menagerie {
      * @dev Getter for address of owner of contract
      */
     function getContractOwner() public view returns(address) {
-        return _owner;
+        return owner;
     }
 
     /**
      * @dev Withdraw commission from marketplace to contract owner
      */
-    function withDraw() public { 
-        require(msg.sender == _owner, "Sorry, you are not allowed to do that");
-        if(msg.sender == _owner) {
+    function withdraw() public { 
+        require(msg.sender == owner, "Sorry, you are not allowed to do that");
+        if(msg.sender == owner) {
             gemContract.transferGems(msg.sender, address(this).balance);
         }
     }
@@ -178,7 +178,7 @@ contract Menagerie {
      * @dev Check commission made from marketplace
      */
     function checkCommission() public view returns(uint256) {
-        require(msg.sender == _owner, "Sorry, you are not allowed to do that");
+        require(msg.sender == owner, "Sorry, you are not allowed to do that");
         return gemContract.checkGemsOf(address(this));
     }
 }

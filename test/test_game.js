@@ -249,7 +249,7 @@ contract("Game", function (accounts) {
 
     await menagerieInstance.buy(13, { from: accounts[2] });
 
-    await menagerieInstance.withDraw( {from: accounts[0]});
+    await menagerieInstance.withdraw( {from: accounts[0]});
 
     let withdrawalBalance = new BigNumber(await gemInstance.checkGems({from: accounts[0]}))
     let balance = new BigNumber(7);

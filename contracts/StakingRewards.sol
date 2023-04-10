@@ -19,7 +19,7 @@ contract StakingRewards {
     uint256 public maxDailyReward;
     uint256 public totalRewardPool;
 
-    address public contractOwner;
+    address public owner;
     bool public stakingPoolLive;
     
     event Stake(address indexed user, uint256 amount);
@@ -44,7 +44,7 @@ contract StakingRewards {
         lastRewardTimestamp = block.timestamp;
         stakingPoolLive = false; // this variable will turn to true once the contract deployer sends the gem (_rewardPool) 
                                 //into the contract
-        contractOwner = msg.sender;
+        owner = msg.sender;
     }
 
     function setStakingPoolLive() public onlyOwner {
@@ -129,7 +129,7 @@ contract StakingRewards {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == contractOwner, 'Ownable: caller is not the owner');
+        require(msg.sender == owner, 'Ownable: caller is not the owner');
         _;
     }
 
