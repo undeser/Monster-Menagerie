@@ -7,7 +7,6 @@ import "./Beasts.sol";
 contract Menagerie {
     Beasts CardContract;
     Gem GemContract;
-    //uint256 public comissionFee;
     address _owner = msg.sender;
 
     struct Offer {
@@ -19,130 +18,165 @@ contract Menagerie {
     mapping(uint256 => uint256) listPrice;
     mapping(uint256 => Offer[]) offers;
 
-    constructor(Beasts beastAddress, Gem gemAddress) {
-        CardContract = beastAddress;
+    constructor(Beasts cardAddress, Gem gemAddress) {
+        CardContract = cardAddress;
         GemContract = gemAddress;
     }
 
-    function list(uint256 cardID, uint256 price) public {
-        require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot list this card as you are not the owner");
-        listPrice[cardID] = price;
-        //offers[cardID] = new Offer[];
+    /**
+     * @dev List Beast for sale on marketplace
+     * @param id ID of Beast
+     * @param price Listed price of Beast
+     */
+    function list(uint256 id, uint256 price) public {
+        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot list Beast as you are not the owner");
+        listPrice[id] = price;
     }
 
-    function unlist(uint256 cardID) public {
-        require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot unlist this card as you are not the owner");
-        listPrice[cardID] = 0;
-        delete offers[cardID];
+    /**
+     * @dev Unlist Beast from marketplace
+     * @param id ID of Beast
+     */
+    function unlist(uint256 id) public {
+        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot unlist Beast as you are not the owner");
+        listPrice[id] = 0;
+        delete offers[id];
     }
 
-    function checkPrice(uint256 cardID) public view returns(uint) {
-        return uint(listPrice[cardID])*105/100; // Charge 5% commission
+    /**
+     * @dev Getter for listed price of Beast on marketplace
+     * @param id ID of Beast
+     */
+    function checkPrice(uint256 id) public view returns(uint) {
+        return uint(listPrice[id])*105/100; // Charge 5% commission
     }
 
-    function makeOffer(uint256 cardID, uint256 offerPrice) public {
-        require(listPrice[cardID] != 0, "Card is not listed for sale");
+    /**
+     * @dev Make an offer to listing to purchase Beast
+     * @param id ID of Beast
+     * @param offerPrice Price of offer for Beast
+     */
+    function makeOffer(uint256 id, uint256 offerPrice) public {
+        require(listPrice[id] != 0, "Beast is not listed for sale");
         require(GemContract.balanceOf(msg.sender) >= offerPrice, "Insufficient Gems");
-        require(checkOfferExists(cardID, address(msg.sender)) == false, "You have already made an offer for this card");
+        require(checkOfferExists(id, address(msg.sender)) == false, "You have already made an offer for this Beast");
         Offer memory newOffer = Offer({
             owner: address(msg.sender),
             offerValue: offerPrice,
-            offerCardId: cardID
+            offerCardId: id
         });
-        offers[cardID].push(newOffer);
+        offers[id].push(newOffer);
     }
 
-    function checkOffers(uint256 cardID) public view returns(Offer[] memory) {
-        require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot view the offers for this card as you are not the owner");
-        uint256 numOffers = offers[cardID].length;
-        Offer[] memory id = new Offer[](numOffers);
+    /**
+     * @dev View the offers for the Beast
+     * @param id ID of Beast
+     */
+    function checkOffers(uint256 id) public view returns(Offer[] memory) {
+        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot view the offers for this Beast as you are not the owner");
+        uint256 numOffers = offers[id].length;
+        Offer[] memory offerIds = new Offer[](numOffers);
         for (uint i = 0; i < numOffers; i++) {
-            Offer storage offer = offers[cardID][i];
-            id[i] = offer;
+            Offer storage offer = offers[id][i];
+            offerIds[i] = offer;
         }
-        return id;
+        return offerIds;
     }
 
-    function acceptOffer(uint256 cardID, address offerer) public {
-        require(msg.sender == CardContract.ownerOf(cardID), "Sorry you cannot accept offers for this card as you are not the owner");
-        require(checkOfferExists(cardID, offerer) == true, "Offer does not exists");
-        require(checkOfferExists(cardID, address(msg.sender)) == false, "You have not made an offer for this card");
+    /**
+     * @dev Accept offer made by offerer for Beast
+     * @param id ID of Beast
+     * @param offerer Address of offerer for the Beast
+     */
+    function acceptOffer(uint256 id, address offerer) public {
+        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot accept offers for this Beast as you are not the owner");
+        require(checkOfferExists(id, offerer) == true, "Offer does not exist");
         uint256 price;
 
-        uint256 numOffers = offers[cardID].length;
+        uint256 numOffers = offers[id].length;
         for (uint i = 0; i < numOffers; i++) {
-            if(offers[cardID][i].owner == offerer) {
-                price = offers[cardID][i].offerValue;
+            if(offers[id][i].owner == offerer) {
+                price = offers[id][i].offerValue;
             }
         }
 
         GemContract.transferGemsFrom(offerer, msg.sender, price);
         GemContract.transferGemsFrom(offerer, address(this), price* 5/100);
-        CardContract.safeTransferFrom(msg.sender, offerer, cardID);
+        CardContract.safeTransferFrom(msg.sender, offerer, id);
 
-        listPrice[cardID] = 0;
-        delete offers[cardID];
+        listPrice[id] = 0;
+        delete offers[id];
     }
 
-    function checkOfferExists(uint256 cardID, address offerer) public view returns(bool exists) {
-        // Offer[] offerArray = offers[cardID];
-        uint256 numOffers = offers[cardID].length;
+    /**
+     * @dev Check if an offer exists
+     * @param id ID of Beast
+     * @param offerer Address of offerer
+     */
+    function checkOfferExists(uint256 id, address offerer) public view returns(bool exists) {
+        uint256 numOffers = offers[id].length;
         for (uint i = 0; i < numOffers; i++) {
-            // Offer storage offer = offerArray[i];
-            if(offers[cardID][i].owner == offerer) {
+            if(offers[id][i].owner == offerer) {
                 exists = true;
                 return exists;
             }
         }
     }
-    
-    /*
-    function remove(uint index, Offer[] array) public {
-        array[index] = array[array.length - 1];
-        array.pop();
-    }
-    */
 
-    function retractOffer(uint256 cardID) public {
-        require(checkOfferExists(cardID, address(msg.sender)) == true, "You have not made an offer for this card");
-        // Offer[] offerArray = offers[cardID];
+    /**
+     * @dev Retract offer that was already made for a Beast
+     * @param id ID of Beast
+     */
+    function retractOffer(uint256 id) public {
+        require(checkOfferExists(id, address(msg.sender)) == true, "You have not made an offer for this Beast");
         address Offerer = address(msg.sender);
-        uint256 numOffers = offers[cardID].length;
+        uint256 numOffers = offers[id].length;
         for (uint i = 0; i < numOffers; i++) {
-            // Offer storage offer = offerArray[i];
-            if(offers[cardID][i].owner == Offerer) {
-                // remove(i, offers[cardID]);
-                offers[cardID][i] = offers[cardID][numOffers - 1];
-                offers[cardID].pop();
+            if(offers[id][i].owner == Offerer) {
+                offers[id][i] = offers[id][numOffers - 1];
+                offers[id].pop();
             }
         }
     }
 
-    function buy(uint256 cardID) public {
-        require(listPrice[cardID] != 0, "Card is not listed for sale");
-        require(GemContract.balanceOf(msg.sender) >= this.checkPrice(cardID), "Insufficient Gems");
+    /**
+     * @dev Buy Beast at listed price
+     * @param id ID of Beast
+     */
+    function buy(uint256 id) public {
+        require(listPrice[id] != 0, "Beast is not listed for sale");
+        require(GemContract.balanceOf(msg.sender) >= this.checkPrice(id), "Insufficient Gems");
 
-        address recipent = address(uint160(CardContract.ownerOf(cardID)));
+        address recipent = address(uint160(CardContract.ownerOf(id)));
         address seller = recipent;
-        GemContract.transferGemsFrom(msg.sender ,recipent, listPrice[cardID]); // transfer price to seller
-        GemContract.transferGemsFrom(msg.sender, address(this), listPrice[cardID]*5/100); // transfer commission to this contract
-        CardContract.safeTransferFrom(seller, address(msg.sender), cardID);
+        GemContract.transferGemsFrom(msg.sender ,recipent, listPrice[id]); // transfer price to seller
+        GemContract.transferGemsFrom(msg.sender, address(this), listPrice[id]*5/100); // transfer commission to this contract
+        CardContract.safeTransferFrom(seller, address(msg.sender), id);
 
-        listPrice[cardID] = 0;
-        delete offers[cardID];
+        listPrice[id] = 0;
+        delete offers[id];
     }
 
+    /**
+     * @dev Getter for address of owner of contract
+     */
     function getContractOwner() public view returns(address) {
         return _owner;
     }
 
-    function withDraw() public { // Withdraw commission
+    /**
+     * @dev Withdraw commission from marketplace to contract owner
+     */
+    function withDraw() public { 
         require(msg.sender == _owner, "Sorry, you are not allowed to do that");
         if(msg.sender == _owner) {
             GemContract.transferGems(msg.sender, address(this).balance);
         }
     }
-
+    
+    /**
+     * @dev Check commission made from marketplace
+     */
     function checkCommission() public view returns(uint256) {
         require(msg.sender == _owner, "Sorry, you are not allowed to do that");
         return GemContract.checkGemsOf(address(this));
