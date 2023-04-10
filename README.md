@@ -1,4 +1,4 @@
-# is4302placeholdername
+# Monster Menagerie
 
 ## Introduction
 A project for a module, IS4302 - Blockchain and Distributed Ledeger Technologies, taken in National University of Singapore (NUS) in 2023. The project is a GameFi Dapp.
