@@ -5,8 +5,8 @@ import "./Gem.sol";
 import "./Beasts.sol";
 
 contract Menagerie {
-    Beasts CardContract;
-    Gem GemContract;
+    Beasts cardContract;
+    Gem gemContract;
     address _owner = msg.sender;
 
     struct Offer {
@@ -19,8 +19,8 @@ contract Menagerie {
     mapping(uint256 => Offer[]) offers;
 
     constructor(Beasts cardAddress, Gem gemAddress) {
-        CardContract = cardAddress;
-        GemContract = gemAddress;
+        cardContract = cardAddress;
+        gemContract = gemAddress;
     }
 
     /**
@@ -29,7 +29,7 @@ contract Menagerie {
      * @param price Listed price of Beast
      */
     function list(uint256 id, uint256 price) public {
-        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot list Beast as you are not the owner");
+        require(msg.sender == cardContract.ownerOf(id), "Sorry you cannot list Beast as you are not the owner");
         listPrice[id] = price;
     }
 
@@ -38,7 +38,7 @@ contract Menagerie {
      * @param id ID of Beast
      */
     function unlist(uint256 id) public {
-        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot unlist Beast as you are not the owner");
+        require(msg.sender == cardContract.ownerOf(id), "Sorry you cannot unlist Beast as you are not the owner");
         listPrice[id] = 0;
         delete offers[id];
     }
@@ -58,7 +58,7 @@ contract Menagerie {
      */
     function makeOffer(uint256 id, uint256 offerPrice) public {
         require(listPrice[id] != 0, "Beast is not listed for sale");
-        require(GemContract.balanceOf(msg.sender) >= offerPrice, "Insufficient Gems");
+        require(gemContract.balanceOf(msg.sender) >= offerPrice, "Insufficient Gems");
         require(checkOfferExists(id, address(msg.sender)) == false, "You have already made an offer for this Beast");
         Offer memory newOffer = Offer({
             owner: address(msg.sender),
@@ -73,7 +73,7 @@ contract Menagerie {
      * @param id ID of Beast
      */
     function checkOffers(uint256 id) public view returns(Offer[] memory) {
-        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot view the offers for this Beast as you are not the owner");
+        require(msg.sender == cardContract.ownerOf(id), "Sorry you cannot view the offers for this Beast as you are not the owner");
         uint256 numOffers = offers[id].length;
         Offer[] memory offerIds = new Offer[](numOffers);
         for (uint i = 0; i < numOffers; i++) {
@@ -89,7 +89,7 @@ contract Menagerie {
      * @param offerer Address of offerer for the Beast
      */
     function acceptOffer(uint256 id, address offerer) public {
-        require(msg.sender == CardContract.ownerOf(id), "Sorry you cannot accept offers for this Beast as you are not the owner");
+        require(msg.sender == cardContract.ownerOf(id), "Sorry you cannot accept offers for this Beast as you are not the owner");
         require(checkOfferExists(id, offerer) == true, "Offer does not exist");
         uint256 price;
 
@@ -100,9 +100,9 @@ contract Menagerie {
             }
         }
 
-        GemContract.transferGemsFrom(offerer, msg.sender, price);
-        GemContract.transferGemsFrom(offerer, address(this), price* 5/100);
-        CardContract.safeTransferFrom(msg.sender, offerer, id);
+        gemContract.transferGemsFrom(offerer, msg.sender, price);
+        gemContract.transferGemsFrom(offerer, address(this), price* 5/100);
+        cardContract.safeTransferFrom(msg.sender, offerer, id);
 
         listPrice[id] = 0;
         delete offers[id];
@@ -145,13 +145,13 @@ contract Menagerie {
      */
     function buy(uint256 id) public {
         require(listPrice[id] != 0, "Beast is not listed for sale");
-        require(GemContract.balanceOf(msg.sender) >= this.checkPrice(id), "Insufficient Gems");
+        require(gemContract.balanceOf(msg.sender) >= this.checkPrice(id), "Insufficient Gems");
 
-        address recipent = address(uint160(CardContract.ownerOf(id)));
+        address recipent = address(uint160(cardContract.ownerOf(id)));
         address seller = recipent;
-        GemContract.transferGemsFrom(msg.sender ,recipent, listPrice[id]); // transfer price to seller
-        GemContract.transferGemsFrom(msg.sender, address(this), listPrice[id]*5/100); // transfer commission to this contract
-        CardContract.safeTransferFrom(seller, address(msg.sender), id);
+        gemContract.transferGemsFrom(msg.sender ,recipent, listPrice[id]); // transfer price to seller
+        gemContract.transferGemsFrom(msg.sender, address(this), listPrice[id]*5/100); // transfer commission to this contract
+        cardContract.safeTransferFrom(seller, address(msg.sender), id);
 
         listPrice[id] = 0;
         delete offers[id];
@@ -170,7 +170,7 @@ contract Menagerie {
     function withDraw() public { 
         require(msg.sender == _owner, "Sorry, you are not allowed to do that");
         if(msg.sender == _owner) {
-            GemContract.transferGems(msg.sender, address(this).balance);
+            gemContract.transferGems(msg.sender, address(this).balance);
         }
     }
     
@@ -179,6 +179,6 @@ contract Menagerie {
      */
     function checkCommission() public view returns(uint256) {
         require(msg.sender == _owner, "Sorry, you are not allowed to do that");
-        return GemContract.checkGemsOf(address(this));
+        return gemContract.checkGemsOf(address(this));
     }
 }
