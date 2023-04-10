@@ -33,10 +33,11 @@ Functions of `Gem`:
 
 ### BeastCard
 [`ERC721`]
-Properties of `BeastCard`:
+Properties of BeastCard:
 - Health Points (HP)
 - Attack Stat (AP)
-- Rarity (Rare, Epic, Unique, Legendary)
+- Nature (Verdant, Infernal, Aquatic)
+- Rarity (Common, Rare, Epic, Legendary)
 - Broken Status
 - Repair Cost
   - based on Rarity status
@@ -44,7 +45,7 @@ Properties of `BeastCard`:
 ### Fight
 Take in an input of an array of `Card`.
 
-### Marketplace
+### Menagerie
 To buy, sell and trade `Card` with other players.
 To make the game more gasless and make the game seamless... 
 
