@@ -31,7 +31,7 @@ Functions of `Gem`:
 - `transferFrom()`: 
 - `giveApproval()`: 
 
-### BeastCard
+### Beast
 [`ERC721`]
 Properties of BeastCard:
 - Health Points (HP)
@@ -43,10 +43,10 @@ Properties of BeastCard:
   - based on Rarity status
 
 ### Fight
-Take in an input of an array of `Card`.
+Take in an input of an array of Beast.
 
 ### Menagerie
-To buy, sell and trade `Card` with other players.
+To buy, sell and trade Beast with other players.
 To make the game more gasless and make the game seamless... 
 
 ### Staking
