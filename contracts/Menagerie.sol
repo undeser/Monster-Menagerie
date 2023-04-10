@@ -2,10 +2,10 @@
 pragma solidity ^0.8.17;
 
 import "./Gem.sol";
-import "./BeastCard.sol";
+import "./Beasts.sol";
 
 contract Menagerie {
-    BeastCard CardContract;
+    Beasts CardContract;
     Gem GemContract;
     //uint256 public comissionFee;
     address _owner = msg.sender;
@@ -19,7 +19,7 @@ contract Menagerie {
     mapping(uint256 => uint256) listPrice;
     mapping(uint256 => Offer[]) offers;
 
-    constructor(BeastCard beastAddress, Gem gemAddress) {
+    constructor(Beasts beastAddress, Gem gemAddress) {
         CardContract = beastAddress;
         GemContract = gemAddress;
     }
