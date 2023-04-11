@@ -169,8 +169,9 @@ contract Menagerie {
      */
     function withdraw() public { 
         require(msg.sender == owner, "Sorry, you are not allowed to do that");
+        uint256 balance = gemContract.checkGemsOf(address(this));
         if(msg.sender == owner) {
-            gemContract.transferGems(msg.sender, address(this).balance);
+            gemContract.transferGems(msg.sender, balance);
         }
     }
     
