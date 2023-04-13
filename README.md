@@ -9,6 +9,7 @@ Monster Menagerie
   - [Targeted Users](https://github.com/undeser/Monster-Menagerie#targeted-users)
   - [Business Logic](https://github.com/undeser/Monster-Menagerie#business-logic)
   - [Gameplay Logic](https://github.com/undeser/Monster-Menagerie#gameplay-users)
+- [Architecture](https://github.com/undeser/Monster-Menagerie#architecture)
 
 
 # Introduction
@@ -52,7 +53,11 @@ Our target users are mainly those who are already in the NFT and Defi community 
 
 ## Gameplay Logic
 
-# Architecture & Design
+# Architecture
+
+## System Illustration
+
+## How This System Works
 
 ## Gem
 [`ERC20`]
