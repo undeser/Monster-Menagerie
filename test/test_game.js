@@ -28,7 +28,7 @@ var Menagerie = artifacts.require("../contracts/Menagerie.sol");
 
 const oneEth = new BigNumber(1000000000000000000); // 1 eth
 
-contract("Game", function (accounts) {
+contract("Fight and Menagerie", function (accounts) {
   before(async () => {
     gemInstance = await Gem.deployed();
     BeastsInstance = await Beasts.deployed();
@@ -37,7 +37,7 @@ contract("Game", function (accounts) {
     menagerieInstance = await Menagerie.deployed();
   });
 
-  console.log("Testing Game contract");
+  console.log("Testing Fight and Menagerie contract");
 
   it("Get Gems", async () => {
     await gemInstance.getGems({
