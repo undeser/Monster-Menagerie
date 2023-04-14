@@ -125,13 +125,15 @@ Each Beast upon minting, will come with a unique combination of Attack Points (A
 
 [^2]: Rarity Types are indicated by the symbol at the top of the cards, represented by different shapes for different Rarity Types.
 
+![Figure 1: Beast Card Statistics](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig1.png?raw=true)
+
 Defeated Beast cards will be broken after a Fight, rendering them unplayable until fixed. They can be fixed using Gems, where their Rarity type would determine the cost of Gems needed for this process.
 
 ### Entering a Fight
 
 Players are required to wager an amount of Gems to participate in a Fight. Apart from wagering (and ensuring that the player has sufficient Gems), players would be required to select five Beasts **in sequence** from their collection to form a Deck. The Deck must have a total cost of no more than 65. After which, they would be placed in a matchmaking lobby where they will be assigned an opponent using our algorithm. 
 
-![Figure 1: Beast Card Statistics](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig1.png?raw=true)
+![Figure 2: Example of a Fight](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig2.png?raw=true)
 
 ### Scaling and Nature Advantage
 
@@ -145,13 +147,19 @@ The algorithm will consider two factors:
   - Verdant is strong against Aquatic; Aquatic is strong against Infernal; Infernal is strong against Verdant. 
   - There are no Nature “disadvantages”.
 
+![Figure 3: Example of Nature Boost](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig3.png?raw=true)
+
 ### During a Fight
 
 After scaling is done, both Beasts will fight against each other. Each Beast’s scaled HP will be deducted based on the opponent’s scaled AP. If the opponent’s scaled AP exceeds the Beast’s scaled HP, the Beasting card will be broken. Any residual damage will be stored and recorded as Damage Points (DP). If the opponent’s scaled AP does not exceed the scaled HP, nothing happens. This would repeat for each of the five Beasts. The player with the higher Damage Points (DP) would win the game. 
 
+![Figure 4: Example of Outcome of Fight](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig4.png?raw=true)
+
 ### Victory
 
 Winning a Fight not only allows you to climb the leaderboard, but also gaining MMR and Gems in the process. The winner of the Fight will receive the majority of the pool of wagered Gems, while the remaining is distributed as platform fees.
+
+![Figure 5: Example of Wagered Gems' Distribution](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig5.png?raw=true)
 
 -----
 
@@ -342,6 +350,7 @@ class StakeInfo {
     rewardDebt : uint256
 }
 ```
+![Figure 7: System Use Cases](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig7.png?raw=true)
 
 ## How This System Works
 
