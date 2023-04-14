@@ -441,9 +441,11 @@ The Menagerie Marketplace is a marketplace where players can sell and buy cards 
 A leaderboard based on the MMR could be created to incentivise users to fight more, since a place on the leaderboard gives the user bragging rights. Furthermore, we could share a portion of the commissions we made from all the fights and distribute it amongst the top 10 highest MMR users in the game, incentivising users to play more to earn more MMR.
 
 ### Matchmaking Ranking (MMR) Algorithm
+
 Currently, we are using constants to determine the MMR change for different scenarios, whether the winner has a higher or lower MMR than the loser. However, we understand that this may not be the best way to control the MMR of the users and this current system could be manipulated by users. Therefore, in the future, we could implement an ingenious algorithm to prevent such manipulations from happening and change the MMR of users more fairly after each fight.
 
 ### Using Oracles
+
 We could also implement a minting system whereby card properties like rarity, name, image, attack, cost, and health are randomly generated via Chainlink’s Verifiable Random Function, and post these data to IPFS when a new card is minted. This will allow the contract to mint unique cards (unique images and stats) in a truly random way instead of from a list of pre-generated random data like we are currently doing. Keeping RNG off chain will also help maintain the protocol’s resistance to manipulation by users trying to get good card attributes.
 
 We could also use oracles like Chainlink to query data from IPFS to run game logic if it is not too expensive to do so, so that we do not have to store a second set of NFT metadata on-chain to run the game logic.
@@ -452,7 +454,14 @@ We could also use oracles like Chainlink to query data from IPFS to run game log
 
 Currently, our tokens supply increases when minted by users. This results in a very unstable tokenomics as users enter the game and will result in low liquidity token trading as demand is fulfilled via minting. This is bad for the game economy, and we should plan and broadcast a proper token release schedule so that users are aware of how tokens are emitted and can make their decisions with greater clarity. Below is a proposed $BGM token allocation:
 
-[]() <- picture here
+```mermaid
+pie title $BGM Allocation
+    "Staking" : 10
+    "Treasury" : 10
+    "Team & Development" : 15
+    "Public Sale" : 5
+    "Game Reward" : 60
+```
 
 Under this token release schedule, tokens will be emitted to early players who play the game for a set period, until maximum supply is reached. This will incentivise users to try out the game during the early days and penetrate the gaming market. Tokens are also allocated to fund the staking rewards, build up a treasury, and to compensate the team. Instead of allowing users to continue to mint tokens until maximum supply is reached, a public sale will be held to generate revenue for the protocol and release the initial supply of tokens to the market.
 
