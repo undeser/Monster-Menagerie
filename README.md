@@ -343,6 +343,21 @@ class StakeInfo {
 
 ## How This System Works
 
+The four main features available for the users are the minting of Beasts, fighting others' Beasts, listing and purchasing Beasts on the Menagerie Marketplace and staking of LPTokens. In this section, we will be illustrating the flow of main features through the use of user flow diagrams.
+
+### Mint Beast
+
+Users will be able to purchase $BGM from our platform and mint 1 Beast (NFT) for 5 $BGM. The Beast minted can be used in Monster Menagerie to fight others' Beasts. The generation of the attributes of the Beast is random, with the highest probability to get Common Beasts and the lowest probability to get Legendary Beasts.
+
+### Fight other Beasts
+Users can pit their Beasts against others' Beasts and earn Gems when they win, based on the difference in damage dealt to the opponent and the damage received from the opponent. At the end of each fight, if the Beast's health goes to 0, it will be destroyed and can only be revived if the owner of the Beast pays a specified amount of Gems to the system.
+
+### Listing and Purchasing Beasts
+Users can list their Beasts for sale on the Menagerie Marketplace at their desired price. Prospective buyers can either buy at the listed price, or make an offer with their own asking price. Sellers can then accept their most preferred offer. The Menagerie Marketplace will earn 5% commission on every successful sale which is paid by the buyer.
+
+### Staking of LPTokens
+Users can obtain the Liquidity Provider (LP) token by providing liquidity for the $BGM-USDC trading pair on Uniswap. The LP token can be staked on our platform to earn $BGM rewards. The incentivisation will last a year and the reward per second will be fixed. After the incentivisation ends, we will determine if a top-up of $BGM rewards is required to bring in liquidity or if the liquidity pool is self-sustainable using its trading fees. The rewards for stakers are dependent on the proportion it holds in the pool and how long it has been staking. The primary objective of the staking pool is to encourage individuals to contribute liquidity to the trading pair, thereby promoting price stability and mitigating excessive volatility for the $BGM token. Stakers are able to claim,  withdraw and check their rewards at any point of time just by calling the appropriate function. 
+
 -----
 
 # Analyses
