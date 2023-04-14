@@ -154,35 +154,128 @@ Winning a Fight not only allows you to climb the leaderboard, but also gaining M
 
 ## How This System Works
 
-## Gem
-[`ERC20`]
-In-game currency used to mint and purchase card packs. Can be purchased using ETH.
-Functions of `Gem`:
-- `getCredit()`: allows caller to check own credits
-- `checkCredit()`: 
-- `checkBal()`:
-- `transfer()`: 
-- `transferFrom()`: 
-- `giveApproval()`: 
+-----
 
-## Beast
-[`ERC721`]
-Properties of BeastCard:
-- Health Points (HP)
-- Attack Stat (AP)
-- Nature (Verdant, Infernal, Aquatic)
-- Rarity (Common, Rare, Epic, Legendary)
-- Broken Status
-- Repair Cost
-  - based on Rarity status
+# Analyses
 
-## Fight
-Take in an input of an array of Beast.
+## Technical Implementation
 
-## Menagerie
-To buy, sell and trade Beast with other players.
-To make the game more gasless and make the game seamless... 
+### Gems Contract ($BGM)
 
-## Staking
+- ERC20 implementation
+  - Gem is ERC20 with a maximum supply of 1 Million BGM Tokens.
 
-# Challenge Mechanics
+- 1e18 Denomination
+  - Everything is handled at a scale of 1e18 so that when deployed on testnet or mainnet, 1 Gem is shown as 1 BGM instead of 0.000000000000000001 BGM.
+
+- Gem Functions
+  - Gem functions take in and return proper Gem amounts instead of in 1e18 Denomination so other contracts can interact with it using intuitive numbers.
+
+- Mint, Allowance and Transfer
+  - Users and contracts can supply ETH to get Gems, provide approval for other addresses to spend a certain amount of their Gems, and transfer their own Gems or the Gems of other addresses (if given allowance) to another address.
+
+### Staking of $BGM - $USDC Liquidity Provider (LP) Token
+
+- Staking contract
+  - It interacts with two token contracts - the LP token being staked and Gems being distributed as rewards. The staking contract stores information about the staking pool, individual user stakes, and reward distribution.
+
+- Reward Distribution
+  - The contract calculates pending rewards for each user based on their staked amount and the time they have staked. This is done using the *accGemPerShare* variable, which represents the accumulated rewards per share for the entire staking pool. The *rewardDebt* variable in the *StakeInfo* struct is used to track the reward amount already accounted for the user.
+
+Overall, the staking contract serves as an intermediary between users and the token contracts, managing the staking process, updating the reward distribution, and ensuring that users receive the correct proportion of rewards based on their staked amount and the time they have staked.
+
+### Beasts
+
+- ERC721 Implementation
+  - BeastCard is implemented following the ERC721 standard.
+ 
+- OpenSea compatible
+  - BeastCard uses additional methods that are interrogated by Opensea to be displayed on the site, and BeastCard metadata are stored on IPFS in OpenSea JSON format so that OpenSea can properly query and display the NFT name, image, description and other attributes. 
+
+- Double storage of NFT metadata
+  - Beast metadata has to be stored on IPFS so Opensea can query the data for buyers and sellers to know the attributes and determine its value. The metadata (except for the image) also has to be stored on-chain so that Fight contract can perform game logic with it. Otherwise, an oracle would have to be used to query data from IPFS to perform game logic.
+
+- Proof of Concept Deployed:
+  - [Link to deployed BeastCard on testnet OpenSea](https://testnets.opensea.io/collection/beast-fight-cards)
+  - [Link to BeastCard NFT metadata on IPFS](https://ipfs.io/ipfs/bafybeihjukhqan3okv5kpoqh6aqxmncjp75a76rgmm6zet6x3l7kugck5e/)
+  - [Link to deployed BGM contract on Goerli Etherscan](https://goerli.etherscan.io/token/0x4c80168dfb589baabe4563bf038ec65e7e2a6df1)
+  - [Link to deployed BeastCard contract on Goerli Etherscan](https://goerli.etherscan.io/address/0x9a0d867c26200fe8fe07478e7cfcd385cbbddc14)
+
+- Minting 
+  - As this contract is meant to be interacted through a front end, users do not have to manually input their address and NFT metadata into the mint function. The javascript will query the metadata from IPFS API to instantiate the card with the corresponding metadata to the user’s address, these data are stored in mappings and Beast structure.
+
+- Approval
+  - Users can give approval to another address to transfer one or all of their NFTs. This is meant for marketplaces like OpenSea and The Menagerie Marketplace to transfer sold NFTs without having to first transfer ownership of the NFT to the intermediary to list them.
+ 
+- Safe Transfer 
+  - Transfer of NFTs should use the safeTransfer functions to prevent the NFT from being transferred to an incompatible wallet address and become lost.
+
+### Fight
+
+- Matchmaking
+  - Due to the short timeline for this project, the matchmaking system currently allows a player ready to fight to enter a matchmaking queue if there is no one currently in the queue. If the queue is not empty, the first player will be matchmade to the player trying to enter a fight.
+
+- Cost Scaling 
+  - To allow new players to have a shot at winning fights, we have implemented cost scaling, where players’ Beasts get buffed based on the difference of the maximum cost and the team’s cost. 
+  - scale = (65 - cost) / 10 + 10
+  - For instance, a team that has a cost of 65 will have a scale of 10 while a team that has a cost of 45 will have a scale of 12, which is 20% higher than the former’s scale.
+
+- Nature Scaling
+  - When a Beast’s nature is effective to another Beast’s nature, the former will have its AP and HP buffed by 10%, while the latter will remain constant. 
+
+- Calculation of Rewards for Winner 
+  - Based on the difference in damage dealt to each team, the winner of the fight will be the team that dealt more damage to the opponent. The amount of gems that the loser loses will be the damage difference divided by 100. Of which, 90% will go to the winner of the fight and 10% will go to the Fight contract as a form of commission fee.
+
+### Menagerie Marketplace
+
+The Menagerie Marketplace is a marketplace where players can sell and buy cards belonging to other players. The Menagerie Marketplace charges a 5% commission fee for every successful sale of a BeastCard, which is paid by the buyer. This commission belongs to the contract owner of the Menagerie Marketplace.
+
+- List and Unlist
+  - BeastCard owners can list their card for sale, specifying an amount of BGM as the price. They can also Unlist their card if they do not wish to sell the card anymore, or wish to change the price of the listed card.
+
+- checkPrice and Buy
+  - Prospective buyers are able to check the price of the listed card, and subsequently purchase the card.
+
+- makeOffer and retractOffer
+  - Prospective buyers are also able to offer their own price for a particular listed BeastCard. Each buyer can only have one offer for a particular card. If they wish to change their offered price, they retract the offer and make another offer.
+
+- checkOffers and acceptOffer
+  - BeastCard owners who list their card for sale can check all the available offers that other prospective buyers made for their card. They can then accept the offer of their preference.
+
+- withdraw and checkCommission
+  - The contract owner can check the amount of commission earned from the sale of BeastCards, and subsequently withdraw the amount of BGM from the Menagerie Marketplace contract.
+
+## Potential Future Features
+
+### Leaderboard
+
+A leaderboard based on the MMR could be created to incentivise users to fight more, since a place on the leaderboard gives the user bragging rights. Furthermore, we could share a portion of the commissions we made from all the fights and distribute it amongst the top 10 highest MMR users in the game, incentivising users to play more to earn more MMR.
+
+### Matchmaking Ranking (MMR) Algorithm
+Currently, we are using constants to determine the MMR change for different scenarios, whether the winner has a higher or lower MMR than the loser. However, we understand that this may not be the best way to control the MMR of the users and this current system could be manipulated by users. Therefore, in the future, we could implement an ingenious algorithm to prevent such manipulations from happening and change the MMR of users more fairly after each fight.
+
+### Using Oracles
+We could also implement a minting system whereby card properties like rarity, name, image, attack, cost, and health are randomly generated via Chainlink’s Verifiable Random Function, and post these data to IPFS when a new card is minted. This will allow the contract to mint unique cards (unique images and stats) in a truly random way instead of from a list of pre-generated random data like we are currently doing. Keeping RNG off chain will also help maintain the protocol’s resistance to manipulation by users trying to get good card attributes.
+
+We could also use oracles like Chainlink to query data from IPFS to run game logic if it is not too expensive to do so, so that we do not have to store a second set of NFT metadata on-chain to run the game logic.
+
+### BGM Token Release Schedule
+
+Currently, our tokens supply increases when minted by users. This results in a very unstable tokenomics as users enter the game and will result in low liquidity token trading as demand is fulfilled via minting. This is bad for the game economy, and we should plan and broadcast a proper token release schedule so that users are aware of how tokens are emitted and can make their decisions with greater clarity. Below is a proposed $BGM token allocation:
+
+[]() <- picture here
+
+Under this token release schedule, tokens will be emitted to early players who play the game for a set period, until maximum supply is reached. This will incentivise users to try out the game during the early days and penetrate the gaming market. Tokens are also allocated to fund the staking rewards, build up a treasury, and to compensate the team. Instead of allowing users to continue to mint tokens until maximum supply is reached, a public sale will be held to generate revenue for the protocol and release the initial supply of tokens to the market.
+
+### Staking Rewards Sustainability
+
+Once maximum supply is reached, staking rewards from token emissions will dry up and lose its incentive. We should plan ahead and implement a more sustainable approach to incentivising locked liquidity. As such, we should share part of the protocol’s revenue from fights and Menagerie Marketplace trading fees to fund the staking rewards, allowing a circular economy of token flow for better sustainability.
+
+### NFT Minting Restrictions
+
+Similar to our token emissions, we should conduct a formal NFT sale event where the total supply of the batch of Beast cards is up for sale so that demand for Beast cards from then on will be supplied by the secondary market. With this, we can revise the cost of minting and limit the number of cards a single user can mint, so as to deter a single person from dominating the secondary market and ruining the economy.
+
+### More Strategy Potential in Gameplay
+
+We could also try to incorporate more game logic so that players have more avenues to strategise to win, such as specific card combos. For instance, we could create more classes of monsters such as Dragons or more types of nature, which could be used to form combos to boost the AP and HP of the deck.
+
