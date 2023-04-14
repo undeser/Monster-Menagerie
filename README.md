@@ -131,9 +131,9 @@ Players are required to wager an amount of Gems to participate in a Fight. Apart
 During a Fight, Beasts will fight opponent’s Beasts in the sequence which they were selected (ie. first Beast Fight opponent’s first Beast). Both Beasts’ AP and HP will be scaled using our algorithm. 
 
 The algorithm will consider two factors:
-1. Cost of each player’s Deck: 
+- Cost of each player’s Deck: 
   - The lower the cost of a player’s Deck, the greater the scaling of stats is.
-2. Nature advantages: 
+- Nature advantages: 
   - A Beast is considered Nature-advantaged when its Nature is strong against the opponent Beast’s Nature. 
   - Verdant is strong against Aquatic; Aquatic is strong against Infernal; Infernal is strong against Verdant. 
   - There are no Nature “disadvantages”.
