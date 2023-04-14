@@ -136,7 +136,7 @@ contract("Game", function (accounts) {
     truffleAssert.eventEmitted(fight, "outcomeWin", { winner: accounts[1] }, "Incorrect outcome");
   });
 
-  it("Buy Beast on menagerie at listed price", async () => {
+  it("Buy Beast on marketplace at listed price", async () => {
     // Mint new card
     await BeastsInstance.mint(accounts[1], beast10.name, beast10.attributes[0].value, beast10.attributes[1].value, beast10.attributes[2].value, beast10.attributes[3].value, beast10.attributes[4].value);
 
