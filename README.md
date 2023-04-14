@@ -421,7 +421,7 @@ Overall, the staking contract serves as an intermediary between users and the to
 
 - Cost Scaling 
   - To allow new players to have a shot at winning fights, we have implemented cost scaling, where players’ Beasts get buffed based on the difference of the maximum cost and the team’s cost. 
-  - scale = (65 - cost) / 10 + 10
+  - $scale = \frac{(65 - cost)}{10} + 10$
   - For instance, a team that has a cost of 65 will have a scale of 10 while a team that has a cost of 45 will have a scale of 12, which is 20% higher than the former’s scale.
 
 - Nature Scaling
