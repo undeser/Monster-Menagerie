@@ -157,6 +157,191 @@ Winning a Fight not only allows you to climb the leaderboard, but also gaining M
 
 ## System Illustration
 
+```
+mermaid
+classDiagram
+
+class Gem {
+    <<Contract>>
+    supplyLimit : uint256 
+    currentSupply : uint256 
+    owner : address
+    getGems()
+    checkGems()
+    checkGemsOf(address user)
+    transferGems(address recipient, uint256 value)
+    transferGemsFrom(address from, address to, uint256 amt)
+    giveGemApproval(address recipient, uint256 amt)
+    checkGemAllowance(address user, address spender)
+    currentGemSupply()
+}
+
+class Fight {
+    <<Contract>>
+    cardContract : Beasts
+    gemContract : Gem
+    mmrContract : MMR
+    matchmakingQueue : address[]
+    owner : address
+    _cardsOfPlayersInQueue : mapping(address => uint256[])
+    _scale : mapping(address => uint256)
+    fight(uint256[] memory cards)
+    getElementalScales(uint256 myCard, uint256 enemyCard)
+    withdraw()
+}
+
+class MMR {
+    <<Contract>>
+    _playerMMR : mapping(address => uint256)
+    isNew(address user)
+    initialiseUser(address user)
+    getMMR(address user)
+    updateMMR(address winner, address loser)
+}
+
+class Menagerie {
+    <<Contract>>
+    cardContract : Beasts
+    gemContract : Gem
+    owner : address
+    listPrices : mapping(unint256 => uint256)
+    offers : mapping(uint256 => Offer[])
+    list(uint256 id, uint256 price)
+    unlist(uint256 id)
+    checkPrice(uint256 id)
+    makeOffer(uint256 id, uint256 offerPrice)
+    checkOffers(uint256 id)
+    acceptOffer(uint256 id, address offerer)
+    checkOfferExists(uint256 id, address offerer)
+    retractOffer(uint256 id)
+    buy(uint256 id)
+    getContractOwner()
+    withdraw()
+    checkCommission()
+}
+
+Menagerie --> Offer
+
+class Offer {
+    <<Struct>>
+    owner : address
+    offerValue : uint256
+    offerCardId: uint256
+}
+
+class Beasts {
+    <<Contract>>
+    gemContract : Gem
+    collectionName : string
+    collectionSymbol : string
+    baseURL : string
+    nextTokenIdToMint : uint256
+    maxTokens  : uint256
+    contractOwner : address
+    _owners : mapping(uint256 => address)
+    _balances : mapping(adress => uint256)
+    _tokenApprovals : mapping(uint256 => address)
+    _operatorApprovals : mapping(address => bool)
+    _beasts : mapping(uint256 => Beast)
+    _cardStates : mapping(uint256 => cardStates)
+    _tokenUris : mapping(uint256 => string)
+
+    cardDestroyed(uint256 id)
+    cardRevived(uint256 id)
+    restoreCard(uint256 id)
+    effective(uint256 id, uint256 other_id)
+    safeTransferFrom(address _from, address _to, uint256 _tokenId)
+    safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory _data)
+    transferFrom(address _from, address _to, uint256 _tokenId)
+    approve(address _approved, uint256 _tokenId)
+    getApproved(uint256 _tokenId)
+    setApprovalForAll(address _oeprator, bool _approved)
+    isApprovedForAll(address _owner, address _owner)
+    mint(address _to, string memory bname, string memory rarity, string memory nature, uint256 cost, uint256 attack, uint256 health)
+    totalSupply()
+    withdraw()
+    _checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory data)
+    transfer(address _from, address _to, uint256 _tokenId)
+    compareStrings(string memory a, string memory b)
+    uint2str(uint _i)
+    isContract()
+    name()
+    symbol()
+    tokenURI(uint256 _tokenId)
+    attackOf(uint256 id)
+    healthOf(uint256 id)
+    stateOf(uint256 id)
+    costOf(uint256 id)
+    natureOf(uint256 id)
+    nameOf(uint256 id)
+    rarirtyOf(uint256 id)
+    balanceOf(address _owner)
+    ownerOf(uint256 id)
+}
+
+Beasts --> Beast
+class Beast {
+    <<Struct>>
+    id : uint256
+    name : string
+    rarity : string
+    nature : string
+    cost : uint256
+    attack : uint256
+    health : uint256
+}
+
+Beasts --> cardState
+class cardState {
+    <<Enum>>
+    broken
+    functional
+}
+
+class LPtoken {
+    <<Contract>>
+    supplyLimit : uint256
+    currentSupply : uint256
+    owner : address
+    getLPtoken()
+    checkLPtoken()
+    checkLPtokenOf(address myAdd)
+    transferLPtokenFrom(address from, address to, uint256 amt)
+    giveLPtokenApproval(address receipt, uint256 amt)
+    checkLPtokenAllowance(address user, address spender)
+    currentLPtokenSupply()
+}
+
+class StakingRewards {
+    <<Contract>>
+    lpToken : LPtoken
+    gem : Gem
+    rewardPerSecond : uint256
+    totalStakingShares : uint256
+    accGemPerShare : uint256
+    lastRewardTimeStamp : uint256
+    maxDailyReward : uint256
+    totalRewardPool : uint256
+    owner : address
+    stakingPoolLive : bool
+    stakers : mapping(address => StakeInfo)
+
+    setStakingPoolLive()
+    updatePool()
+    pendingReward(address _user)
+    stake(uint256 amountToStake)
+    withdraw(uint256 amountToWithdraw)
+    claimReward()
+}
+
+StakingRewards --> StakeInfo
+class StakeInfo {
+    <<Struct>>
+    amount : uint256
+    rewardDebt : uint256
+}
+```
+
 ## How This System Works
 
 -----
