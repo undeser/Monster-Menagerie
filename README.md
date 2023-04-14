@@ -51,7 +51,102 @@ Our target users are mainly those who are already in the NFT and Defi community 
 
 ## Business Logic
 
+Monster Menagerie adopts a **play-AND-earn model**, where gaming allows for an open economy and provides financial benefits to players who play the game. 
+
+### Tokenomics
+
+The Monster Menagerie platform will use a native ERC-20 token, Gems ($BGM), for all in-game transactions. Users will be able to mint Gems using ETH and the tokenomics is designed to have a maximum supply cap of 1,000,000 Gems. The main utility of Gems are: 
+
+- Purchasing of Monster pack / Monster from the Marketplace
+- Fighting with other players
+- Used to repair cards after battling
+- Provide liquidity with USD Coin (USDC) and stake on the platform for reward
+
+To ensure that there is not only inflationary pressure on the token, the Gems token is designed with several sinks, making it a deflationary token. These sinks aim to reduce the overall supply of Gems over time, preserving the token's value and ensuring a healthy balance in the platform's economy.
+
+Some of the deflationary mechanisms built into the Gems token design include:
+
+- Implementing a repair fee in Gems after battling. When cards are damaged during Fights, players will need to use Gems to repair them. 50% of the Gems will be burnt to reduce circulating supply in the market and the remaining will be sent to the treasury. 
+- Charging a transaction fee for trades and auctions in the Menagerie Marketplace.
+- Implementing a staking mechanism where users can lock their Gems tokens with USDC to provide liquidity to the platform. These locked tokens will be taken out of circulation temporarily, reducing the available supply and contributing to deflationary pressure.
+
+The future implementation details for the tokenomics can be found at [Chapter 3.2.4. BGM Token Release Schedule](https://github.com/undeser/Monster-Menagerie#bgm-token-release). 
+
+### Monster NFTs
+
+By implementing and building our solution on the Blockchain and GameFi network, the game assets gained by the players not only have real world value, but lifetime value. Beasts can be minted as NFTs using Gems ($BGM). Beasts’ stats are generated upon minting, having different Attack Points (AP), Health Points (HP), Rarity type and Natures. These combat stats affect their performance in Fights and their value in the Menagerie Marketplace, which will be briefly discussed in [Chapter 1.4.4 The Menagerie Marketplace](https://github.com/undeser/Monster-Menagerie#the-menagerie-marketplace).
+
+### The Menagerie Marketplace
+
+The Menagerie Marketplace is a centralised marketplace where players can trade and auction their Beasts, offering the players a platform to monetise their in-game assets. With a user-friendly interface, players can list and bid for Beasts with ease and no fuss. Similar to Fights, a portion of the sale price will be charged as platform fee in Gems. Additionally, the Menagerie Marketplace will have integration with popular wallets and platforms for seamless trading and asset management.
+
+### Staking
+
+In an effort to promote price stability and mitigate excessive volatility for the $BGM token, users will be able to stake their Uniswap Liquidity Provider (LP) tokens on the Monster Menagerie platform. To obtain LP tokens, users need to provide liquidity for the $BGM-USDC trading pair on Uniswap. The LP tokens can then be staked on our platform to earn $BGM rewards, incentivising users to contribute liquidity to the trading pair.
+
+### Marketing and User Acquisition
+
+To attract new users and investors, various marketing strategies will be employed, such as collaborating with influencers and content creators in the gaming, NFT, and DeFi spaces, social media marketing on platforms like Twitter, Instagram, and Reddit, and organising in-game events, competitions, and giveaways to promote user engagement and platform growth. 
+
+### Revenue Streams
+
+Monster Menagerie's primary revenue streams include platform fees charged on Beasts minting, trading, and auctioning transactions and fees from Fights.
+
+### Self-Development Retention
+
+Our business model focuses on monetising experience, this way, we can attract players to the game based on skill. This means that players who have devoted time to mastering the game and its mechanics should earn the most. On the other hand, new and lower-skilled players will be incentivised by the future possibilities, rather than the idea of immediate earning. By using the addictive quality of self-improvement, it keeps players interested in the game and creates player retention as they have invested time to learn and master the game. 
+
+In addition, our reward system incentivises players by rewarding them more Gems if they beat a player with higher MMR. Similarly, if a player were to lose to another player with lower MMR, they would also stand to lose more Gems. This system encourages players to come up with new and better strategies in order to beat more skilled players, developing different “metas” and strategies as more Beasts are added to the game. With the Menagerie Marketplace, players can then use those Gems earned to purchase rarer and more powerful cards, this creates more possibilities for players to formulate different strategies, as they have access to a wider variety of cards with different abilities and strengths.
+
+Additionally, the Menagerie Marketplace can provide a sense of progression and achievement for players as they earn more Gems and mint more powerful cards. This can keep players engaged and motivated to continue playing the game, as they work towards acquiring the most powerful cards and achieving victory.
+
+### Roadmap & Development Plan
+
+The development of Monster Menagerie will follow a structured roadmap that includes:
+
+1. Initial development of the platform, including smart contracts, tokenomics, and NFT design (Launch of MVP). This stage focuses on creating the foundation of the Monster Menagerie ecosystem and establishing core functionalities. This is the current stage.
+2. Alpha and beta testing to gather user feedback and optimise the platform. During this stage, we will work on refining the platform's front end, ensuring a seamless user experience while addressing any bugs or issues that arise during testing.
+3. Development of the Leaderboard and MMR algorithm for the battling function. This stage involves creating a competitive environment for players, implementing a ranking system to match players of similar skill levels, and fostering a sense of achievement and progress.
+4. Integration of oracles for NFT mints, NFT minting restrictions, and tokenomics improvement. This stage aims to enhance the platform's security and fairness, ensuring that the minting process is transparent and adheres to the designed rarity distribution.
+5. Launching the platform and organising marketing campaigns to acquire users. This stage focuses on promoting Monster Menagerie to the target audience, using various marketing channels and strategies to attract users and establish a strong user base.
+6. Regular updates and improvements, including new Monster releases, events, and in-game features. We will continue to enhance the gameplay experience, introducing new content and strategies to keep players engaged and maintain the platform's growth.
+
+By following this roadmap, we aim to create a thriving and sustainable GameFi platform that balances both the entertainment and financial aspects, providing users with a fun, engaging, and rewarding experience.
+
 ## Gameplay Logic
+
+### Monster Cards
+Each Beast upon minting, will come with a unique combination of Attack Points (AP), Health Points (HP), Rarity, cost and Nature. Both AP and HP are integer values and come in a range. There are four Rarity types[^2] in total – Common, Rare, Epic and Legendary. The cost of the Beasts is dependent on the Rarity type. As of now, there are only three Natures in Monster Menagerie – Verdant, Infernal and Aquatic. 
+
+[^2]: Rarity Types are indicated by the symbol at the top of the cards, represented by different shapes for different Rarity Types.
+
+Defeated Beast cards will be broken after a Fight, rendering them unplayable until fixed. They can be fixed using Gems, where their Rarity type would determine the cost of Gems needed for this process.
+
+### Entering a Fight
+
+Players are required to wager an amount of Gems to participate in a Fight. Apart from wagering (and ensuring that the player has sufficient Gems), players would be required to select five Beasts **in sequence** from their collection to form a Deck. The Deck must have a total cost of no more than 65. After which, they would be placed in a matchmaking lobby where they will be assigned an opponent using our algorithm. 
+
+### Scaling and Nature Advantage
+
+During a Fight, Beasts will fight opponent’s Beasts in the sequence which they were selected (ie. first Beast Fight opponent’s first Beast). Both Beasts’ AP and HP will be scaled using our algorithm. 
+
+The algorithm will consider two factors:
+1. Cost of each player’s Deck: 
+  - The lower the cost of a player’s Deck, the greater the scaling of stats is.
+2. Nature advantages: 
+  - A Beast is considered Nature-advantaged when its Nature is strong against the opponent Beast’s Nature. 
+  - Verdant is strong against Aquatic; Aquatic is strong against Infernal; Infernal is strong against Verdant. 
+  - There are no Nature “disadvantages”.
+
+### During a Fight
+
+After scaling is done, both Beasts will fight against each other. Each Beast’s scaled HP will be deducted based on the opponent’s scaled AP. If the opponent’s scaled AP exceeds the Beast’s scaled HP, the Beasting card will be broken. Any residual damage will be stored and recorded as Damage Points (DP). If the opponent’s scaled AP does not exceed the scaled HP, nothing happens. This would repeat for each of the five Beasts. The player with the higher Damage Points (DP) would win the game. 
+
+### Victory
+
+Winning a Fight not only allows you to climb the leaderboard, but also gaining MMR and Gems in the process. The winner of the Fight will receive the majority of the pool of wagered Gems, while the remaining is distributed as platform fees.
+
+-----
 
 # Architecture
 
