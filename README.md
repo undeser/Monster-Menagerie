@@ -2,6 +2,13 @@ Monster Menagerie
 
 ------
 
+## Contributors
+- [Bryan Wong Jun Lin](https://github.com/bryanwonggy)
+- [Conrad Rein Tang Ze Aw](https://github.com/cReintang)
+- [James Mak](https://github.com/jamesmakjxnp)
+- [Luther Tan Xin Kang](https://github.com/luthertan98)
+- [Seah Zhi Han Mervyn](https://github.com/undeser)
+
 ## Content Page
 - [Introduction](https://github.com/undeser/Monster-Menagerie#introduction)
   - [Problem Definition](https://github.com/undeser/Monster-Menagerie#problem-definition)
@@ -10,18 +17,16 @@ Monster Menagerie
   - [Business Logic](https://github.com/undeser/Monster-Menagerie#business-logic)
   - [Gameplay Logic](https://github.com/undeser/Monster-Menagerie#gameplay-users)
 - [Architecture](https://github.com/undeser/Monster-Menagerie#architecture)
+  - [System Illustration](https://github.com/undeser/Monster-Menagerie#system-illustration)
+  - [How This System Works](https://github.com/undeser/Monster-Menagerie#how-this-system-works)
+- [Analyses](https://github.com/undeser/Monster-Menagerie#analyses)
+  - [Technical Implementation](https://github.com/undeser/Monster-Menagerie#technical-implementation)
+  - [Potential Future Features](https://github.com/undeser/Monster-Menagerie#potential-future-features)
 
+----- 
 
 # Introduction
 A project for a module, IS4302 - Blockchain and Distributed Ledeger Technologies, taken in National University of Singapore (NUS) in 2023. The project is a GameFi Dapp.
-
-### Contributors
-- [Bryan Wong Jun Lin](https://github.com/bryanwonggy)
-- [Conrad Rein Tang Ze Aw](https://github.com/cReintang)
-- [James Mak](https://github.com/jamesmakjxnp)
-- [Luther Tan Xin Kang](https://github.com/luthertan98)
-- [Seah Zhi Han Mervyn](https://github.com/undeser)
-
 
 ## Problem Definition
 GameFI integrates the concepts of both Non-Fungible Tokens (NFTs) and Decentralised Finance (DeFi) into a game, running blockchain’s financial system more intuitively. With the usage of NFTs, players have full ownership of these assets in a decentralised blockchain game [(Emmert et al., 2022)](https://www.nerdwallet.com/article/investing/gamefi). In essence, GameFi augments and enhances on boring DeFi transactions, adding entertainment and interactivity into blockchain finance and NFT. This allows traders to profit and trade through a gamified experience and social interaction.
