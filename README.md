@@ -1,4 +1,4 @@
-![]()
+![](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/title.png?raw=true)
 
 ------
 
@@ -131,7 +131,7 @@ Defeated Beast cards will be broken after a Fight, rendering them unplayable unt
 
 Players are required to wager an amount of Gems to participate in a Fight. Apart from wagering (and ensuring that the player has sufficient Gems), players would be required to select five Beasts **in sequence** from their collection to form a Deck. The Deck must have a total cost of no more than 65. After which, they would be placed in a matchmaking lobby where they will be assigned an opponent using our algorithm. 
 
-![Figure 1: Beast Card Statistics]()
+![Figure 1: Beast Card Statistics](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig1.png?raw=true)
 
 ### Scaling and Nature Advantage
 
