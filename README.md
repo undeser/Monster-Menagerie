@@ -125,7 +125,7 @@ Each Beast upon minting, will come with a unique combination of Attack Points (A
 
 [^2]: Rarity Types are indicated by the symbol at the top of the cards, represented by different shapes for different Rarity Types.
 
-![Figure 1: Beast Card Statistics](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig1.png?raw=true)
+<img src = "https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig1.png?raw=true" width=2000>
 
 Defeated Beast cards will be broken after a Fight, rendering them unplayable until fixed. They can be fixed using Gems, where their Rarity type would determine the cost of Gems needed for this process.
 
@@ -350,7 +350,7 @@ class StakeInfo {
     rewardDebt : uint256
 }
 ```
-![Figure 7: System Use Cases](https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig7.png?raw=true)
+<img src = "https://github.com/undeser/Monster-Menagerie/blob/main/readme_assets/fig7.png?raw=true" width=750>
 
 ## How This System Works
 
