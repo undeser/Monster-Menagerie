@@ -157,8 +157,7 @@ Winning a Fight not only allows you to climb the leaderboard, but also gaining M
 
 ## System Illustration
 
-```
-mermaid
+```mermaid
 classDiagram
 
 class Gem {
